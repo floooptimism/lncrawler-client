@@ -1,0 +1,5 @@
+const MAXCHAPTERSPERCHUNK =  500;
+
+module.exports = {
+    MAXCHAPTERSPERCHUNK
+}
