@@ -1,0 +1,17 @@
+.DownloadsBar {
+    @apply fixed top-0 w-56 h-screen bg-white px-4 py-2;
+    @apply transition-all ease-in duration-100;
+}
+
+.DownloadsBarItem{
+    @apply py-2 flex items-center;
+    @apply border-b border-gray-300
+}
+
+.DownloadsBarItemTitle{
+    @apply font-medium text-gray-700;
+}
+
+.DownloadsBarItemStatus{
+    @apply text-xs text-gray-400 font-medium;
+}
