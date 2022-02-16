@@ -1,0 +1,8 @@
+.searchBarContainer{
+    @apply flex items-center rounded-xl bg-gray-200 w-64 mx-auto px-2 py-1;
+}
+
+.searchBar {
+    @apply  bg-gray-200 outline-none py-1 px-2 mx-auto;
+
+}
