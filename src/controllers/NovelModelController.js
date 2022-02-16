@@ -87,7 +87,7 @@ class NovelModelController {
       "ChapterChunk" +
       Math.floor(chapterNumber / (MAXCHAPTERSPERCHUNK + 1));
     let chunk = await ChapterChunkDexie.get(chunkid);
-    console.log("This is chunk -> ",chunk);
+    console.log("This is chunk -> ", chunk);
     let chaptermeta = await ChapterMetaDexie.get(chunk.chaptermetaref);
     console.log(chaptermeta);
     //store the content in the chunk
