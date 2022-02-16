@@ -1,4 +1,4 @@
-const dexie = require("../../../components/Dexiesj/dexie");
+const dexie = require("../../../functionalcomponents/Dexiesj/dexie");
 const Model = require("../../Model");
 
 /**
