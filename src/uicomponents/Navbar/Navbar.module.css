@@ -1,0 +1,35 @@
+.TopBar {
+    @apply h-12 w-screen fixed top-0 left-0 bg-white; 
+    @apply flex md:hidden items-center justify-between;
+    @apply px-4;
+}
+
+.SideBar {
+    @apply fixed w-56 top-0 md:left-0 bg-white h-screen;
+    @apply bg-gray-50;
+    @apply transition-all ease-in duration-100;
+}
+
+
+
+.TopBarTitle{
+    @apply flex items-center justify-center;
+    @apply text-xl;
+}
+
+.NavItem{
+    @apply flex justify-center items-center p-2 py-3;
+    @apply cursor-pointer;
+}
+
+.NavItemNotPicked{
+    @apply hover:bg-blue-300 hover:text-white
+}
+
+.NavItemPicked{
+    @apply bg-blue-400 text-white
+}
+
+.NavItemIcon{
+    @apply mr-3;
+}
