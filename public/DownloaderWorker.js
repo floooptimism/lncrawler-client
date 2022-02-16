@@ -7,7 +7,6 @@ function getQueryString(type, p1,p2){
     "chaptercontent": "https://lncrawler.azurewebsites.net/chaptercontent?",
     "chaptermeta" :"https://lncrawler.azurewebsites.net/chapters?",
   }
-
   const param = {
     "chaptercontent": "chapterURL",
     "chaptermeta" :"novelURL",
@@ -19,12 +18,16 @@ function getQueryString(type, p1,p2){
 
 class DownloaderWorker {
   constructor() {
-    this.state = "idle"; // states -> "idle", "working", "paused"
-    this.callMeToAbortDownload = function () {};
+    this.state = "paused"; // states -> "idle", "working", "paused"
+    this.callMeToAbortDownload = null;
   }
 
   cancelDownload() {
-    this.callMeToAbortDownload();
+    if(this.callMeToAbortDownload) {
+      console.log("Called the abort function");
+      this.callMeToAbortDownload.abort();
+      this.callMeToAbortDownload = null;
+    }
   }
 
   getState() {
@@ -50,13 +53,13 @@ class DownloaderWorker {
         query,
         () => {}, //progress
         (result) => { // success
-          this.sendResult(result, task, true);
+          this.sendResult(result, task);
         },
         (status) => { // error
           this.sendResult(null, task, false);
         }
       );
-      this.callMeToAbortDownload = xhr.abort;
+      this.callMeToAbortDownload = xhr;
     }else{
       this.sendResult(null, task, false);
     }

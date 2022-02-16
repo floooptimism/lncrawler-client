@@ -14,8 +14,8 @@ function request(url, progress, success, error){
             error(this.status);
         }  
     };
-    xhr.send();
 
+    xhr.send();
     return xhr;
 }
 

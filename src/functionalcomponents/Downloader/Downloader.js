@@ -3,6 +3,7 @@ class Downloader {
     this.tasks = [
       {
         id: "https://lightnovel.world/book/1616/18.htmlhttps://lightnovel.world/content/1616/263863.html",
+        name: "Chapter 1",
         novel: "https://lightnovel.world/book/1616/18.html",
         source: "https://lightnovel.world",
         type: "chaptercontent",
@@ -10,7 +11,20 @@ class Downloader {
       },
     ];
     this.worker = new Worker("Worker.js");
-    this.currentTask = null;
+    this.currentTask = this.tasks[0];
+    this.running = false;
+
+    // * callbacks
+    this.successCallback = function () {};
+    this.failCallback = function () {};
+  }
+
+  //* Getters and Setters ********************
+  setSuccessCallback(callback) {
+    this.successCallback = callback;
+  }
+  setFailCallback(callback) {
+    this.failCallback = callback;
   }
 
   setCurrentTask(task) {
@@ -20,12 +34,26 @@ class Downloader {
     return this.currentTask;
   }
 
+  getTaskList(){
+    return this.tasks;
+  }
+
+  setIsrunning(isRunning) {
+    this.running = isRunning;
+  }
+  isRunning() {
+    return this.running;
+  }
+  // *****************************************
+
   startWorker() {
     this.worker.postMessage({ type: "start" });
+    this.setIsrunning(true);
   }
 
   pauseWorker() {
     this.worker.postMessage({ type: "pause" });
+    this.setIsrunning(false);
   }
 
   sendTask() {
@@ -45,8 +73,8 @@ class Downloader {
   }
 
   swapTasks(task1, task2) {
-    let index1 = this.tasks.indexOf(task1);
-    let index2 = this.tasks.indexOf(task2);
+    let index1 = this.tasks.findIndex((t) => t.id == task1.id);
+    let index2 = this.tasks.findIndex((t) => t.id == task2.id);
 
     this.tasks[index1] = task2;
     this.tasks[index2] = task1;
@@ -64,12 +92,14 @@ class Downloader {
           break;
         case "fail":
           // this.removeTask(msg.data.task);
+          this.failCallback();
           break;
         case "success":
           console.log("Task ", msg.data.task, " completed!");
           console.log(msg.data)
           this.removeTask(msg.data.task);
           this.setCurrentTask(null);
+          this.successCallback();
           break;
         case "accepted": // worker is working on a task
           this.setCurrentTask(msg.data.task);
@@ -79,4 +109,7 @@ class Downloader {
   }
 }
 
-module.exports = Downloader;
+let downloader = new Downloader();
+downloader.init();
+
+module.exports = downloader;
