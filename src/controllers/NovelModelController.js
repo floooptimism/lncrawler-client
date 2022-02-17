@@ -1,10 +1,10 @@
 import ChapterChunkDexie from "../models/concretes/Dexie/ChapterChunkDexie";
 import ChapterMetaDexie  from "../models/concretes/Dexie/ChapterMetaDexie";
 import NovelDexie from "../models/concretes/Dexie/NovelDexie";
+import MAXCHAPTERSPERCHUNK from "../models/constants";
 
 const { compare } = require("string-compare");
 
-import MAXCHAPTERSPERCHUNK from "../models/constants";
 
 class NovelModelController {
   /**
