@@ -80,7 +80,7 @@ function DownloadsSideBar(props) {
 
       {tasks.map((task) => {
         return (
-          <div className={`${styles.DownloadsBarItem}`}>
+          <div key={task.id} className={`${styles.DownloadsBarItem}`}>
             <div>
               <h6 className={`${styles.DownloadsBarItemTitle}`}>{task.name}</h6>
               <p className={`${styles.DownloadsBarItemStatus}`}>

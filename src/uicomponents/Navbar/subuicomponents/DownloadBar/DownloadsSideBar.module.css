@@ -1,6 +1,6 @@
 .DownloadsBar {
-    @apply fixed top-0 w-56 h-screen bg-white px-4 py-2;
-    @apply transition-all ease-in duration-100;
+    @apply fixed md:hidden top-0 w-56 h-screen bg-white px-4 py-2;
+    @apply transition-all ease-in duration-100 z-50;
 }
 
 .DownloadsBarItem{
