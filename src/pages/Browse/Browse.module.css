@@ -1,0 +1,31 @@
+.BrowseContainer{
+    @apply bg-gray-100 h-full pt-16;
+}
+
+
+.SourceDropdownContainer {
+    @apply flex flex-col;
+    @apply mx-auto mt-5;
+    @apply w-64;
+}
+
+.SourceDropdownContainer label{
+    @apply mb-2;
+    @apply text-gray-600;
+    @apply text-sm;
+    @apply font-medium;
+}
+
+.SourceDropdown{
+    @apply w-full;
+    @apply p-2 px-3;  
+    @apply rounded-lg;
+    @apply bg-white border border-gray-300;
+    @apply outline-none;
+    @apply h-10 max-h-10;
+    @apply text-gray-600;
+}
+
+.SourceDropdown:focus{
+    @apply outline-none;
+}
