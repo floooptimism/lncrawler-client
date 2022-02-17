@@ -34,12 +34,12 @@ jobs:
           node-version: '16'
       # Runs a single command using the runners shell
       - name: Install dependencies
-      - uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install # will run `yarn install` command
       
       - name: Build application
-      - uses: borales/actions-yarn@v2.3.0
+        uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
         
@@ -47,7 +47,7 @@ jobs:
         run: mv build/index.html build/200.html
      
       - name: Upload Artifact for deployment
-      - uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2
         with:
           name: build
           path: build/
@@ -62,7 +62,7 @@ jobs:
         run: npm install -g surge
       
       - name: Download artifact
-      - uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: build
           path: build/
