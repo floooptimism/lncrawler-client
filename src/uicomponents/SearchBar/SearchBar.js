@@ -3,7 +3,7 @@ import style from './SearchBar.module.css';
 function SearchBar(props) {
 
   return (
-    <div className={`${style.searchBarContainer} text-center mt-3`}>
+    <div className={`${style.searchBarContainer}`}>
       <span>
         <svg
           className="feather feather-search"

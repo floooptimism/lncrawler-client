@@ -1,8 +1,10 @@
 .searchBarContainer{
-    @apply flex items-center rounded-xl bg-gray-200 w-64 mx-auto px-2 py-1;
+    @apply flex items-center rounded-xl bg-white w-64 mx-auto p-2 text-center;
+    @apply max-h-10 border border-gray-300;
+    @apply text-gray-600;
 }
 
 .searchBar {
-    @apply  bg-gray-200 outline-none py-1 px-2 mx-auto;
+    @apply  bg-white outline-none mx-auto;
 
 }
