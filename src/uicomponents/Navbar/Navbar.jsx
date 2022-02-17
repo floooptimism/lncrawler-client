@@ -61,7 +61,7 @@ function Navbar(props) {
           onClick={() => setSideBarOpen(false)}
           className={` ${
             sideBarOpen ? "bg-opacity-60" : "bg-opacity-0 pointer-events-none"
-          } transition-all ease-in duration-100 md:hidden fixed h-screen w-screen top-0 left-0 bg-gray-800`}
+          } transition-all ease-in duration-100 md:hidden fixed h-screen w-screen top-0 left-0 bg-gray-800 z-40`}
         ></div>
 
         {/* sidebar */}
