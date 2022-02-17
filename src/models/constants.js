@@ -1,5 +1,8 @@
 const MAXCHAPTERSPERCHUNK =  500;
 
-export default {
+
+let ret = {
     MAXCHAPTERSPERCHUNK
 }
+
+export default ret;

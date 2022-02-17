@@ -10,7 +10,7 @@ const Model = require("../../Model");
 class NovelDexie extends Model{
     static db = dexie;
     constructor(source, url, title, author, cover, description, status, genres, tags, type, lastUpdate, lastChapter, views, rating){
-        super();
+        super(null);
         this.url = url;
         this.title = title;
         this.author = author;

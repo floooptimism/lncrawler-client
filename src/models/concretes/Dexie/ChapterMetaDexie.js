@@ -6,7 +6,7 @@ class ChapterMetaDexie extends Model {
 
 
     constructor(novel_url){
-        super();
+        super(null);
         this.novel_url = novel_url;
         this.save = this.constructor.save;
         this.chapterchunks = [];

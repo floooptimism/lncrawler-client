@@ -4,7 +4,7 @@ const Model = require("../../Model");
 class ChapterChunkDexie extends Model{
     static db = dexie;
     constructor(id, chaptermetaref){
-        super()
+        super(null)
         this.id = id;
         this.chaptermetaref = chaptermetaref;
         this.save = this.constructor.save;
