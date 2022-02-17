@@ -188,4 +188,4 @@ class NovelModelController {
   }
 }
 
-module.exports = NovelModelController;
+export default NovelModelController;
