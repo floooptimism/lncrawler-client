@@ -44,7 +44,7 @@ jobs:
           cmd: build
         
       - name: Tweaking built app
-      - run: mv build/index.html build/200.html
+        run: mv build/index.html build/200.html
      
       - name: Upload Artifact for deployment
       - uses: actions/upload-artifact@v2
@@ -59,7 +59,7 @@ jobs:
         with:
           node-version: '16'
       - name: Install surge
-      - run: npm install -g surge
+        run: npm install -g surge
       
       - name: Download artifact
       - uses: actions/download-artifact@v2
@@ -68,4 +68,4 @@ jobs:
           path: build/
       
       - name: Upload build
-      - run: surge --project build/ --domain $DOMAIN
+        run: surge --project build/ --domain $DOMAIN
