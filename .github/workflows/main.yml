@@ -73,5 +73,8 @@ jobs:
       - name: Print list of files
         run: ls -la
 
+      - name: Print build
+        run: ls -la build/
+
       - name: Upload build
         run: surge --project build/ --domain $DOMAIN
