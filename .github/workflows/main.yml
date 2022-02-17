@@ -69,5 +69,9 @@ jobs:
           name: build
           path: build/
       
+      # print directory
+      - name: Print list of files
+        run: ls -la
+
       - name: Upload build
         run: surge --project build/ --domain $DOMAIN
