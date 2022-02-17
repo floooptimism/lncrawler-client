@@ -1,0 +1,15 @@
+ .BrowseNovelCardContainer{
+     @apply flex items-center w-full bg-white;
+     @apply rounded-lg shadow;
+     @apply p-3;
+ }
+
+ .BrowseNovelCardImageContainer{
+     @apply rounded-lg overflow-hidden;
+     @apply h-40 w-28;
+ }
+
+ .BrowseNovelCardImage{
+     @apply h-full w-full;
+     @apply object-fill;
+ }

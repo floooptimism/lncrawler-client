@@ -1,0 +1,5 @@
+.LibraryNovelCard {
+    @apply flex justify-between;
+    @apply p-2;
+    @apply overflow-hidden text-ellipsis;
+}
