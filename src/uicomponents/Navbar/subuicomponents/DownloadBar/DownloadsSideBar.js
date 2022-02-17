@@ -11,9 +11,6 @@ function DownloadsSideBar(props) {
     functions: downloader,
   } = useDownloader();
 
-  useEffect(()=>{
-    window.downloader = downloader;
-  }, [])
 
   return (
     <div
