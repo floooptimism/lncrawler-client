@@ -44,4 +44,4 @@ class ChapterMetaDexie extends Model {
     }
 }
 
-module.exports = ChapterMetaDexie;
+export default ChapterMetaDexie;

@@ -7,4 +7,4 @@ dexie.version(1).stores({
     chapterchunks: "&id, chaptermetaref"
 })
 
-module.exports = dexie;
+export default dexie;

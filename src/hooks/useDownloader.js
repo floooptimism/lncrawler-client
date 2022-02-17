@@ -65,4 +65,4 @@ function useDownloader(){
 
 }
 
-module.exports = useDownloader;
+export default useDownloader;

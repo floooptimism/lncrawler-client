@@ -112,4 +112,4 @@ class Downloader {
 let downloader = new Downloader();
 downloader.init();
 
-module.exports = downloader;
+export default downloader;

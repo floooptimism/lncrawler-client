@@ -58,4 +58,4 @@ class NovelDexie extends Model{
     }
 }
 
-module.exports = NovelDexie;
+export default NovelDexie;

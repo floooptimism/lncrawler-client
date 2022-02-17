@@ -40,4 +40,4 @@ class ChapterChunkDexie extends Model{
     }
 }
 
-module.exports = ChapterChunkDexie; 
+export default ChapterChunkDexie; 
