@@ -38,4 +38,4 @@ class Librarian{
 
 }
 
-module.exports = Librarian;
+export default Librarian;
