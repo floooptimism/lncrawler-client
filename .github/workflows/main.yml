@@ -45,7 +45,7 @@ jobs:
           cmd: build
         
       - name: Tweaking built app
-        run: mv build/index.html build/200.html
+        run: sudo mv build/index.html build/200.html
      
       - name: Upload Artifact for deployment
         uses: actions/upload-artifact@v2
