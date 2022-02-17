@@ -17,6 +17,7 @@ env:
   SURGE_TOKEN: 4a64cd99c804f3f7d82a4d061e054ee0
   SURGE_LOGIN: jackmord445@gmail.com
   DOMAIN: https://crawlia.surge.sh
+  CI: false
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
