@@ -85,6 +85,7 @@ function DisplayResults({arrayOfResults}){
         setIdx(idx + 10);
     }
 
+
     return (
         <>
             {results.map((result, idx) => {

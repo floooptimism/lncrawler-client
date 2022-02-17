@@ -67,14 +67,14 @@ class Downloader {
 
   removeTask(task) {
     this.tasks.splice(
-      this.tasks.findIndex((t) => t.id == task.id),
+      this.tasks.findIndex((t) => t.id === task.id),
       1
     );
   }
 
   swapTasks(task1, task2) {
-    let index1 = this.tasks.findIndex((t) => t.id == task1.id);
-    let index2 = this.tasks.findIndex((t) => t.id == task2.id);
+    let index1 = this.tasks.findIndex((t) => t.id === task1.id);
+    let index2 = this.tasks.findIndex((t) => t.id === task2.id);
 
     this.tasks[index1] = task2;
     this.tasks[index2] = task1;
@@ -103,6 +103,8 @@ class Downloader {
           break;
         case "accepted": // worker is working on a task
           this.setCurrentTask(msg.data.task);
+          break;
+        default:
           break;
       }
     };

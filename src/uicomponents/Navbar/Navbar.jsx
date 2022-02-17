@@ -75,7 +75,7 @@ function Navbar(props) {
               <li>
                 <div
                   className={`${styles.NavItem} group ${
-                    viewState[0] == "library"
+                    viewState[0] === "library"
                       ? `${styles.NavItemPicked}`
                       : `${styles.NavItemNotPicked}`
                   } `}
@@ -87,7 +87,7 @@ function Navbar(props) {
                     className={`${
                       styles.NavItemIcon
                     } group-hover:text-white pointer-events-none group-hover:fill-current ${
-                      viewState[0] == "library" ? "text-white fill-current" : ""
+                      viewState[0] === "library" ? "text-white fill-current" : ""
                     }`}
                     height="16"
                     width="16"
@@ -111,7 +111,7 @@ function Navbar(props) {
               <li>
                 <div
                   className={`${styles.NavItem} group ${
-                    viewState[0] == "browse"
+                    viewState[0] === "browse"
                       ? `${styles.NavItemPicked}`
                       : `${styles.NavItemNotPicked}`
                   }`}
@@ -122,7 +122,7 @@ function Navbar(props) {
                     className={`${
                       styles.NavItemIcon
                     } group-hover:text-white pointer-events-none group-hover:fill-current ${
-                      viewState[0] == "browse" ? "text-white fill-current" : ""
+                      viewState[0] === "browse" ? "text-white fill-current" : ""
                     }`}
                     width="17"
                     height="17"

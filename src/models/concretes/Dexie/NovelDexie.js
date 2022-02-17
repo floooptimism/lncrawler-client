@@ -1,5 +1,5 @@
-const dexie = require("../../../functionalcomponents/Dexiesj/dexie");
-const Model = require("../../Model");
+import dexie from "../../../functionalcomponents/Dexiesj/dexie";
+import Model from "../../Model";
 
 /**
  * @class Novel

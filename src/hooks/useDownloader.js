@@ -1,5 +1,5 @@
 const { useState, useEffect } = require("react");
-const Downloader = require("../functionalcomponents/Downloader/Downloader");
+import Downloader from "../functionalcomponents/Downloader/Downloader";
 
 function useDownloader(){
     console.log("Rerender");
