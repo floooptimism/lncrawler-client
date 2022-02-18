@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Liaison from "../../functionalcomponents/Liaison/Liaison";
 import SearchBar from "../../uicomponents/SearchBar/SearchBar";
 import styles from "./Browse.module.css";
@@ -45,21 +45,21 @@ function Browse(props) {
 
         {/* if searched and searchResults is empty, tell user that there are no results  */}
         {searched && !loading && searchResults.length === 0 && (
-          <p className="text-gray-500 opacity-80 italic font-medium text-lg text-center px-8">
+          <p className={styles.Info}>
             No results found
           </p>
         )}
 
         {/* if loading, tell user that it's loading */}
         {loading && (
-          <p className="text-gray-500 opacity-80 italic font-medium text-lg text-center px-8">
+          <p className={styles.Info}>
             Loading...
           </p>
         )}
 
         {/* if not searched, tell user to enter a novel name and select source */}
         {!searched && (
-          <p className="text-gray-500 opacity-80 italic font-medium text-lg text-center px-8">
+          <p className={styles.Info}>
             Enter a novel name and select a source
           </p>
         )}
@@ -77,13 +77,20 @@ function Browse(props) {
 }
 
 function DisplayResults({arrayOfResults}){
-    const [idx, setIdx] = useState(20);
-    const [results, setResults] = useState(arrayOfResults.slice(0, idx));
+    const [idx, setIdx] = useState();
+    const [results, setResults] = useState([]);
 
     function loadMore(){
-        setResults(arrayOfResults.slice(0, idx + 10));
         setIdx(idx + 10);
     }
+
+    useEffect( resetResultsIfArrayChangeOrIndex => {
+      setResults(arrayOfResults.slice(0, idx));
+    }, [arrayOfResults, idx])
+
+    useEffect( resetIdxIfArrayChange => {
+      setIdx(10);
+    }, [arrayOfResults])
 
 
     return (
