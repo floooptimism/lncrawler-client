@@ -6,7 +6,7 @@ function SearchBar(props) {
     <div className={`${style.searchBarContainer}`}>
       <span>
         <svg
-          className="feather feather-search"
+          className={style.Icon}
           height="24"
           width="24"
           fill="none"
@@ -22,7 +22,7 @@ function SearchBar(props) {
         </svg>
       </span>
 
-      <input type="text" placeholder="Search" className={style.searchBar} />
+      <input type="text" placeholder="Search novel" className={style.searchBar} />
     </div>
   );
   
