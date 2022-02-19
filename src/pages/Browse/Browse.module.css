@@ -1,16 +1,17 @@
 .BrowseContainer{
-    @apply h-full pt-16;
+    @apply h-full pt-14;
+    @apply px-4;
 }
 
 
 .SourceDropdownContainer {
     @apply flex flex-col;
-    @apply mx-auto mt-5;
-    @apply w-64;
+    @apply mx-auto mt-3;
+    @apply w-full;
 }
 
 .SourceDropdownContainer label{
-    @apply mb-2;
+    @apply mb-1;
     @apply text-gray-600;
     @apply text-sm;
     @apply font-medium;

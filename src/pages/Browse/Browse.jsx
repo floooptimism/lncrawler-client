@@ -27,7 +27,7 @@ function Browse(props) {
           searchNovel(e.target[0].value, e.target[1].value);
         }}
       >
-        <SearchBar />
+        <SearchBar className="w-full"/>
 
         {/* Dropdown select source */}
         <div className={`${styles.SourceDropdownContainer}`}>
@@ -41,7 +41,7 @@ function Browse(props) {
         </div>
       </form>
 
-      <div className="flex-wrap flex flex-col justify-center items-center gap-3 py-8 px-2">
+      <div className="flex-wrap flex flex-col justify-center items-center gap-3 py-8">
 
         {/* if searched and searchResults is empty, tell user that there are no results  */}
         {searched && !loading && searchResults.length === 0 && (
