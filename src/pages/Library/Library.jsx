@@ -37,7 +37,7 @@ function Library() {
   }, []);
 
   return (
-    <div className="mt-14">
+    <div className="mt-14 px-4">
       {/* Searchbar */}
       <form onSubmit={e => {
         e.preventDefault();
