@@ -1,15 +1,61 @@
- .BrowseNovelCardContainer{
-     @apply flex items-center w-full bg-white;
-     @apply rounded-lg shadow;
-     @apply p-3;
- }
+.BrowseNovelCardContainer {
+  @apply flex items-start w-full bg-white;
+  @apply rounded-lg shadow;
+  @apply p-3;
+  @apply overflow-hidden;
+  height: 230px;
+}
 
- .BrowseNovelCardImageContainer{
-     @apply rounded-lg overflow-hidden;
-     @apply h-40 w-28;
- }
+.BrowseNovelCardImageContainer {
+  @apply rounded-lg overflow-hidden;
+  @apply h-40 w-24;
+  @apply shrink-0 mr-4 my-auto;
+}
 
- .BrowseNovelCardImage{
-     @apply h-full w-full;
-     @apply object-fill;
- }
+.BrowseNovelCardImage {
+  @apply h-full w-full;
+  @apply object-fill;
+}
+
+.BrowseNovelCardInfo {
+  @apply flex flex-col h-full;
+  @apply overflow-hidden;
+}
+
+.BrowseNovelCardTitle {
+  @apply text-sm font-medium;
+}
+
+.BrowseNovelCardAuthor {
+  @apply text-xs mb-2 font-medium text-gray-600;
+}
+
+.BrowseNovelCardDescription {
+  @apply text-xs relative;
+  @apply text-gray-500;
+  @apply text-justify;
+  @apply overflow-hidden;
+  height: 120px;
+}
+
+.BrowseNovelCardDescriptionFade {
+  @apply absolute h-full w-full;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 48%,
+    rgba(255, 255, 255, 1) 97%
+  );
+}
+
+.BrowseNovelCardIndicator {
+  @apply flex items-center justify-center;
+  @apply mt-3;
+  @apply w-16 h-5 text-center text-xs;
+  @apply rounded;
+}
+
+.BrowseNovelCardIndicatorInLibrary {
+  @apply bg-green-200;
+  @apply text-green-900;
+}
