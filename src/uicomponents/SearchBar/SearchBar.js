@@ -3,7 +3,7 @@ import style from './SearchBar.module.css';
 function SearchBar(props) {
 
   return (
-    <div className={`${style.searchBarContainer}`}>
+    <div className={`${style.searchBarContainer} ${props.className}`}>
       <span>
         <svg
           className={style.Icon}

@@ -1,5 +1,5 @@
 .searchBarContainer{
-    @apply relative w-64 mx-auto;
+    @apply relative;
 }
 
 .searchBar {
