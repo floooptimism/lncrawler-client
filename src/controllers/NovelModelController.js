@@ -122,6 +122,17 @@ class NovelModelController {
   }
 
   /**
+   * Deletes a novel from the database
+   * @param {String} url 
+   * @returns undefined
+   */
+  async deleteNovel(url) {
+    await NovelDexie.delete(url);
+    // delete a novels meta
+    // delete all the novels chapters
+  }
+
+  /**
    * Searches the novel
    * @param {String} novelName - Title of the novel
    * @returns {Array} - Array of novel objects
