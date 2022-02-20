@@ -7,7 +7,7 @@ import styles from './NovelInfo.module.css';
 
 function NovelInfo({url, scraper, inLibrary}){
 
-    function getNovelInfo(){
+    async function getNovelInfo(){
         let res = await Liaison.getNovelInfo(url, scraper);
         console.log(res);
     }
