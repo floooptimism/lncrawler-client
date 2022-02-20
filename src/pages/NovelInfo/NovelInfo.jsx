@@ -5,16 +5,16 @@ import Librarian from '../../functionalcomponents/Librarian/Librarian';
 import styles from './NovelInfo.module.css';
 
 
-function NovelInfo({url, scraper, inLibrary}){
+function NovelInfo(props){
 
     async function getNovelInfo(){
-        let res = await Liaison.getNovelInfo(url, scraper);
+        let res = await Liaison.getNovelInfo(props.url, props.scraper);
         console.log(res);
     }
 
     useEffect(() => {
         getNovelInfo();
-    }, [url]);
+    }, [props.url]);
 
     return (
         <div className={styles.background}>

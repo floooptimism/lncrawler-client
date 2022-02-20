@@ -1,5 +1,4 @@
 import Browse from "../pages/Browse/Browse";
-import BrowseNovelView from "../pages/BrowseNovelView/BrowseNovelView";
 import Library from "../pages/Library/Library";
 import NovelInfo from "../pages/NovelInfo/NovelInfo";
 
