@@ -53,7 +53,7 @@ class NovelModelController {
     let chaptermeta = new ChapterMetaDexie(novel_url);
     let chunksneeded = Math.ceil(chapters.length / MAXCHAPTERSPERCHUNK);
     for (let i = 0; i < chunksneeded; i++) {
-      await new Promise(async (resolve, reject) => {
+      await new Promise((resolve, reject) => {
         let chapterchunkid = novel_url + "ChapterChunk" + i;
         let chunk = new ChapterChunkDexie(
           novel_url + "ChapterChunk" + i,
@@ -65,9 +65,10 @@ class NovelModelController {
           (i + 1) * MAXCHAPTERSPERCHUNK
         );
 
-        await chunk.save();
-        chaptermeta.chapterchunks.push(chapterchunkid);
-        resolve();
+        chunk.save().then( () => {
+           chaptermeta.chapterchunks.push(chapterchunkid);
+           resolve();
+        });
       });
     }
     chaptermeta.numberOfChapters = chapters.length;
