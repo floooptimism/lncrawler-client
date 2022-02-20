@@ -65,9 +65,10 @@ class NovelModelController {
           (i + 1) * MAXCHAPTERSPERCHUNK
         );
 
-        await chunk.save();
-        chaptermeta.chapterchunks.push(chapterchunkid);
-        resolve();
+        chunk.save().then( () => {
+           chaptermeta.chapterchunks.push(chapterchunkid);
+           resolve();
+        });
       });
     }
     chaptermeta.numberOfChapters = chapters.length;
