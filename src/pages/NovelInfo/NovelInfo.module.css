@@ -1,0 +1,9 @@
+.background {
+    @apply bg-white;
+    @apply absolute top-0 left-0 h-screen w-screen;
+}
+
+.NovelInfo {
+    @apply absolute mt-12;
+    @apply top-o left-0;
+}

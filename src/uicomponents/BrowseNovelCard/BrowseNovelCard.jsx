@@ -19,8 +19,9 @@ function BrowseNovelCard({
         // add to library
     }
 
+function BrowseNovelCard({title, author, description, cover, url, source, onClick}){
     return (
-        <div className={`${styles.BrowseNovelCardContainer}`}>
+        <div onClick={onClick.bind(null, url, source)} className={`${styles.BrowseNovelCardContainer}`}>
             {/* image */}
             <div className={`${styles.BrowseNovelCardImageContainer}`}>
                 <img
