@@ -22,8 +22,8 @@ function useLibrarian(novelChangedCallBack){
         setNovels(novels);
     }
 
-    async function addToLibrary(novel){
-        const novel = await librarian.addNovel(novel);
+    async function addToLibrary(nov){
+        const novel = await librarian.addNovel(nov);
         setNovels([...novels, novel]);
     }
 

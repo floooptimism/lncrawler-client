@@ -4,11 +4,14 @@ import SearchBar from "../../uicomponents/SearchBar/SearchBar";
 import styles from "./Browse.module.css";
 
 import BrowseNovelCard from "../../uicomponents/BrowseNovelCard/BrowseNovelCard";
+import useLibrarian from "../../hooks/useLibrarian";
 
 function Browse(props) {
   const [searchResults, setSearchResults] = useState([]);
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const {novels, novelIds, librarian} = useLibrarian();
 
   async function searchNovel(novelName, source) {
     setSearched(true);
@@ -67,7 +70,7 @@ function Browse(props) {
         {/* if searchResults is not empty, display the results */}
         {!loading &&
           searchResults.length > 0 &&
-          <DisplayResults arrayOfResults={searchResults} />
+          <DisplayResults arrayOfResults={searchResults} novelIds={novelIds} librarian={librarian}/>
         }
 
 
@@ -76,7 +79,9 @@ function Browse(props) {
   );
 }
 
-function DisplayResults({arrayOfResults}){
+
+// lazy loading
+function DisplayResults({arrayOfResults, novelIds, librarian}) {
     const [idx, setIdx] = useState();
     const [results, setResults] = useState([]);
 
@@ -97,7 +102,7 @@ function DisplayResults({arrayOfResults}){
         <>
             {results.map((result, idx) => {
                 return (
-                    <BrowseNovelCard {...result} />
+                    <BrowseNovelCard {...result} inLibrary={result.url in novelIds} librarian={librarian}/>
                 )
             })
             }

@@ -1,13 +1,13 @@
 .BrowseNovelCardContainer {
   @apply flex items-start w-full bg-white;
-  @apply rounded-lg shadow;
+  @apply rounded-lg shadow-lg border border-gray-100;
   @apply p-3;
   @apply overflow-hidden;
   /* height: 230px; */
 }
 
 .BrowseNovelCardImageContainer {
-  @apply rounded-lg overflow-hidden;
+  @apply rounded-lg shadow overflow-hidden;
   @apply h-40 w-24;
   @apply shrink-0 mr-4 my-auto;
 }
@@ -35,6 +35,7 @@
   @apply text-gray-500;
   @apply text-justify;
   @apply overflow-hidden;
+  @apply font-serif;
   height: 54px;
 }
 
@@ -58,4 +59,10 @@
 .BrowseNovelCardIndicatorInLibrary {
   @apply bg-green-200;
   @apply text-green-900;
+}
+
+.BrowseNovelCardIndicatorNotInLibrary{
+  @apply border border-blue-400;
+  @apply text-blue-400;
+  @apply w-24
 }
