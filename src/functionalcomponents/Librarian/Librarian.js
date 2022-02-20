@@ -7,10 +7,6 @@ class Librarian{
         return await this.novelController.storeNovel(novel);
     }
 
-    async deleteNovel(novel_url){
-        return await this.novelController.deleteNovel(novel_url);
-    }
-
     async getAllNovels(){
         return await this.novelController.getNovels()
     }
