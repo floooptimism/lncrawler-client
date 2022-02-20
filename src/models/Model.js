@@ -12,10 +12,6 @@ class Model{
         // get all model data
     }
 
-    static delete(){
-        // delete model data
-    }
-
     static save(){
         // save model data
     }

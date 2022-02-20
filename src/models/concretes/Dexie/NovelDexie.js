@@ -17,7 +17,7 @@ class NovelDexie extends Model{
         this.source = source;
         this.cover = cover;
         this.description = description;
-        this.status = status; 
+        this.status = status;
         this.genres = genres;
         this.tags = tags;
         this.type = type;
@@ -42,10 +42,6 @@ class NovelDexie extends Model{
             novel.save = this.save;
             return novel;
             });
-    }
-    
-    static async delete(url){
-        await this.db.novels.delete(url);
     }
 
     static async save(){
