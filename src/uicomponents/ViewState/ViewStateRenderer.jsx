@@ -17,7 +17,7 @@ function ViewStateRenderer(props){
     })()
 
     return (
-        <Content><Component /></Content>
+        <Content><Component param={viewState[1]} /></Content>
     )
 }
 
