@@ -19,6 +19,7 @@ function BrowseNovelCard({
     // add to library
   }
 
+  // opens the modal
   function clickHandle(){
     onClick(url, source, inLibrary);
   }
