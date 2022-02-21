@@ -1,4 +1,6 @@
 [![Deploy to Surge.sh](https://github.com/floooptimism/lncrawler-client/actions/workflows/main.yml/badge.svg)](https://github.com/floooptimism/lncrawler-client/actions/workflows/main.yml)
+[![DeepSource](https://deepsource.io/gh/floooptimism/lncrawler-client.svg/?label=active+issues&show_trend=true&token=4F1mGmJSii1wGmSKw0qSQY43)](https://deepsource.io/gh/floooptimism/lncrawler-client/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/floooptimism/lncrawler-client.svg/?label=resolved+issues&show_trend=true&token=4F1mGmJSii1wGmSKw0qSQY43)](https://deepsource.io/gh/floooptimism/lncrawler-client/?ref=repository-badge)
 
 ## Crawlia - Web novel crawler
 
