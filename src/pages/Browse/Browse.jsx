@@ -5,6 +5,10 @@ import styles from "./Browse.module.css";
 
 import BrowseNovelCard from "../../uicomponents/BrowseNovelCard/BrowseNovelCard";
 import useLibrarian from "../../hooks/useLibrarian";
+import NovelInfo from "../NovelInfo/NovelInfo";
+
+import scrollControlFunctions from './disableScrolling'
+const {enableScroll, disableScroll} = scrollControlFunctions;
 
 function Browse(props) {
   const [searchResults, setSearchResults] = useState([]);
@@ -44,7 +48,7 @@ function Browse(props) {
         </div>
       </form>
 
-      <div className="flex-wrap flex flex-col justify-center items-center gap-3 py-8">
+      <div className="relative flex-wrap flex flex-col justify-center items-center gap-3 py-8">
 
         {/* if searched and searchResults is empty, tell user that there are no results  */}
         {searched && !loading && searchResults.length === 0 && (
@@ -80,17 +84,41 @@ function Browse(props) {
 }
 
 
-// lazy loading
+// partial loading
 function DisplayResults({arrayOfResults, novelIds, librarian}) {
     const [idx, setIdx] = useState();
     const [results, setResults] = useState([]);
+    const [novelInfoModal, setNovelInfoModal] = useState(false);
+    const [novelInfoParam, setNovelInfoParam] = useState({});
+    const [removeScroll, setRemoveScroll] = useState(false);
+
+    function openModal(url, source, inLibrary){
+      setNovelInfoModal(true);
+      setNovelInfoParam({url, source, inLibrary});
+
+    }
+
+    function closeModal(){
+      setRemoveScroll(false);
+      setNovelInfoModal(false);
+    }
 
     function loadMore(){
         setIdx(idx + 10);
     }
 
+    useEffect( function enable_disable_scroll() {
+      if(novelInfoModal){
+        disableScroll();
+        return;
+      }
+      enableScroll();
+    }, [novelInfoModal])
+
     useEffect( resetResultsIfArrayChangeOrIndex => {
       setResults(arrayOfResults.slice(0, idx));
+      
+      document.getElementsByTagName('body')[0].addEventListener('scroll', ()=>{console.log("Scrolling")})
     }, [arrayOfResults, idx])
 
     useEffect( resetIdxIfArrayChange => {
@@ -102,10 +130,12 @@ function DisplayResults({arrayOfResults, novelIds, librarian}) {
         <>
             {results.map((result, idx) => {
                 return (
-                    <BrowseNovelCard {...result} inLibrary={result.url in novelIds} librarian={librarian}/>
+                    <BrowseNovelCard onClick={openModal} {...result} inLibrary={result.url in novelIds} librarian={librarian}/>
                 )
             })
             }
+
+            {novelInfoModal && <NovelInfo onClose={closeModal}  {...results[idx]} {...novelInfoParam} librarian={librarian}/>}
         </>
     )
 }
