@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
-import NovelModelController from '../../controllers/NovelModelController';
 import Liaison from '../../functionalcomponents/Liaison/Liaison';
-import Librarian from '../../functionalcomponents/Librarian/Librarian';
 import styles from './NovelInfo.module.css';
 
 
 function NovelInfo(props){
 
-    async function getNovelInfo(){
-        let res = await Liaison.getNovelInfo(props.url, props.scraper);
-        console.log(res);
-    }
-
     useEffect(() => {
+        async function getNovelInfo(){
+            let res = await Liaison.getNovelInfo(props.url, props.scraper);
+            console.log(res);
+        }
+        
         getNovelInfo();
-    }, [props.url]);
+    }, [props.url, props.scraper]);
 
     return (
         <div className={styles.background}>
