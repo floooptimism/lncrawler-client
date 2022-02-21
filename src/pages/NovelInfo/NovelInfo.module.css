@@ -1,9 +1,34 @@
 .background {
-    @apply bg-white;
-    @apply absolute top-0 left-0 h-screen w-screen;
+    @apply bg-gray-900 bg-opacity-80;
+    @apply fixed top-0 left-0 h-full w-full;
+    @apply overflow-y-scroll z-50;
 }
 
 .NovelInfo {
-    @apply absolute mt-12;
-    @apply top-0 left-0;
+    @apply relative bg-white;
+    @apply mx-auto overflow-auto;
+}
+
+.NovelInfoTopBar{
+    @apply fixed flex items-center justify-between;
+    @apply h-12 px-3;
+    @apply bg-white;
+    @apply shadow;
+}
+
+.NovelInfoTopBarIcon{
+    @apply flex items-center justify-center;
+    @apply h-9 w-9;
+}
+
+.NovelInfo, .NovelInfoTopBar{
+    @apply w-full;
+}
+
+.NovelInfoTopBarTitle{
+    @apply text-xl;
+}
+
+.NovelInfoContent{
+    @apply mt-12;
 }
