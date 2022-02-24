@@ -107,24 +107,36 @@ function DisplayResults({arrayOfResults, novelIds, librarian}) {
         setIdx(idx + 10);
     }
 
-    useEffect( function enable_disable_scroll() {
-      if(novelInfoModal){
-        disableScroll();
-        return;
-      }
-      enableScroll();
-    }, [novelInfoModal])
+    useEffect(
+        function enable_disable_scroll() {
+            if (novelInfoModal) {
+                disableScroll();
+                return;
+            }
+            enableScroll();
+        },
+        [novelInfoModal]
+    );
 
-    useEffect( resetResultsIfArrayChangeOrIndex => {
-      setResults(arrayOfResults.slice(0, idx));
-      
-      document.getElementsByTagName('body')[0].addEventListener('scroll', ()=>{console.log("Scrolling")})
-    }, [arrayOfResults, idx])
+    useEffect(
+        (resetResultsIfArrayChangeOrIndex) => {
+            setResults(arrayOfResults.slice(0, idx));
 
-    useEffect( resetIdxIfArrayChange => {
-      setIdx(10);
-    }, [arrayOfResults])
+            document
+                .getElementsByTagName("body")[0]
+                .addEventListener("scroll", () => {
+                    console.log("Scrolling");
+                });
+        },
+        [arrayOfResults, idx]
+    );
 
+    useEffect(
+        (resetIdxIfArrayChange) => {
+            setIdx(10);
+        },
+        [arrayOfResults]
+    );
 
     return (
         <>
