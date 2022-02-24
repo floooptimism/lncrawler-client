@@ -40,13 +40,26 @@ function useLibrarian(novelChangedCallBack){
         setNovels(novels.filter(n => n.url !== url));
     }
 
+    async function getNovelInfo(url){
+        return novels.filter(n => n.url === url)[0];
+    }
+
+    async function updateNovel(novel){
+        let success = await librarian.updateNovel(novel);
+        if(success){
+            setNovels(novels.map(n => n.url === novel.url ? novel : n));
+        }
+    }
+
     return {
         novels,
         novelIds,
         librarian: {
             getNovels,
             addToLibrary,
-            removeFromLibrary
+            removeFromLibrary,
+            getNovelInfo,
+            updateNovel
         }
     }
 }
