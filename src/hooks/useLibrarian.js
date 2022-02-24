@@ -8,6 +8,12 @@ function useLibrarian(novelChangedCallBack){
     const [novels, setNovels] = useState([]);
     const [novelIds, setNovelIds] = useState({});
 
+    useEffect(function getAllNovels(){
+        librarian.getNovels().then(novels => {
+            setNovels(novels);
+        });
+    },[])
+
     useEffect( setIds => {
         // get all urls from novels and store them as keys in an object
         const novelIds = novels.reduce((acc, novel) => {
