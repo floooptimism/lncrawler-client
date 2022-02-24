@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import Liaison from "../../functionalcomponents/Liaison/Liaison";
 import SearchBar from "../../uicomponents/SearchBar/SearchBar";
 import styles from "./Browse.module.css";
@@ -24,10 +24,6 @@ function Browse(props) {
         console.log(res);
         setLoading(false);
         setSearchResults(res);
-    }
-
-    window.callme = function(){
-      librarian.testing("https://lightnovel.world/book/1616/19.html")
     }
 
     useEffect( () =>{

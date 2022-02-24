@@ -10,8 +10,11 @@ import Librarian from "../../functionalcomponents/Librarian/Librarian";
 // * String compare function
 import { compare } from "string-compare";
 import SearchBar from "../../uicomponents/SearchBar/SearchBar";
+import useLibrarian from "../../hooks/useLibrarian";
+
 
 function Library() {
+  const {novels:novel, novelIds, librarian} = useLibrarian();
   let library = new Librarian(new NovelModelController());
 
   const [novels, setNovels] = useState([]);
