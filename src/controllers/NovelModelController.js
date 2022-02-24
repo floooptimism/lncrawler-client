@@ -14,20 +14,7 @@ class NovelModelController {
   async storeNovel(novel) {
     try {
       let nov = new NovelDexie(
-        novel.source,
-        novel.url,
-        novel.title,
-        novel.author,
-        novel.cover,
-        novel.description,
-        novel.status,
-        novel.genres,
-        novel.tags,
-        novel.type,
-        novel.lastUpdate,
-        novel.lastChapter,
-        novel.views,
-        novel.rating
+        novel
       );
       await nov.save();
 
@@ -38,6 +25,21 @@ class NovelModelController {
       console.log(err);
       return false;
     }
+  }
+
+  /**
+   * Updates the information of a novel
+   * @param {*} novel_url 
+   * @param {*} novelInfo 
+   */
+  async updateNovel(novel){
+    let novelLibrary = NovelDexie.get(novel.url);
+    if(!novelLibrary){
+      return false;
+    }
+    novel = {...novelLibrary, ...novel};
+    await novel.save();
+    return true;
   }
 
   /**
