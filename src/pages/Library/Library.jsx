@@ -17,6 +17,7 @@ function Library() {
   const [novels, setNovels] = useState([]);
   const [searchNovelResult, setSearchNovelResult] = useState([]);
 
+
   // TODO: Get all novels function
   function getAllNovels() {
     library.getAllNovels().then((res) => {
