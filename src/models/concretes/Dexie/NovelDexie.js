@@ -29,11 +29,15 @@ class NovelDexie extends Model{
     }
 
     static async get(url){
-        let novel = await this.db.novels.where("url").equals(url).first();
-        if(novel){
-            novel.save = this.save;
-        }   
-        return novel;
+        try{
+            let novel = await this.db.novels.where("url").equals(url).first();
+            if(novel){
+                novel.save = this.save;
+            }   
+            return novel;
+        }catch(err){
+            return null;
+        }
     }
 
     static async getAll(){
