@@ -7,10 +7,6 @@ import Liaison from './functionalcomponents/Liaison/Liaison';
 
 
 function App() {
-  useEffect(() => {
-    window.liaison = Liaison;
-
-  }, [])
   
   return (
     <div className="App">

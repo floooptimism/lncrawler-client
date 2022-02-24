@@ -12,6 +12,7 @@ function useLibrarian(novelChangedCallBack){
 
     useEffect(function getAllNovels(){
         librarian.getAllNovels().then(novels => {
+            console.log(novels);
             setNovels(novels);
         });
     },[])
@@ -66,4 +67,4 @@ function useLibrarian(novelChangedCallBack){
 
 
 
-export default singletonHook(useLibrarian, useLibrarian);
+export default singletonHook({novels:[], novelIds:{}, librarian:{}}, useLibrarian);
