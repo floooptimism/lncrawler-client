@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import Librarian from '../functionalcomponents/Librarian/Librarian';
 import NovelModelController from '../controllers/NovelModelController';
 
+import { singletonHook } from 'react-singleton-hook';
+
 let librarian = new Librarian(new NovelModelController());
 
 function useLibrarian(novelChangedCallBack){
@@ -49,4 +51,6 @@ function useLibrarian(novelChangedCallBack){
     }
 }
 
-export default useLibrarian;
+
+
+export default singletonHook(useLibrarian, useLibrarian);
