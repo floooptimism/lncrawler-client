@@ -9,8 +9,9 @@ import Model from "../../Model";
 
 class NovelDexie extends Model{
     static db = dexie;
-    constructor(source, url, title, author, cover, description, status, genres, tags, type, lastUpdate, lastChapter, views, rating){
+    constructor({source, url, title, author, cover, description, status, genres, tags, type, lastUpdate, lastChapter, views, rating, loaded}){
         super(null);
+        this.loaded = loaded || false;
         this.url = url;
         this.title = title;
         this.author = author;
@@ -29,11 +30,15 @@ class NovelDexie extends Model{
     }
 
     static async get(url){
-        let novel = await this.db.novels.where("url").equals(url).first();
-        if(novel){
-            novel.save = this.save;
-        }   
-        return novel;
+        try{
+            let novel = await this.db.novels.where("url").equals(url).first();
+            if(novel){
+                novel.save = this.save;
+            }   
+            return novel;
+        }catch(err){
+            return null;
+        }
     }
 
     static async getAll(){

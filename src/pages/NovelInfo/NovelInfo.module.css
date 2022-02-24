@@ -1,9 +1,132 @@
 .background {
-    @apply bg-white;
-    @apply absolute top-0 left-0 h-screen w-screen;
+    @apply bg-gray-900 bg-opacity-80;
+    @apply fixed top-0 left-0 h-full w-full;
+    @apply overflow-y-scroll z-50;
 }
 
 .NovelInfo {
-    @apply absolute mt-12;
-    @apply top-0 left-0;
+    @apply relative bg-white h-screen;
+    @apply mx-auto overflow-auto;
+}
+
+.NovelInfoTopBar {
+    @apply fixed flex items-center justify-between;
+    @apply h-12 px-3;
+    @apply bg-white;
+    @apply shadow;
+}
+
+.NovelInfoTopBarIcon {
+    @apply flex items-center justify-center;
+    @apply h-9 w-9;
+}
+
+.NovelInfo,
+.NovelInfoTopBar {
+    @apply w-full;
+}
+
+.NovelInfoTopBarTitle {
+    @apply text-xl;
+}
+
+.NovelInfoContent {
+    @apply mt-12;
+}
+
+.CoverContainer {
+    @apply bg-gray-50;
+    @apply h-72;
+    @apply flex items-center justify-center;
+}
+
+.Cover {
+    @apply rounded-2xl overflow-hidden w-40 h-52;
+}
+
+.Cover img {
+    @apply h-full w-full;
+}
+
+
+
+
+.AddToLibraryButton {
+    @apply relative;
+    @apply flex justify-center h-8 space-x-4;
+    top: -16px;
+}
+
+/* BOTH buttons */
+.AddToLibraryButton .AddToLibraryButtonAdd {
+    @apply w-40;
+    @apply rounded bg-opacity-80 shadow-lg;
+    background-color: #f097b7;
+    @apply font-light;
+    @apply text-white;
+}
+
+.AddToLibraryButtonAdded , .AddToLibraryButtonView {
+    @apply w-auto;
+    @apply flex items-center justify-center;
+    @apply max-h-40 p-2;
+    @apply rounded bg-opacity-80;
+    @apply font-light;
+    @apply text-sm;
+
+}
+
+.AddToLibraryButtonAdded {
+    @apply bg-gray-100;
+    @apply text-gray-800;
+    
+}
+
+.AddToLibraryButtonView {
+    @apply shadow-lg;
+    background-color: #f097b7;
+    @apply text-white;
+}
+
+
+
+.Title {
+    @apply text-2xl font-bold text-gray-700 mt-5;
+}
+
+.DescriptionContainer {
+    @apply transition-all duration-200 ease-in-out;
+    @apply relative p-2 text-lg mt-4 mb-6;
+    @apply overflow-hidden;
+    @apply bg-gray-50 text-gray-600;
+    @apply min-h-full h-32;
+}
+
+.DescriptionFade {
+    @apply absolute h-full w-full;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 48%,
+        rgba(255, 255, 255, 1) 97%
+    );
+}
+
+
+.AttributeList{
+    @apply flex mt-5;
+}
+
+.AttributeItem{
+    @apply flex flex-col w-full;
+}
+
+.AttributeItem .AttributeItemTitle{
+    @apply text-xs;
+    @apply text-gray-500;
+}
+
+.AttributeItem .AttributeItemContent{
+    @apply mt-2 text-sm font-medium;
+    @apply text-gray-700;
 }

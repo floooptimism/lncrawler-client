@@ -7,6 +7,10 @@ class Librarian{
         return await this.novelController.storeNovel(novel);
     }
 
+    async updateNovel(novel){
+        return await this.novelController.updateNovel(novel);
+    }
+
     async getAllNovels(){
         return await this.novelController.getNovels()
     }
