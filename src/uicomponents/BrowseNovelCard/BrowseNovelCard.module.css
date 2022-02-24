@@ -35,7 +35,6 @@
   @apply text-gray-500;
   @apply text-justify;
   @apply overflow-hidden;
-  @apply font-serif;
   height: 54px;
 }
 
@@ -52,17 +51,16 @@
 .BrowseNovelCardIndicator {
   @apply flex items-center justify-center;
   @apply mt-3;
-  @apply w-16 h-5 text-center text-xs;
+  @apply h-6 text-center text-xs;
   @apply rounded;
 }
 
 .BrowseNovelCardIndicatorInLibrary {
-  @apply bg-green-200;
-  @apply text-green-900;
+  @apply text-green-400 bg-opacity-20;
 }
 
 .BrowseNovelCardIndicatorNotInLibrary{
-  @apply border border-blue-400;
-  @apply text-blue-400;
-  @apply w-24
+  color: #404040;
+  background-color: #cfcfcf;
+  @apply w-28; 
 }
