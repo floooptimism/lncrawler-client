@@ -1,16 +1,60 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Liaison from "../../functionalcomponents/Liaison/Liaison";
+import useLibrarian from "../../hooks/useLibrarian";
 import styles from "./NovelInfo.module.css";
 
-function NovelInfo(props) {
-    useEffect(() => {
-        async function getNovelInfo() {
-            let res = await Liaison.getNovelInfo(props.url, props.scraper);
-            console.log(res);
-        }
 
-        getNovelInfo();
-    }, [props.url, props.scraper]);
+function NovelInfo(props) {
+    const [novelInfo, setNovelInfo] = useState({});
+    const {novelIds, librarian} = useLibrarian();
+    const [exist, setExist] = useState(props.url in novelIds);
+
+
+    // add to library
+    function toggleInLibrary() {
+        if (exist) {
+            // remove from library
+            librarian.removeNovel(props.url);
+        } else {
+            // add to library
+            librarian.addNovel({...novelInfo, loaded:true});
+        }
+    }
+
+    useEffect( function checkIfExist(){
+        if (props.url in novelIds) {
+            setExist(true);
+        } else {
+            setExist(false);
+        }
+    },[props.url, novelIds]);
+    
+
+    useEffect(() => {
+        if(exist){
+            // get info from library
+            librarian.getNovelInfo(props.url).then( result => setNovelInfo(result));
+            return;
+        }
+        // get info from api
+        Liaison.getNovelInfo(props.url, props.source).then(res => setNovelInfo(res));
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.url, props.source]);
+
+    useEffect(()=>{
+        if(exist){
+            if(!novelInfo.loaded){
+                // fetch info from api
+                Liaison.getNovelInfo(props.url, props.source).then(res => {
+                    res.loaded = true;
+                    librarian.updateNovel(res);
+                    setNovelInfo(res);
+                });
+                return;
+            }
+        }
+    }, [novelInfo])
 
     return (
         <div className={styles.background}>
@@ -19,7 +63,7 @@ function NovelInfo(props) {
                 <div className={styles.NovelInfoTopBar}>
                     {/* go back icon */}
                     <div className={styles.NovelInfoTopBarIcon}>
-                        <svg    
+                        <svg
                             onClick={props.onClose}
                             height="24"
                             width="24"
@@ -31,9 +75,9 @@ function NovelInfo(props) {
                     </div>
 
                     {/* title */}
-                    <div className={styles.NovelInfoTopBarTitle}>
+                    {/* <div className={styles.NovelInfoTopBarTitle}>
                         Novel Info
-                    </div>
+                    </div> */}
 
                     {/* ellipsis icon*/}
                     <div className={styles.NovelInfoTopBarIcon}>
@@ -52,78 +96,51 @@ function NovelInfo(props) {
                 </div>
 
                 <div className={styles.NovelInfoContent}>
-                    <h1>Dudeeee</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-                    <h1>Dude</h1>
-
                     {/* image cover */}
-                    <div className={styles.Cover}>
-                        <img src={props.cover} alt="cover" />
-                    </div>
-
-                    {/* author */}
-                    <div className={styles.Author}>
-                        <h2>{props.author}</h2>
-                    </div>
-
-                    {/* description */}
-                    <div className={styles.Description}>
-                        <p>{props.description}</p>
-                    </div>
-
-                    {/* information grid */}
-                    <div className={styles.Information}>
-                        <div className={styles.InformationItem}>
-                            <h3>{props.chapters}</h3>
-                            <p>Chapters</p>
+                    <div className={styles.CoverContainer}>
+                        <div className={styles.Cover}>
+                            <img src={novelInfo.cover} alt="cover" />
                         </div>
+                    </div>
+
+                    {/* add to library button */}
+                    <div className={styles.AddToLibraryButton}>
+                        <button onClick={toggleInLibrary} className={exist ? styles.AddToLibraryButtonAdded : styles.AddToLibraryButtonAdd}>{exist ? "Added to Library" : "Add to Library"}</button>
+                        {exist && <button className={styles.AddToLibraryButtonView}>View in Library</button>}
+                    </div>
+
+                    {/* info container */}
+                    <div className="px-5">
+                        {/* title */}
+                        <div className={styles.Title}>{novelInfo.title}</div>
+
+                        {/* description container */}
+                        <div className={styles.DescriptionContainer}>
+                            <div className={styles.DescriptionFade}></div>
+                            {novelInfo.description}
+                        </div>
+
+                        <div className={styles.AttributeList}>
+                            <div className={styles.AttributeItem}>
+                                <span className={styles.AttributeItemTitle}>Author</span>
+                                <div className={styles.AttributeItemContent}>{novelInfo.author}</div>
+                            </div>
+
+                            <div className={styles.AttributeItem}>
+                                <span className={styles.AttributeItemTitle}>Chapters</span>
+                                <div className={styles.AttributeItemContent}>866</div>
+                            </div>
+                            
+                        </div>
+
+                        <div className={styles.AttributeList}>
+                            <div className={styles.AttributeItem}>
+                                <span className={styles.AttributeItemTitle}>Source</span>
+                                <div className={styles.AttributeItemContent}>{novelInfo.source}</div>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
