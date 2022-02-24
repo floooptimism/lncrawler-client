@@ -11,7 +11,7 @@ function useLibrarian(novelChangedCallBack){
     const [novelIds, setNovelIds] = useState({});
 
     useEffect(function getAllNovels(){
-        librarian.getNovels().then(novels => {
+        librarian.getAllNovels().then(novels => {
             setNovels(novels);
         });
     },[])
