@@ -1,0 +1,49 @@
+.background {
+    @apply bg-gray-900 bg-opacity-80;
+    @apply fixed top-0 left-0 h-full w-full;
+    @apply overflow-y-scroll z-50;
+}
+
+.NovelInfo {
+    @apply relative bg-white h-screen;
+    @apply mx-auto overflow-auto;
+}
+
+.NovelInfoTopBar {
+    @apply fixed flex items-center justify-between;
+    @apply h-12 px-3;
+    @apply bg-white;
+    @apply shadow;
+}
+
+.NovelInfoTopBarIcon {
+    @apply flex items-center justify-center;
+    @apply h-9 w-9;
+}
+
+.NovelInfo,
+.NovelInfoTopBar {
+    @apply w-full;
+}
+
+.NovelInfoTopBarTitle {
+    @apply text-xl;
+}
+
+.NovelInfoContent {
+    @apply mt-12;
+}
+
+.CoverContainer {
+    @apply bg-gray-50;
+    @apply h-72;
+    @apply flex items-center justify-center;
+}
+
+.Cover {
+    @apply rounded-2xl overflow-hidden w-40 h-52;
+}
+
+.Cover img {
+    @apply h-full w-full;
+}
