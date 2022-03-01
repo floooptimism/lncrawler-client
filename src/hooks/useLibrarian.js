@@ -17,8 +17,9 @@ function useLibrarian(novelChangedCallBack){
         });
     },[])
 
-    useEffect( setIds => {
+    useEffect( () => {
         // get all urls from novels and store them as keys in an object
+        console.log("USE EFFECT IN LIBRARIAN", novels);
         const novelIds = novels.reduce((acc, novel) => {
             acc[novel.url] = undefined;
             return acc;
@@ -32,8 +33,8 @@ function useLibrarian(novelChangedCallBack){
     }
 
     async function addToLibrary(nov){
-        const novel = await librarian.addNovel(nov);
-        setNovels([...novels, novel]);
+        await librarian.addNovel(nov);
+        setNovels([...novels, nov]);
     }
 
     async function removeFromLibrary(url){
@@ -52,6 +53,10 @@ function useLibrarian(novelChangedCallBack){
         }
     }
 
+    async function getNumberOfChapters(url){
+        return await librarian.getNumberOfChapters(url);
+    }
+
     return {
         novels,
         novelIds,
@@ -60,7 +65,8 @@ function useLibrarian(novelChangedCallBack){
             addToLibrary,
             removeFromLibrary,
             getNovelInfo,
-            updateNovel
+            updateNovel,
+            getNumberOfChapters
         }
     }
 }
