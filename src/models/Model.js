@@ -16,6 +16,10 @@ class Model{
         // save model data
     }
 
+    static delete(){
+        // delete model data
+    }
+
 }
 
 export default Model;
