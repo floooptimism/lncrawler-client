@@ -27,17 +27,29 @@ class NovelModelController {
     }
   }
 
+  async deleteNovel(novel_url){
+    await NovelDexie.delete(novel_url);
+    let chapterMeta = await ChapterMetaDexie.get(novel_url);
+    // loop through all chunks inside chaptermeta and delete them
+    for(let i = 0; i < chapterMeta.chapterchunks.length; i++){
+      await ChapterChunkDexie.delete(chapterMeta.chapterchunks[i].id);
+    }
+    await ChapterMetaDexie.delete(novel_url);
+  }
+
   /**
    * Updates the information of a novel
    * @param {*} novel_url 
    * @param {*} novelInfo 
    */
   async updateNovel(novel){
-    let novelLibrary = NovelDexie.get(novel.url);
+    let novelLibrary = await NovelDexie.get(novel.url);
+    console.log("RETURNNNNNN", novelLibrary);
     if(!novelLibrary){
       return false;
     }
     novel = {...novelLibrary, ...novel};
+    console.log("YOOOOO", novel);
     await novel.save();
     return true;
   }
@@ -73,6 +85,11 @@ class NovelModelController {
         });
       });
     }
+
+    let novel = await NovelDexie.get(novel_url);
+    novel.chaptersLoaded = true;
+    await novel.save();
+    
     chaptermeta.numberOfChapters = chapters.length;
     await chaptermeta.save();
   }
@@ -107,7 +124,7 @@ class NovelModelController {
    * @param {URL} novel_url - Novel's url
    * @returns the number of chapters
    */
-  async getNumberofChapters(novel_url) {
+  async getNumberOfChapters(novel_url) {
     //get all chunks for novel_url
     let chaptermeta = await ChapterMetaDexie.get(novel_url);
     return chaptermeta.numberOfChapters;
