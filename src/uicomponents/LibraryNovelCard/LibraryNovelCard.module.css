@@ -1,5 +1,31 @@
-.LibraryNovelCard {
-    @apply flex justify-between;
-    @apply p-2;
-    @apply overflow-hidden text-ellipsis;
-}
+.NovelCardContainer {
+    @apply flex items-start w-full bg-white;
+    @apply rounded-lg shadow-lg border border-gray-100;
+    @apply p-3;
+    @apply overflow-hidden;
+    /* height: 230px; */
+  }
+  
+  .NovelCardImageContainer {
+    @apply rounded-lg shadow overflow-hidden;
+    @apply h-40 w-24;
+    @apply shrink-0 mr-4 my-auto;
+  }
+  
+  .NovelCardImage {
+    @apply h-full w-full;
+    @apply object-fill;
+  }
+  
+  .NovelCardInfo {
+    @apply flex flex-col h-full;
+    @apply overflow-hidden;
+  }
+  
+  .NovelCardTitle {
+    @apply text-sm font-medium;
+  }
+  
+  .NovelCardAuthor {
+    @apply text-xs mb-2 font-medium text-gray-600;
+  }
