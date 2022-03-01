@@ -22,6 +22,10 @@ class ChapterMetaDexie extends Model {
         return chaptermeta;
     }
 
+    static async delete(url){
+        return await this.db.chaptermetas.delete(url);
+    }
+
     static async getAll(){
         let chaptermetas = await this.db.chaptermetas.toArray();
         chaptermetas.map(cm => {
