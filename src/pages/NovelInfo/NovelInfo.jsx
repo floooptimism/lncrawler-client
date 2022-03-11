@@ -31,11 +31,6 @@ function NovelInfo({url, source, onClose, library=false}) {
     },[url, novelIds]);
     
     useEffect(() => {
-        if(library){
-            // get info from library
-            librarian.getNovelInfo(url).then( result => setNovelInfo(result));
-            return;
-        }
         // get info from api
         Liaison.getNovelInfo(url, source).then(res => setNovelInfo(res));
         
