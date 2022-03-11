@@ -1,49 +1,60 @@
-.background {
-    @apply bg-gray-900 bg-opacity-80;
-    @apply fixed top-0 left-0 h-full w-full;
-    @apply overflow-y-scroll z-50;
-}
-
-.NovelInfo {
-    @apply relative bg-white h-screen;
-    @apply mx-auto overflow-auto;
-}
-
-.NovelInfoTopBar {
-    @apply fixed flex items-center justify-between;
-    @apply h-12 px-3;
+.NovelInfoContainer {
+    @apply hidden;
+    @apply fixed h-screen w-screen top-0 left-0 z-50;
     @apply bg-white;
-    @apply shadow;
 }
 
-.NovelInfoTopBarIcon {
-    @apply flex items-center justify-center;
-    @apply h-9 w-9;
+.NovelInfoContainerShow{
+    @apply block;
 }
 
-.NovelInfo,
-.NovelInfoTopBar {
-    @apply w-full;
+.TopBar{
+    @apply flex items-center;
+    @apply h-12 px-6;
+    color: #616161;
 }
 
-.NovelInfoTopBarTitle {
-    @apply text-xl;
+.SummarizeInfo{
+    @apply h-40 flex items-center px-3 space-x-4;
 }
+    .Image{
+        @apply h-32 w-24;
+        @apply bg-gray-500;
+        @apply flex-shrink-0;
+    }
 
-.NovelInfoContent {
-    @apply mt-12;
-}
+    .Info {
+        @apply h-32 flex flex-col w-full;
+    }
+        .Title{
+            @apply text-base font-medium;
+            @apply max-h-14 overflow-hidden;
+            color: #565656;
+        }
+        .Author{
+            @apply text-xs;
+            color: #616161;
+        }
 
-.CoverContainer {
-    @apply bg-gray-50;
-    @apply h-72;
-    @apply flex items-center justify-center;
-}
+        .HeartAndRead{
+            @apply flex items-center mt-auto mb-3 space-x-5;
+        }
+            .Heart svg{
+                @apply h-6 w-6 text-gray-400 shrink-0;
+                @apply fill-current;
+            }
+                .Heart svg.Hearted{
+                    @apply text-red-400;
+                }
 
-.Cover {
-    @apply rounded-2xl overflow-hidden w-40 h-52;
-}
+            .ReadButton{
+                @apply w-full;
+            }
+                .ReadButton button{
+                    @apply h-6 w-full text-gray-400;
+                    @apply rounded;
+                    background: #C4C4C4;
+                    color: #646464;
+                    max-width: 150px;
+                }
 
-.Cover img {
-    @apply h-full w-full;
-}
