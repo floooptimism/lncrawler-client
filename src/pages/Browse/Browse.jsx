@@ -33,18 +33,19 @@ function Browse(props) {
     return (
         <div className={styles.BrowseContainer}>
             <form
+                className={styles.Form}
                 onSubmit={(e) => {
                     e.preventDefault();
                     searchNovel(e.target[0].value, e.target[1].value);
                 }}
             >
+                <h1 className="text-center p-4 text-2xl text-gray-500">Search</h1>
                 <SearchBar className="w-full" />
 
                 {/* Dropdown select source */}
                 <div className={`${styles.SourceDropdownContainer}`}>
                     <label htmlFor="source">Select Source</label>
                     <select id="source" className={`${styles.SourceDropdown}`}>
-                        <option value="A">All sources</option>
                         <option value="https://lightnovel.world">
                             www.lightnovel.world
                         </option>
@@ -137,6 +138,7 @@ function DisplayResults({ arrayOfResults, novelIds, librarian }) {
             {results.map((result, idx) => {
                 return (
                     <BrowseNovelCard
+                        key={result.url}
                         onClick={openModal}
                         {...result}
                         inLibrary={result.url in novelIds}
