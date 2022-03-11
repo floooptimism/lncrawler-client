@@ -42,7 +42,7 @@ function useLibrarian(novelChangedCallBack){
         setNovels(novels.filter(n => n.url !== url));
     }
 
-    async function getNovelInfo(url){
+    function getNovelInfo(url){
         return novels.filter(n => n.url === url)[0];
     }
 
