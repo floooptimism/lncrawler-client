@@ -1,8 +1,12 @@
 import styles from './LibraryNovelCard.module.css';
 
-function LibraryNovelCard({title, cover, author, chaptersLoaded, numberOfChapters, progress}){
+function LibraryNovelCard({url, title, cover, author, chaptersLoaded, numberOfChapters, progress, onClick}){
+    function handleClick(){
+        onClick(url);
+    }
+
     return (
-        <div className={`${styles.NovelCardContainer}`}>
+        <div className={`${styles.NovelCardContainer}`} onClick={handleClick}>
             {/* image */}
             <div className={`${styles.NovelCardImageContainer}`}>
                 <img src={cover} className={styles.NovelCardImage} alt={title} />
