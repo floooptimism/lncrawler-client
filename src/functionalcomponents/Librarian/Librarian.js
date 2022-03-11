@@ -7,6 +7,10 @@ class Librarian{
         return await this.novelController.storeNovel(novel);
     }
 
+    async deleteNovel(novel_url){
+        return await this.novelController.deleteNovel(novel_url);
+    }
+
     async updateNovel(novel){
         return await this.novelController.updateNovel(novel);
     }
@@ -15,8 +19,8 @@ class Librarian{
         return await this.novelController.getNovels()
     }
 
-    async getNumberofChapters(novel_url){
-        return await this.novelController.getNumberofChapters(novel_url);
+    async getNumberOfChapters(novel_url){
+        return await this.novelController.getNumberOfChapters(novel_url);
     }
 
     async getNovel(novel_url){

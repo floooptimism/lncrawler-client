@@ -1,0 +1,12 @@
+.Attribute {
+    @apply flex flex-col;
+    color: #565656;
+}
+
+.Attribute h1 {
+    @apply font-bold text-sm
+}
+
+.Attribute p{
+    @apply text-xs mt-2;
+}

@@ -1,0 +1,60 @@
+.NovelInfoContainer {
+    @apply hidden;
+    @apply fixed h-screen w-screen top-0 left-0 z-50;
+    @apply bg-white;
+}
+
+.NovelInfoContainerShow{
+    @apply block;
+}
+
+.TopBar{
+    @apply flex items-center;
+    @apply h-12 px-6;
+    color: #616161;
+}
+
+.SummarizeInfo{
+    @apply h-40 flex items-center px-3 space-x-4;
+}
+    .Image{
+        @apply h-32 w-24;
+        @apply bg-gray-500;
+        @apply flex-shrink-0;
+    }
+
+    .Info {
+        @apply h-32 flex flex-col w-full;
+    }
+        .Title{
+            @apply text-base font-medium;
+            @apply max-h-14 overflow-hidden;
+            color: #565656;
+        }
+        .Author{
+            @apply text-xs;
+            color: #616161;
+        }
+
+        .HeartAndRead{
+            @apply flex items-center mt-auto mb-3 space-x-5;
+        }
+            .Heart svg{
+                @apply h-6 w-6 text-gray-400 shrink-0;
+                @apply fill-current;
+            }
+                .Heart svg.Hearted{
+                    @apply text-red-400;
+                }
+
+            .ReadButton{
+                @apply w-full;
+            }
+                .ReadButton button{
+                    @apply h-6 w-full text-gray-400;
+                    @apply rounded;
+                    background: #C4C4C4;
+                    color: #646464;
+                    max-width: 150px;
+                }
+
