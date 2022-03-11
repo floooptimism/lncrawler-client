@@ -11,7 +11,6 @@ class ChapterMetaDexie extends Model {
         this.save = this.constructor.save;
         this.chapterchunks = [];
         this.downloadedchapters = [];
-        this.numberOfChapters = 0;
     }
 
     static async get(url){

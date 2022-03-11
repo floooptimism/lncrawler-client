@@ -88,9 +88,9 @@ class NovelModelController {
 
     let novel = await NovelDexie.get(novel_url);
     novel.chaptersLoaded = true;
+    novel.numberOfChapters = chapters.length;
     await novel.save();
     
-    chaptermeta.numberOfChapters = chapters.length;
     await chaptermeta.save();
   }
 
@@ -126,8 +126,8 @@ class NovelModelController {
    */
   async getNumberOfChapters(novel_url) {
     //get all chunks for novel_url
-    let chaptermeta = await ChapterMetaDexie.get(novel_url);
-    return chaptermeta.numberOfChapters;
+    let novel = await NovelDexie.get(novel_url);
+    return novel.numberOfChapters;
   }
 
   /**

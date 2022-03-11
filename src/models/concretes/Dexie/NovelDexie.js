@@ -24,6 +24,7 @@ class NovelDexie extends Model{
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.lastChapter = lastChapter;
+        this.numberOfChapters = 0;
         this.chaptersLoaded = false;
         this.views = views;
         this.rating = rating;
