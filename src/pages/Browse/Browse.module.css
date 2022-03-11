@@ -21,8 +21,8 @@
     @apply w-full;
     @apply p-2 px-3;  
     @apply rounded-lg;
-    @apply bg-white border border-gray-300;
-    @apply focus:border-blue-600 focus:border-2;
+    @apply bg-gray-100;
+    @apply focus:border-gray-400 focus:border-2;
     @apply transition-all duration-75 ease-in;
     @apply outline-none;
     @apply h-10 max-h-10;
@@ -39,5 +39,12 @@
 }
 
 body{
+    @apply bg-gray-100;
+}
+
+.Form{
     @apply bg-white;
+    @apply py-5 pt-0 px-3;
+    @apply rounded-lg;
+    @apply shadow;
 }

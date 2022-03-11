@@ -1,24 +1,29 @@
 import styles from './LibraryNovelCard.module.css';
 
-function LibraryNovelCard(props){
+function LibraryNovelCard({url, title, cover, author, chaptersLoaded, numberOfChapters, progress, onClick}){
+    function handleClick(){
+        onClick(url);
+    }
+
     return (
-        <div className={`${styles.LibraryNovelCard}`}>
+        <div className={`${styles.NovelCardContainer}`} onClick={handleClick}>
             {/* image */}
-            <div className={`${styles.CardImageContainer}`}>
-                <img src={props.cover} alt={props.title} />
+            <div className={`${styles.NovelCardImageContainer}`}>
+                <img src={cover} className={styles.NovelCardImage} alt={title} />
             </div>
 
             {/* info */}
-            <div className={`${styles.CardInfoContainer}`}>
+            <div className={`${styles.NovelCardInfoContainer}`}>
                 {/* Title */}
-                <div className={`${styles.CardTitle}`}></div>
+                <div className={`${styles.NovelCardTitle}`}>{title}</div>
                 {/* author */}
-                <div className={`${styles.CardAuthor}`}></div>
+                <div className={`${styles.NovelCardAuthor}`}>{author} </div>
 
                 {/* number of chapters */}
-                <div className={`${styles.CardChapters}`}></div>
+                <div className={`${styles.NovelCardChapters}`}>
+                </div>
                 {/* reading progress */}
-                <div className={`${styles.CardProgress}`}></div>
+                <div className={`${styles.NovelCardProgress}`}></div>
             </div>  
         </div>
     )

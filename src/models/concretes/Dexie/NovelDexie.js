@@ -24,6 +24,8 @@ class NovelDexie extends Model{
         this.type = type;
         this.lastUpdate = lastUpdate;
         this.lastChapter = lastChapter;
+        this.numberOfChapters = 0;
+        this.chaptersLoaded = false;
         this.views = views;
         this.rating = rating;
         this.save = this.constructor.save;
@@ -39,6 +41,10 @@ class NovelDexie extends Model{
         }catch(err){
             return null;
         }
+    }
+
+    static async delete(url){
+        return await this.db.novels.delete(url);
     }
 
     static async getAll(){

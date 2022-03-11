@@ -2,51 +2,46 @@ import React, { useEffect, useState } from "react";
 import Liaison from "../../functionalcomponents/Liaison/Liaison";
 import useLibrarian from "../../hooks/useLibrarian";
 import styles from "./NovelInfo.module.css";
+import NovelInfoBrowser from "./NovelInfoBrowser";
 
 
-function NovelInfo(props) {
+function NovelInfo({url, source, onClose, library=false}) {
     const [novelInfo, setNovelInfo] = useState({});
     const {novelIds, librarian} = useLibrarian();
-    const [exist, setExist] = useState(props.url in novelIds);
+    const [exist, setExist] = useState();
 
 
     // add to library
     function toggleInLibrary() {
         if (exist) {
             // remove from library
-            librarian.removeNovel(props.url);
+            librarian.removeFromLibrary(url);
         } else {
             // add to library
-            librarian.addNovel({...novelInfo, loaded:true});
+            librarian.addToLibrary({...novelInfo, loaded:true});
         }
     }
 
-    useEffect( function checkIfExist(){
-        if (props.url in novelIds) {
+    useEffect( () => {
+        if (url in novelIds) {
             setExist(true);
         } else {
             setExist(false);
         }
-    },[props.url, novelIds]);
+    },[url, novelIds]);
     
-
     useEffect(() => {
-        if(exist){
-            // get info from library
-            librarian.getNovelInfo(props.url).then( result => setNovelInfo(result));
-            return;
-        }
         // get info from api
-        Liaison.getNovelInfo(props.url, props.source).then(res => setNovelInfo(res));
+        Liaison.getNovelInfo(url, source).then(res => setNovelInfo(res));
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.url, props.source]);
+    }, [url, source]);
 
     useEffect(()=>{
         if(exist){
-            if(!novelInfo.loaded){
+            if(novelInfo.loaded === false){
                 // fetch info from api
-                Liaison.getNovelInfo(props.url, props.source).then(res => {
+                Liaison.getNovelInfo(url, source).then(res => {
                     res.loaded = true;
                     librarian.updateNovel(res);
                     setNovelInfo(res);
@@ -64,7 +59,7 @@ function NovelInfo(props) {
                     {/* go back icon */}
                     <div className={styles.NovelInfoTopBarIcon}>
                         <svg
-                            onClick={props.onClose}
+                            onClick={onClose}
                             height="24"
                             width="24"
                             viewBox="0 0 48 48"
@@ -103,45 +98,7 @@ function NovelInfo(props) {
                         </div>
                     </div>
 
-                    {/* add to library button */}
-                    <div className={styles.AddToLibraryButton}>
-                        <button onClick={toggleInLibrary} className={exist ? styles.AddToLibraryButtonAdded : styles.AddToLibraryButtonAdd}>{exist ? "Added to Library" : "Add to Library"}</button>
-                        {exist && <button className={styles.AddToLibraryButtonView}>View in Library</button>}
-                    </div>
-
-                    {/* info container */}
-                    <div className="px-5">
-                        {/* title */}
-                        <div className={styles.Title}>{novelInfo.title}</div>
-
-                        {/* description container */}
-                        <div className={styles.DescriptionContainer}>
-                            <div className={styles.DescriptionFade}></div>
-                            {novelInfo.description}
-                        </div>
-
-                        <div className={styles.AttributeList}>
-                            <div className={styles.AttributeItem}>
-                                <span className={styles.AttributeItemTitle}>Author</span>
-                                <div className={styles.AttributeItemContent}>{novelInfo.author}</div>
-                            </div>
-
-                            <div className={styles.AttributeItem}>
-                                <span className={styles.AttributeItemTitle}>Chapters</span>
-                                <div className={styles.AttributeItemContent}>866</div>
-                            </div>
-                            
-                        </div>
-
-                        <div className={styles.AttributeList}>
-                            <div className={styles.AttributeItem}>
-                                <span className={styles.AttributeItemTitle}>Source</span>
-                                <div className={styles.AttributeItemContent}>{novelInfo.source}</div>
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <NovelInfoBrowser novelInfo={novelInfo} toggleInLibrary={toggleInLibrary} exist={exist}/>
                 </div>
             </div>
         </div>

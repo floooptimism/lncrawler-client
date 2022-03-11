@@ -8,4 +8,4 @@ export const PAGES = {
     novel: NovelInfo
 }
 
-export const defaultPage = "browse";
+export const defaultPage = "library";

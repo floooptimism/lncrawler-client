@@ -19,6 +19,10 @@ class ChapterChunkDexie extends Model{
         return chunk;
     }
 
+    static async delete(id){
+        return await this.db.chapterchunks.delete(id);
+    }
+
     static async getAll(){
         let chapterchunks = await this.db.chapterchunks.toArray();
         return chapterchunks.map(cc => {

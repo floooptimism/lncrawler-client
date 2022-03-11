@@ -1,0 +1,13 @@
+.Form {
+    @apply px-3 rounded-lg;
+
+}
+
+body{
+    @apply bg-white;
+}
+
+.SearchBar{
+    background: #F2F2F2;
+    @apply rounded-lg;
+}

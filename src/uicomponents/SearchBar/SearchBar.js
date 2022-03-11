@@ -1,16 +1,23 @@
+import React, { useState } from 'react';
 import style from './SearchBar.module.css';
 
-function SearchBar(props) {
+
+function SearchBar({onChange, className}) {
+  const [input, setInput] = useState("");
+
+  function onTextChange(event) {
+    setInput(event.target.value);
+    onChange && onChange(event.target.value.trim());
+  }
 
   return (
-    <div className={`${style.searchBarContainer} ${props.className}`}>
+    <div className={`${style.searchBarContainer} ${className}`}>
       <span>
         <svg
           className={style.Icon}
           height="24"
           width="24"
           fill="none"
-          stroke="#000"
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="1.5"
@@ -22,10 +29,11 @@ function SearchBar(props) {
         </svg>
       </span>
 
-      <input type="text" placeholder="Search novel" className={style.searchBar} />
+      <input type="text" value={input} onChange={onTextChange} placeholder="Search novel" className={style.searchBar} />
     </div>
   );
   
 }
 
 export default SearchBar;
+ 
