@@ -14,37 +14,37 @@ import SearchBar from "../../uicomponents/SearchBar/SearchBar";
 import useLibrarian from "../../hooks/useLibrarian";
 
 import debounce from "../../util/debounce";
-import NovelInfo from "../NovelInfo/NovelInfo";
-
+import NovelInfoLibrary from "../NovelInfoLibrary/NovelInfoLibrary";
 
 
 function Library() {
   const {novels:novelLibrary, novelIds, librarian} = useLibrarian();
 
   const [novels, setNovels] = useState(novelLibrary);
-  const [novelsFinal, setNovelsFinal] = useState([]);
   const [searchNovelResult, setSearchNovelResult] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
+  const [novelViewModal, setNovelViewModal] = useState(false);
+  const [novelViewModalParam, setNovelViewModalParam] = useState(null);
+
+  function onLibraryCardClick(url){
+    setNovelViewModalParam(url);
+    setNovelViewModal(true);
+  }
 
 
   // TODO: Search novels function
   function searchNovelInLibrary(novelname) {
+    if(novelname.trim() === ''){
+      setSearchNovelResult([]);
+      setIsSearching(false);
+      return;
+    }
     setSearchNovelResult(
-      novelsFinal.filter((novel) => compare(novel.title, novelname) > 0.5)
+      novels.filter((novel) => compare(novel.title, novelname) > 0.5)
     );
+    setIsSearching(true);
   }
-
-  useEffect( () => {
-    let newNovels = novels.map(async novel => {
-        let numberOfChapters = await librarian.getNumberOfChapters(novel.url);
-        console.log("USE EFFECT HERE", numberOfChapters)
-        novel.numberOfChapters = numberOfChapters;
-        return novel;
-    });
-    Promise.all(newNovels).then(res => {
-      setNovelsFinal(res);
-    });
-  }, [novels])
 
   useEffect(() => {
     setNovels(novelLibrary);
@@ -57,7 +57,7 @@ function Library() {
         e.preventDefault();
       }}>
         {/* <h1 className="text-center mb-3 text-2xl text-gray-500">Search</h1> */}
-        <SearchBar onChange={debounce(searchNovelInLibrary, 500)} className="border-b border-gray-400 focus:border-none"/>
+        <SearchBar onChange={debounce(searchNovelInLibrary, 500)} className={`focus:border-none ${style.SearchBar}`}/>
       </form>
 
       {/* Novel List */}
@@ -73,18 +73,19 @@ function Library() {
         
         {searchNovelResult.length > 0 && (
           searchNovelResult.map((novel) => {
-            return <LibraryNovelCard {...novel} key={novel.url}/>;
+            return <LibraryNovelCard onClick={onLibraryCardClick} {...novel} key={novel.url}/>;
             }
           )
         )}
 
-        {novelsFinal.length > 0 && searchNovelResult.length === 0 && (
-          novelsFinal.map((novel) => {
-            return <LibraryNovelCard {...novel}  key={novel.url}/>;
+        {novels.length > 0 && !isSearching && (
+          novels.map((novel) => {
+            return <LibraryNovelCard onClick={onLibraryCardClick} {...novel}  key={novel.url}/>;
           })
         )}
 
       </div>
+      <NovelInfoLibrary url={novelViewModalParam}  open={novelViewModal} onClose={setNovelViewModal.bind(null, false)}/>
     </div>
   );
 }
