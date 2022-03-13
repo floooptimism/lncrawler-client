@@ -32,6 +32,14 @@ function useLibrarian(novelChangedCallBack){
         setNovels(novels);
     }
 
+    async function getChapters(url){
+        return await librarian.getChapters(url);
+    }
+
+    async function storeChapters(url, chapters){
+       return await librarian.storeChapters(url, chapters);
+    }
+
     async function addToLibrary(nov){
         await librarian.addNovel(nov);
         setNovels([...novels, nov]);
@@ -66,7 +74,9 @@ function useLibrarian(novelChangedCallBack){
             removeFromLibrary,
             getNovelInfo,
             updateNovel,
-            getNumberOfChapters
+            getNumberOfChapters,
+            getChapters,
+            storeChapters
         }
     }
 }
