@@ -7,7 +7,7 @@ import BrowseNovelCard from "../../uicomponents/BrowseNovelCard/BrowseNovelCard"
 import useLibrarian from "../../hooks/useLibrarian";
 import NovelInfo from "../NovelInfo/NovelInfo";
 
-import scrollControlFunctions from "./disableScrolling";
+import scrollControlFunctions from "../../util/disableScrolling";
 const { enableScroll, disableScroll } = scrollControlFunctions;
 
 function Browse(props) {
