@@ -2,6 +2,7 @@
     @apply hidden;
     @apply fixed h-screen w-screen top-0 left-0 z-50;
     @apply bg-white;
+    @apply overflow-y-scroll;
 }
 
 .NovelInfoContainerShow{

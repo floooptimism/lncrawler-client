@@ -118,7 +118,7 @@ function NovelInfoLibrary({ onClose, url, open }) {
             </div>
 
             {/* tabs */}
-            <Tabs />
+            <Tabs librarian={librarian} novelInfo={novelInfo}/>
 
             {/* tabs content */}
             <div></div>
