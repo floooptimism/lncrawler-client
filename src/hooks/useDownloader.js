@@ -15,6 +15,7 @@ function useDownloader(){
         setTasks([...Downloader.getTaskList()]);
         setCurrentTask(Downloader.getCurrentTask());
         setIsRunning(Downloader.isRunning());
+        
         Downloader.setSuccessCallback(function update(){
             setTasks([...Downloader.getTaskList()]);
             setCurrentTask(Downloader.getCurrentTask());
