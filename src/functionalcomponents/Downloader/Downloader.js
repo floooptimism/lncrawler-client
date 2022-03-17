@@ -82,11 +82,13 @@ class Downloader {
   }
 
   removeTask(task) {
-    this.tasks.splice(
-      this.tasksHash[task.id].idx,
-      1
-    );
-    delete this.tasksHash[task.id];
+    if(this.tasksHash[task.id]){
+        this.tasks.splice(
+          this.tasksHash[task.id].idx,
+          1
+        );
+        delete this.tasksHash[task.id];
+    }
   }
 
   bulkRemoveTask(tasks) {
