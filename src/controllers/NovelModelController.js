@@ -1,7 +1,7 @@
 import ChapterChunkDexie from "../models/concretes/Dexie/ChapterChunkDexie";
 import ChapterMetaDexie  from "../models/concretes/Dexie/ChapterMetaDexie";
 import NovelDexie from "../models/concretes/Dexie/NovelDexie";
-import MAXCHAPTERSPERCHUNK from "../models/constants";
+import {MAXCHAPTERSPERCHUNK} from "../models/constants";
 
 const { compare } = require("string-compare");
 
@@ -66,6 +66,7 @@ class NovelModelController {
     //store those chapters in their respective chunks
     let chaptermeta = new ChapterMetaDexie(novel_url);
     let chunksneeded = Math.ceil(chapters.length / MAXCHAPTERSPERCHUNK);
+    console.log(MAXCHAPTERSPERCHUNK);
     for (let i = 0; i < chunksneeded; i++) {
       await new Promise((resolve, reject) => {
         let chapterchunkid = novel_url + "ChapterChunk" + i;
@@ -74,10 +75,13 @@ class NovelModelController {
           chaptermeta.novel_url
         );
 
+
         chunk.chapters = chapters.slice(
           i * MAXCHAPTERSPERCHUNK,
           (i + 1) * MAXCHAPTERSPERCHUNK
         );
+
+        console.log("Loaded chapters to chunk", chapterchunkid);
 
         chunk.save().then( () => {
            chaptermeta.chapterchunks.push(chapterchunkid);
@@ -182,12 +186,13 @@ class NovelModelController {
       let chunk = await ChapterChunkDexie.get(chaptermeta.chapterchunks[i]);
       chapters = [
         ...chapters,
-        chunk.chapters.map((ch) => {
+        ...(chunk.chapters.map((ch) => {
           delete ch.content;
           return ch;
-        }),
+        }))
       ];
     }
+    console.log("Chapters fetched!!");
     return chapters;
   }
 

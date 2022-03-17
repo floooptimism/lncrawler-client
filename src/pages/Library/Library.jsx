@@ -16,6 +16,9 @@ import useLibrarian from "../../hooks/useLibrarian";
 import debounce from "../../util/debounce";
 import NovelInfoLibrary from "../NovelInfoLibrary/NovelInfoLibrary";
 
+import scrollControlFunctions from "../../util/disableScrolling";
+const { enableScroll, disableScroll } = scrollControlFunctions;
+
 
 function Library() {
   const {novels:novelLibrary, novelIds, librarian} = useLibrarian();
@@ -49,6 +52,11 @@ function Library() {
   useEffect(() => {
     setNovels(novelLibrary);
   }, [novelLibrary]);
+
+  useEffect(() => {
+    if(novelViewModal) disableScroll();
+    else enableScroll();
+  }, [novelViewModal])
 
   return (
     <div className="mt-14 px-1">

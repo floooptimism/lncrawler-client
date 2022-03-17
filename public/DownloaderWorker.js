@@ -67,7 +67,7 @@ class DownloaderWorker {
 
   sendResult(result,task, success = true) {
     postMessage({ type: success ? "success" : "fail", result: result, task: task });
-    if (this.getState() != "paused") {
+    if (this.getState() !== "paused") {
       this.requestTask();
     }
   }

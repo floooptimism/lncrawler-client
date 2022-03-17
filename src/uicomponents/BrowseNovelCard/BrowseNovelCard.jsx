@@ -69,7 +69,7 @@ function BrowseNovelCard({
                             : styles.BrowseNovelCardIndicatorNotInLibrary)
                     }
                 >
-                    {inLibrary ? "In Library" : (<><AddButton /><span>Add to Library</span></>)}
+                    {inLibrary ? "In Library" : ""}
                 </div>
             </div>
         </div>
