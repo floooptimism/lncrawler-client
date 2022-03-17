@@ -6,13 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import ViewStateProvider from './uicomponents/ViewState/ViewStateContext';
 
 import { defaultPage } from './constants/pages';
+import DownloaderProvider from './contexts/DownloaderContext/DownloaderContext';
+
 
 
 
 ReactDOM.render(
   <React.StrictMode>
     <ViewStateProvider initialViewState={defaultPage}>
-      <App />
+      <DownloaderProvider>
+        <App />
+      </DownloaderProvider>
     </ViewStateProvider>
   </React.StrictMode>,
   document.getElementById('root')

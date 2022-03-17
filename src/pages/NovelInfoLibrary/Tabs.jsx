@@ -5,6 +5,7 @@ import styles from "./Tabs.module.css";
 
 import { FixedSizeList as List} from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
+import useDownloader from '../../hooks/useDownloader';
 
 function Tabs(props) {
     const [active, setActive] = useState(0);
@@ -14,7 +15,16 @@ function Tabs(props) {
     ]);
 
     function RenderActiveTab(props) {
-        let ActiveTab = tabs[active][1];
+        let ActiveTab = tabs[props.active][1];
+        
+        useEffect( () => {
+            if(props.active === 1){
+                props.setMoreDownloadOptionsMenu(true);
+                return;
+            }
+            props.setMoreDownloadOptionsMenu(false);
+        }, [props])
+
         return <ActiveTab {...props} />;
     }
 
@@ -41,8 +51,8 @@ function Tabs(props) {
                 </ul>
             </div>
 
-            <div className="px-4 pt-5 h-full">
-                <RenderActiveTab {...props}/>
+            <div className="px-4 h-full">
+                <RenderActiveTab {...props} active={active}/>
             </div>
         </div>
     );
@@ -53,10 +63,11 @@ function Tabs(props) {
 
 
 function InformationTab(props) {
+
     return (
         <>
             {/* chapters and reading progress */}
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-5">
                 <div className={styles.Attribute}>
                     <h1>Chapters</h1>
                     <p>800</p>
@@ -81,10 +92,45 @@ function InformationTab(props) {
 }
 
 function ChaptersTab({librarian, novelInfo}) {
-    const [chapters, setChapters] = useState([]);
 
-    async function downloadChapters(){
-        let chapters = await Liaison.getNovelChapters(novelInfo.url, novelInfo.source);
+    const [chapters, setChapters] = useState([]);
+    const [loadChapterIsLoading, setLoadChapterIsLoading] = useState(false);
+    const [initDone, setInitDone] = useState(false);
+
+    const {tasks, currentTask, functions:Downloader} = useDownloader();
+
+    async function addAllChaptersToQueue(){
+        let tasks = [];
+        for(let chapter of chapters){
+            tasks.push({
+                id: novelInfo.url + chapter.url,
+                name: chapter.name,
+                novel: novelInfo.url,
+                source: novelInfo.source,
+                type: "chaptercontent",
+                url: chapter.url,
+            });
+        }
+        Downloader.bulkAddTask(tasks);
+
+    }
+
+    async function cancelDownloadingAllChapters(){
+        let tasks = chapters.map( (chapter) => {
+            return {
+                id: novelInfo.url + chapter.url,
+            }
+        });
+        Downloader.bulkRemoveTask(tasks);
+    }
+
+    async function fetchChaptersInfo(){
+        let chapters = await librarian.getChapters(novelInfo.url);
+        if(chapters.length > 0) {
+            setChapters(chapters);
+            return;
+        }   
+        chapters = await Liaison.getNovelChapters(novelInfo.url, novelInfo.source);
         if(chapters.length > 0){
             await librarian.storeChapters(novelInfo.url, chapters);
             setChapters(chapters);
@@ -95,14 +141,22 @@ function ChaptersTab({librarian, novelInfo}) {
     window.librarian = librarian;
     
     useEffect(()=>{
+        let isMounted = true;
         librarian.getChapters(novelInfo.url).then(res => {
-            setChapters(res);
+            if(isMounted){
+                setChapters(res);
+                setInitDone(true);
+            }
         })
+
+        return () => {
+            isMounted = false;
+        }
     }, [librarian, novelInfo.url]);
 
     const Item = function ({index, style}){
         return (
-            <div key={index} className="flex py-2" style={style}>
+            <div key={index} className="flex py-2 px-5" style={style}>
                 <div>
                     <h1 className="text-sm font-medium items-center">Chapter {index + 1}</h1>
                     <p className="text-xs">{chapters[index].name}</p>
@@ -122,17 +176,19 @@ function ChaptersTab({librarian, novelInfo}) {
 
     return (
         <>
-            <div className="px-4" style={{color: "#565656",height:"100%"}}>
-                {chapters.length === 0 && (
-                    <div>
-                        <h1 className="text-center">No chapters in library</h1>
-                        <p className="text-center">
+            <div className="px-1" style={{color: "#565656",height:"100%"}}>
+                {chapters.length === 0 && initDone && (
+                    <div className=" text-center ">
+                        <h1 className="text-center text-gray-700 font-medium">No chapters in library</h1>
+                        <p className="text-center text-sm text-gray-600 mt-1">
                             Add chapters to your library by clicking the button
                             below
-                            </p>
-                            <button onClick={downloadChapters}>Load chapters</button>
+                        </p>
+
+                        <button className="mt-6 bg-gray-400 text-white text-sm p-2 rounded" onClick={fetchChaptersInfo}>Load chapters</button>
                     </div>
                 )}
+
 
                 {chapters.length > 0 && (
                     <AutoSizer>
@@ -140,14 +196,15 @@ function ChaptersTab({librarian, novelInfo}) {
                             <List
                                 height={height}
                                 itemCount={chapters.length}
-                                itemSize={35}
+                                itemSize={52}
                                 width={width}
+                                className="test"
                             >
                                 {Item}
 
                             </List>
                         )}
-                    </AutoSizer>
+                    </AutoSizer>  
                 )}
                 {/* <ul>
                     {chapters.length > 0 && chapters.slice(0,500).map((chapter, index) => (
