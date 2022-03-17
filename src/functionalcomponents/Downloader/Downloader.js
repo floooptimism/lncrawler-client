@@ -72,6 +72,15 @@ class Downloader {
     this.sendTask();
   }
 
+  bulkAddTask(tasks){
+    this.tasks = [...this.tasks, ...tasks];
+    this.tasksHash = {...this.tasksHash, ...tasks.reduce((acc, task) => {
+      acc[task.id] = { idx: this.tasks.length - 1, status: 0 };
+      return acc;
+    }, {})};
+    this.sendTask();
+  }
+
   removeTask(task) {
     this.tasks.splice(
       this.tasksHash[task.id].idx,
@@ -79,6 +88,13 @@ class Downloader {
     );
     delete this.tasksHash[task.id];
   }
+
+  bulkRemoveTask(tasks) {
+    tasks.forEach((task) => {
+      this.removeTask(task);
+    });
+  }
+
 
   swapTasks(task1, task2) {
     let idx1 = this.tasksHash[task1.id].idx;

@@ -1,4 +1,5 @@
 import Downloader from "../functionalcomponents/Downloader/Downloader";
+import { singletonHook } from 'react-singleton-hook';
 
 const { useState, useEffect } = require("react");
 
@@ -26,9 +27,19 @@ function useDownloader(){
         setTasks([...Downloader.getTaskList()]);
     }
 
+    function bulkAddTask(tasks){
+        Downloader.bulkAddTask(tasks);
+        setTasks([...Downloader.getTaskList()]);
+    }
+
     //* Remove Task
     function removeTask(task){
         Downloader.removeTask(task);
+        setTasks([...Downloader.getTaskList()]);
+    }
+
+    function bulkRemoveTask(tasks){
+        Downloader.bulkRemoveTask(tasks);
         setTasks([...Downloader.getTaskList()]);
     }
 
@@ -60,10 +71,12 @@ function useDownloader(){
             removeTask,
             swapTasks,
             startWorker,
-            pauseWorker
+            pauseWorker,
+            bulkAddTask,
+            bulkRemoveTask
         }
     }   
 
 }
 
-export default useDownloader;
+export default singletonHook({tasks:[], currentTask:null, isRunning:false, functions:{}}, useDownloader);
