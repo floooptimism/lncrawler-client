@@ -10,6 +10,12 @@ class Downloader {
         url: "https://lightnovel.world/content/1616/263863.html",
       },
     ];
+
+    // Status -> downloading = 1 , pending = 0
+    this.tasksHash = {
+      "https://lightnovel.world/book/1616/18.htmlhttps://lightnovel.world/content/1616/263863.html": { idx: 0, status: 0}
+    };
+
     this.worker = new Worker("Worker.js");
     this.currentTask = this.tasks[0];
     this.running = false;
@@ -62,22 +68,27 @@ class Downloader {
 
   addTask(task) {
     this.tasks.push(task);
+    this.tasksHash[task.id] = { idx: this.tasks.length - 1, status: 0 };
     this.sendTask();
   }
 
   removeTask(task) {
     this.tasks.splice(
-      this.tasks.findIndex((t) => t.id === task.id),
+      this.tasksHash[task.id].idx,
       1
     );
+    delete this.tasksHash[task.id];
   }
 
   swapTasks(task1, task2) {
-    let index1 = this.tasks.findIndex((t) => t.id === task1.id);
-    let index2 = this.tasks.findIndex((t) => t.id === task2.id);
+    let idx1 = this.tasksHash[task1.id].idx;
+    let idx2 = this.tasksHash[task2.id].idx;
 
-    this.tasks[index1] = task2;
-    this.tasks[index2] = task1;
+    this.tasks[idx1] = task2;
+    this.tasks[idx2] = task1;
+
+    this.tasksHash[task1.id].idx = idx2;
+    this.tasksHash[task2.id].idx = idx1;
   }
 
   init() {
