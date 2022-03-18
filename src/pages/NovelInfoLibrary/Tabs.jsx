@@ -7,6 +7,9 @@ import { FixedSizeList as List} from 'react-window';
 import AutoSizer from "react-virtualized-auto-sizer";
 import useDownloader from '../../hooks/useDownloader';
 
+import { MenuItem } from '@szhsin/react-menu';
+import { useNovelInfoLibraryContext } from "../../contexts/NovelInfoLibraryContext/NovelInfoLibraryContext";
+
 function Tabs(props) {
     const [active, setActive] = useState(0);
     const [tabs, setTabs] = useState([
@@ -92,9 +95,9 @@ function InformationTab(props) {
 }
 
 function ChaptersTab({librarian, novelInfo}) {
+    const {setMenuComponent} = useNovelInfoLibraryContext();
 
     const [chapters, setChapters] = useState([]);
-    const [loadChapterIsLoading, setLoadChapterIsLoading] = useState(false);
     const [initDone, setInitDone] = useState(false);
 
     const {tasks, currentTask, functions:Downloader} = useDownloader();
@@ -149,10 +152,23 @@ function ChaptersTab({librarian, novelInfo}) {
             }
         })
 
+
         return () => {
             isMounted = false;
         }
     }, [librarian, novelInfo.url]);
+
+    useEffect(() => {
+        function Component(props){
+            return (
+                <>
+                    <MenuItem>Testing</MenuItem>
+                </>
+            )
+        }
+
+        setMenuComponent(Component);
+    }, [setMenuComponent]);
 
     const Item = function ({index, style}){
         return (
