@@ -192,7 +192,6 @@ class NovelModelController {
         }))
       ];
     }
-    console.log("Chapters fetched!!");
     return chapters;
   }
 
