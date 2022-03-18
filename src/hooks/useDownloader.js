@@ -4,8 +4,8 @@ import { singletonHook } from 'react-singleton-hook';
 const { useState, useEffect } = require("react");
 
 function useDownloader(){
-    console.log("Rerender");
     const [tasks, setTasks] = useState([]);
+    const [tasksHash, setTasksHash] = useState([]);
     const [currentTask, setCurrentTask] = useState(null);
     const [isRunning, setIsRunning] = useState(false);
 
@@ -13,41 +13,52 @@ function useDownloader(){
     // * Effects!!!!
     useEffect(function initializeDownloader(){
         setTasks([...Downloader.getTaskList()]);
+        setTasksHash(Downloader.getTasksHashTable());
         setCurrentTask(Downloader.getCurrentTask());
         setIsRunning(Downloader.isRunning());
         
         Downloader.setSuccessCallback(function update(){
+            console.log("A FUCKING SUCCESSS");
             setTasks([...Downloader.getTaskList()]);
-            setCurrentTask(Downloader.getCurrentTask());
+            setTasksHash(Downloader.getTasksHashTable());
         })
+
+        Downloader.setCurrentTaskCallback( function updateCurrentTask (){
+            setCurrentTask(Downloader.getCurrentTask());
+        });
     },[])
 
     //* Add Task
     function addTask(task){
         Downloader.addTask(task);
         setTasks([...Downloader.getTaskList()]);
+        setTasksHash(Downloader.getTasksHashTable());
     }
 
     function bulkAddTask(tasks){
         Downloader.bulkAddTask(tasks);
         setTasks([...Downloader.getTaskList()]);
+        setTasksHash(Downloader.getTasksHashTable());
     }
 
     //* Remove Task
     function removeTask(task){
         Downloader.removeTask(task);
         setTasks([...Downloader.getTaskList()]);
+        setTasksHash(Downloader.getTasksHashTable());
     }
 
     function bulkRemoveTask(tasks){
         Downloader.bulkRemoveTask(tasks);
         setTasks([...Downloader.getTaskList()]);
+        setTasksHash(Downloader.getTasksHashTable());
     }
 
     //* Swap Tasks
     function swapTasks(task1, task2){
         Downloader.swapTasks(task1, task2);
         setTasks([...Downloader.getTaskList()]);
+        setTasksHash(Downloader.getTasksHashTable());
     }
 
     //* Start Worker
@@ -65,6 +76,7 @@ function useDownloader(){
 
     return {
         tasks,
+        tasksHash,
         currentTask,
         isRunning,
         functions: {

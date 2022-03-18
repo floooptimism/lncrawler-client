@@ -5,9 +5,10 @@ const NovelInfoContext = createContext();
 
 function NovelInfoLibraryProvider(props){
     const [menuComponent, setMenuComponent] = useState(null);
+    const [menuComponentId, setMenuComponentId] = useState(null);
 
     return (
-        <NovelInfoContext.Provider value={{menuComponent, setMenuComponent}}>
+        <NovelInfoContext.Provider value={{menuComponent, setMenuComponent, menuComponentId, setMenuComponentId}}>
             {props.children}
         </NovelInfoContext.Provider>
     )

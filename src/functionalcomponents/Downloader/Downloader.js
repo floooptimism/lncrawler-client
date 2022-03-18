@@ -23,6 +23,10 @@ class Downloader {
     // * callbacks
     this.successCallback = function () {};
     this.failCallback = function () {};
+    this.currentTaskChangedCallback = function() {};
+
+    window.tasks = this.tasks;
+    window.hashes = this.tasksHash;
   }
 
   //* Getters and Setters ********************
@@ -31,6 +35,9 @@ class Downloader {
   }
   setFailCallback(callback) {
     this.failCallback = callback;
+  }
+  setCurrentTaskCallback(callback){
+    this.currentTaskChangedCallback = callback;
   }
 
   setCurrentTask(task) {
@@ -42,6 +49,10 @@ class Downloader {
 
   getTaskList(){
     return this.tasks;
+  }
+
+  getTasksHashTable(){
+    return this.tasksHash;
   }
 
   setIsrunning(isRunning) {
@@ -67,17 +78,30 @@ class Downloader {
   }
 
   addTask(task) {
+    if(this.tasksHash[task.id]){
+      this.sendTask();
+      return;
+    }
     this.tasks.push(task);
     this.tasksHash[task.id] = { idx: this.tasks.length - 1, status: 0 };
     this.sendTask();
   }
 
   bulkAddTask(tasks){
-    this.tasks = [...this.tasks, ...tasks];
-    this.tasksHash = {...this.tasksHash, ...tasks.reduce((acc, task) => {
-      acc[task.id] = { idx: this.tasks.length - 1, status: 0 };
-      return acc;
-    }, {})};
+    let validTasks = tasks.filter( (task) => {
+      return !this.tasksHash[task.id];
+    })
+
+    if(validTasks.length <= 0){
+      this.sendTask();
+      return;
+    }
+
+    for(var task in validTasks){
+      this.tasks.push(task);
+      this.tasksHash[task.id] = { idx: this.tasks.length - 1, status: 0 };
+    }
+
     this.sendTask();
   }
 
@@ -88,6 +112,10 @@ class Downloader {
           1
         );
         delete this.tasksHash[task.id];
+        let count = 0;
+        for(var t of this.tasks){
+          this.tasksHash[t.id].idx = count++;
+        }
     }
   }
 
@@ -125,13 +153,14 @@ class Downloader {
           break;
         case "success":
           console.log("Task ", msg.data.task, " completed!");
-          console.log(msg.data)
           this.removeTask(msg.data.task);
           this.setCurrentTask(null);
           this.successCallback();
+          this.currentTaskChangedCallback();
           break;
         case "accepted": // worker is working on a task
           this.setCurrentTask(msg.data.task);
+          this.currentTaskChangedCallback();
           break;
         default:
           break;
@@ -142,5 +171,6 @@ class Downloader {
 
 let downloader = new Downloader();
 downloader.init();
+
 
 export default downloader;
