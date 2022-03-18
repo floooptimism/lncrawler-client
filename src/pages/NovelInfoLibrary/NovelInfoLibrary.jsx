@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./NovelInfoLibrary.module.css";
-import Tabs from "./Tabs";
+import Tabs from "./Tabs/Tabs";
 
 import useLibrarian from "../../hooks/useLibrarian";
 import Liaison from "../../functionalcomponents/Liaison/Liaison";
