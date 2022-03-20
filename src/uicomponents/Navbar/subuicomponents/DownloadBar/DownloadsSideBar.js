@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 function DownloadsSideBar(props) {
   const {
-    tasks,
     currentTask,
     isRunning,
     functions: downloader,
@@ -75,7 +74,7 @@ function DownloadsSideBar(props) {
         </div>
       </div>
 
-      {tasks.map((task) => {
+      {downloader.getAllTasks().map((task) => {
         return (
           <div key={task.id} className={`${styles.DownloadsBarItem}`}>
             <div>
