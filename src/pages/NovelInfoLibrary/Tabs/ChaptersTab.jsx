@@ -9,8 +9,9 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import { MoonLoader } from 'react-spinners';
 
 
-function chapterToTask(novelInfo, chapter) {
+function chapterToTask(novelInfo, chapter, chapterIndex) {
     return {
+        chapterIndex: chapterIndex,
         url: chapter.url,
         name: chapter.name,
         novel: novelInfo.url,
@@ -23,7 +24,7 @@ function chapterToTask(novelInfo, chapter) {
 function ChaptersTab({librarian, novelInfo}) {
     const [chapters, setChapters] = useState([]);
     const [initDone, setInitDone] = useState(false);
-
+    
     async function fetchChaptersInfo(){
         let chapters = await librarian.getChapters(novelInfo.url);
         if(chapters.length > 0) {
@@ -57,8 +58,8 @@ function ChaptersTab({librarian, novelInfo}) {
 
     const Item = function ({index, style}){
         const {menuComponentId, setMenuComponentId, setMenuComponent} = useNovelInfoLibraryContext();
+        const {functions:Downloader} = useDownloader();
 
-        const {tasks, tasksHash, currentTask, functions:Downloader} = useDownloader();
 
         function Component(props){
             return (
@@ -95,7 +96,7 @@ function ChaptersTab({librarian, novelInfo}) {
 
         function download(){
             let chapter = chapters[index];
-            Downloader.addTask(chapterToTask(novelInfo, chapter));
+            Downloader.addTask(chapterToTask(novelInfo, chapter, index+1));
         }
 
         return (
@@ -106,7 +107,7 @@ function ChaptersTab({librarian, novelInfo}) {
                 </div>
                 
                 <div className="ml-auto flex items-center">
-                    {tasksHash[novelInfo.url + chapters[index].url] ? (
+                    {Downloader.inQueue([novelInfo.url + chapters[index].url]) ? (
                         <MoonLoader color="blue" loading={true} size={18}/>
                     ): (
                         <svg onClick={download} width="20" height="20" viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">

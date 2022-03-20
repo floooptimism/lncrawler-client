@@ -1,5 +1,7 @@
 import Downloader from "../functionalcomponents/Downloader/Downloader";
 import { singletonHook } from 'react-singleton-hook';
+import successCallback from "./callbacks/downloaderSuccessCallback";
+
 
 const { useState, useEffect } = require("react");
 
@@ -17,8 +19,9 @@ function useDownloader(){
         setCurrentTask(Downloader.getCurrentTask());
         setIsRunning(Downloader.isRunning());
         
-        Downloader.setSuccessCallback(function update(){
+        Downloader.setSuccessCallback(function update(param){
             console.log("A FUCKING SUCCESSS");
+            successCallback(param);
             setTasks([...Downloader.getTaskList()]);
             setTasksHash(Downloader.getTasksHashTable());
         })
@@ -27,6 +30,14 @@ function useDownloader(){
             setCurrentTask(Downloader.getCurrentTask());
         });
     },[])
+
+    function inQueue(url){
+        return tasksHash[url] !== undefined;
+    }
+
+    function getAllTasks(){
+        return tasks;
+    }
 
     //* Add Task
     function addTask(task){
@@ -75,11 +86,11 @@ function useDownloader(){
     }
 
     return {
-        tasks,
-        tasksHash,
         currentTask,
         isRunning,
         functions: {
+            getAllTasks,
+            inQueue,
             addTask,
             removeTask,
             swapTasks,
