@@ -1,19 +1,10 @@
 class Downloader {
   constructor() {
     this.tasks = [
-      {
-        id: "https://lightnovel.world/book/1616/18.htmlhttps://lightnovel.world/content/1616/263863.html",
-        name: "Chapter 1",
-        novel: "https://lightnovel.world/book/1616/18.html",
-        source: "https://lightnovel.world",
-        type: "chaptercontent",
-        url: "https://lightnovel.world/content/1616/263863.html",
-      },
     ];
 
     // Status -> downloading = 1 , pending = 0
     this.tasksHash = {
-      "https://lightnovel.world/book/1616/18.htmlhttps://lightnovel.world/content/1616/263863.html": { idx: 0, status: 0}
     };
 
     this.worker = new Worker("Worker.js");
@@ -155,7 +146,10 @@ class Downloader {
           console.log("Task ", msg.data.task, " completed!");
           this.removeTask(msg.data.task);
           this.setCurrentTask(null);
-          this.successCallback();
+          this.successCallback({
+            task: msg.data.task,
+            result: msg.data.result
+          });
           this.currentTaskChangedCallback();
           break;
         case "accepted": // worker is working on a task
