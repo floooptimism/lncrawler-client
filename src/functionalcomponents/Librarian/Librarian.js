@@ -1,6 +1,13 @@
+import NovelModelController from '../../controllers/NovelModelController';
+
 class Librarian{
     constructor(novelController){
         this.novelController = novelController;
+        this.onChapterContentChanged = function () {};
+    }
+
+    setOnChapterContentChanged(fnc){
+        this.onChapterContentChanged = fnc;
     }
 
     async addNovel(novel){
@@ -15,8 +22,12 @@ class Librarian{
         return await this.novelController.updateNovel(novel);
     }
 
+    async getDownloadedChapters(novel_url){
+        return await this.novelController.getDownloadedChapters(novel_url);
+    }
+
     async getAllNovels(){
-        return await this.novelController.getNovels()
+        return await this.novelController.getNovels()    
     }
 
     async getNumberOfChapters(novel_url){
@@ -33,6 +44,7 @@ class Librarian{
 
     async storeChapterContent(novel_url, chapterNumber, content){
         await this.novelController.storeChapterContent(novel_url, chapterNumber, content);
+        this.onChapterContentChanged();
     }
 
     async getChapters(novel_url){
@@ -46,4 +58,5 @@ class Librarian{
 
 }
 
-export default Librarian;
+
+export default (new Librarian(new NovelModelController()));

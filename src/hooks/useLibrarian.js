@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import Librarian from '../functionalcomponents/Librarian/Librarian';
-import NovelModelController from '../controllers/NovelModelController';
+import librarian from '../functionalcomponents/Librarian/Librarian';
+
 
 import { singletonHook } from 'react-singleton-hook';
 
-let librarian = new Librarian(new NovelModelController());
 
 function useLibrarian(novelChangedCallBack){
     const [novels, setNovels] = useState([]);
@@ -27,6 +26,10 @@ function useLibrarian(novelChangedCallBack){
         setNovelIds(novelIds);
     }, [novels]);
 
+    function setOnChapterContentChanged(fnc){
+        librarian.setOnChapterContentChanged(fnc);
+    }
+
     async function getNovels(){
         const novels = await librarian.getAllNovels();
         setNovels(novels);
@@ -34,6 +37,10 @@ function useLibrarian(novelChangedCallBack){
 
     async function getChapters(url){
         return await librarian.getChapters(url);
+    }
+
+    async function getDownloadedChapters(url){
+        return await librarian.getDownloadedChapters(url);
     }
 
     async function storeChapters(url, chapters){
@@ -69,6 +76,8 @@ function useLibrarian(novelChangedCallBack){
         novels,
         novelIds,
         librarian: {
+            setOnChapterContentChanged,
+            getDownloadedChapters,
             getNovels,
             addToLibrary,
             removeFromLibrary,
