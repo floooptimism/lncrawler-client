@@ -165,6 +165,7 @@ class Downloader {
 
 let downloader = new Downloader();
 downloader.init();
+downloader.startWorker();
 
 
 export default downloader;
