@@ -17,6 +17,8 @@ class ChapterMetaDexie extends Model {
         let chaptermeta = await this.db.chaptermetas.where("novel_url").equals(url).first();
         if(chaptermeta){
             chaptermeta.save = this.save;
+        }else{
+            chaptermeta = {};
         }
         return chaptermeta;
     }

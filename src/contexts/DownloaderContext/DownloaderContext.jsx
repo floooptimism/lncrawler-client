@@ -5,10 +5,10 @@ import useDownloader from '../../hooks/useDownloader';
 const DownloaderContext = createContext();
 
 function DownloaderProvider(props) {
-    const {tasks, currentTask, isRunning, functions} = useDownloader();
+    const {currentTask, isRunning, functions} = useDownloader();
     
     return (
-        <DownloaderContext.Provider value={{tasks, currentTask, isRunning, functions}}>
+        <DownloaderContext.Provider value={{currentTask, isRunning, functions}}>
             {props.children}
         </DownloaderContext.Provider>
     )

@@ -20,7 +20,6 @@ function useDownloader(){
         setIsRunning(Downloader.isRunning());
         
         Downloader.setSuccessCallback(function update(param){
-            console.log("A FUCKING SUCCESSS");
             successCallback(param);
             setTasks([...Downloader.getTaskList()]);
             setTasksHash(Downloader.getTasksHashTable());
@@ -30,6 +29,7 @@ function useDownloader(){
             setCurrentTask(Downloader.getCurrentTask());
         });
     },[])
+
 
     function inQueue(url){
         return tasksHash[url] !== undefined;
