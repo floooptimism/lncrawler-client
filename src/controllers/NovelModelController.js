@@ -110,6 +110,7 @@ class NovelModelController {
       novel_url +
       "ChapterChunk" +
       Math.floor(chapterNumber / (MAXCHAPTERSPERCHUNK + 1));
+
     let chunk = await ChapterChunkDexie.get(chunkid);
     console.log("This is chunk -> ", chunk);
     let chaptermeta = await ChapterMetaDexie.get(chunk.chaptermetaref);
@@ -119,8 +120,19 @@ class NovelModelController {
     //modify chaptermeta to reflect the new downloaded chapter
     chaptermeta.downloadedchapters[chapterNumber - 1] = 1;
     //save all
-    await chunk.save();
-    await chaptermeta.save();
+    try{
+      await chunk.save();
+    }catch(err){
+      console.log("Error saving chunk", chunk);
+      throw err;
+    }
+
+    try{
+      await chaptermeta.save();
+    }catch(err){
+      console.log("Error saving chaptermeta", chaptermeta);
+      throw err;
+    }
   }
 
   /**
@@ -193,6 +205,11 @@ class NovelModelController {
       ];
     }
     return chapters;
+  }
+
+  async getDownloadedChapters(novel_url){
+    let chaptermeta = await ChapterMetaDexie.get(novel_url);
+    return chaptermeta.downloadedchapters;
   }
 
   /**
