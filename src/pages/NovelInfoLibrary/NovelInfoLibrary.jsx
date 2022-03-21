@@ -5,19 +5,20 @@ import Tabs from "./Tabs/Tabs";
 import useLibrarian from "../../hooks/useLibrarian";
 import Liaison from "../../functionalcomponents/Liaison/Liaison";
 
-import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import { Menu } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { useNovelInfoLibraryContext } from "../../contexts/NovelInfoLibraryContext/NovelInfoLibraryContext";
 
 function NovelInfoLibrary({ onClose, url, open }) {
     const [novelInfo, setNovelInfo] = useState(null);
-    const { novels, novelIds, librarian } = useLibrarian();
+    const { librarian } = useLibrarian();
     const [loading, setLoading] = useState(true);
 
     const [moreDownloadOptionsMenu, setMoreDownloadOptionsMenu] =
         useState(false);
 
+    // if not loaded in library, fetch data from server and set it back to db
     useEffect(() => {
         let isMounted = true;
         if (!novelInfo) return;
@@ -32,6 +33,7 @@ function NovelInfoLibrary({ onClose, url, open }) {
                 }
             });
         }
+
         return () => {
             isMounted = false;
         };
