@@ -27,17 +27,17 @@ function Tabs(props) {
     return (
         <div className="h-full">
             <div>
-                <ul className="flex justify-evenly border-b border-gray-300">
+                <ul className="flex justify-evenly border-b-2 border-gray-500">
                     {tabs.map((tab, index) => (
                         <li
                             key={index}
                             className={`${
                                 active === index
-                                    ? "font-medium border-b-2 border-gray-400"
+                                    ? "font-medium border-b-2 border-gray-500"
                                     : ""
                             } px-2 py-1 mr-2 cursor-pointer text-sm`}
                             style={{
-                                color: "#565656",
+                                color: "#262626",
                             }}
                             onClick={() => setActive(index)}
                         >
