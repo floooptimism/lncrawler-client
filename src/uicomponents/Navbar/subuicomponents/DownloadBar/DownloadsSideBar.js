@@ -74,7 +74,7 @@ function DownloadsSideBar(props) {
         </div>
       </div>
 
-      {downloader.getAllTasks().map((task) => {
+      {downloader.getAllTasks && downloader.getAllTasks().map((task) => {
         return (
           <div key={task.id} className={`${styles.DownloadsBarItem}`}>
             <div>
