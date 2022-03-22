@@ -10,3 +10,17 @@
 .Attribute p{
     @apply text-xs mt-2;
 }
+
+.Tabs {
+    @apply flex justify-evenly border-b-2;
+    border-color: #e7e7e7;
+}
+
+.TabSelected {
+    @apply font-medium border-b-2 border-gray-500;
+    color: #262626;
+}
+
+.TabNotSelected {
+    @apply text-gray-400;
+}
