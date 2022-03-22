@@ -71,7 +71,7 @@ function Navbar(props) {
           } flex flex-col`}
         >
           <nav>
-            <ul>
+            <ul className={styles.NavContainer}>
               <li>
                 <div
                   className={`${styles.NavItem} group ${
@@ -86,9 +86,7 @@ function Navbar(props) {
                   <svg
                     className={`${
                       styles.NavItemIcon
-                    } group-hover:text-white pointer-events-none group-hover:fill-current ${
-                      viewState[0] === "library" ? "text-white fill-current" : ""
-                    }`}
+                    } pointer-events-none`}
                     height="16"
                     width="16"
                     viewBox="0 0 36 44"
@@ -121,9 +119,7 @@ function Navbar(props) {
                   <svg
                     className={`${
                       styles.NavItemIcon
-                    } group-hover:text-white pointer-events-none group-hover:fill-current ${
-                      viewState[0] === "browse" ? "text-white fill-current" : ""
-                    }`}
+                    } pointer-events-none`}
                     width="17"
                     height="17"
                     viewBox="0 0 32 32"

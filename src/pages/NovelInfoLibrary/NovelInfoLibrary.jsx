@@ -19,6 +19,11 @@ function NovelInfoLibrary({ onClose, url, open }) {
         useState(false);
 
     // if not loaded in library, fetch data from server and set it back to db
+
+    function toggleInLibrary(){
+        
+    }
+
     useEffect(() => {
         let isMounted = true;
         if (!novelInfo) return;
@@ -106,7 +111,9 @@ function NovelInfoLibrary({ onClose, url, open }) {
             {/* brief info */}
             <div className={styles.SummarizeInfo}>
                 {/* cover image */}
-                <div className={styles.Image}></div>
+                <div className={styles.Image}>
+                    <img src={novelInfo && novelInfo.cover} alt="Novel cover"/>
+                </div>
 
                 {/* some stuffs */}
                 <div className={styles.Info}>
@@ -124,6 +131,7 @@ function NovelInfoLibrary({ onClose, url, open }) {
                     <div className={styles.HeartAndRead}>
                         <div className={styles.Heart}>
                             <svg
+                                className={styles.Hearted}
                                 viewBox="0 0 2048 2048"
                                 xmlns="http://www.w3.org/2000/svg"
                             >

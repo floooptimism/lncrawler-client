@@ -122,7 +122,10 @@ function ChaptersTab({ librarian, novelInfo }) {
                 <div className="ml-auto flex items-center">
                     {(downloadedChapters[index] && (
                         <svg
-                            className="text-green-600 fill-current"
+                            style={{
+                                color: "#65C18C"
+                            }}
+                            className="fill-current"
                             height="20"
                             width="20"
                             viewBox="0 0 24 24"

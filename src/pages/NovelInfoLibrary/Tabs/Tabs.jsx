@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import ChaptersTab from "./ChaptersTab";
 import InformationTab from "./InformationTab";
 
+import styles from './Tabs.module.css';
+
 function Tabs(props) {
     const [active, setActive] = useState(0);
     const [tabs, setTabs] = useState([
@@ -27,18 +29,15 @@ function Tabs(props) {
     return (
         <div className="h-full">
             <div>
-                <ul className="flex justify-evenly border-b-2 border-gray-500">
+                <ul className={styles.Tabs}>
                     {tabs.map((tab, index) => (
                         <li
                             key={index}
                             className={`${
                                 active === index
-                                    ? "font-medium border-b-2 border-gray-500"
-                                    : ""
+                                    ? styles.TabSelected
+                                    : styles.TabNotSelected
                             } px-2 py-1 mr-2 cursor-pointer text-sm`}
-                            style={{
-                                color: "#262626",
-                            }}
                             onClick={() => setActive(index)}
                         >
                             {tab[0]}

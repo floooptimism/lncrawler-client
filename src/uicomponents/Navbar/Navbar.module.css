@@ -6,7 +6,7 @@
 
 .SideBar {
     @apply fixed w-56 top-0 md:left-0 bg-white h-screen;
-    @apply bg-gray-50;
+    @apply bg-white;
     @apply transition-all ease-in duration-100 z-50;
 }
 
@@ -17,17 +17,25 @@
     @apply text-xl;
 }
 
+.NavContainer > li{
+    @apply p-1 px-3;
+}
+
 .NavItem{
-    @apply flex justify-center items-center p-2 py-3;
-    @apply cursor-pointer;
+    @apply flex justify-center items-center p-1 py-2;
+    @apply cursor-pointer rounded-lg text-gray-600;
+}
+
+.NavItemIcon{
+    @apply text-gray-700 fill-current;
 }
 
 .NavItemNotPicked{
-    @apply hover:bg-blue-300 hover:text-white
+    @apply hover:bg-gray-200;
 }
 
 .NavItemPicked{
-    @apply bg-blue-400 text-white
+    @apply bg-gray-100 font-medium;
 }
 
 .NavItemIcon{
