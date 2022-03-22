@@ -21,8 +21,13 @@
 }
     .Image{
         @apply h-32 w-24;
-        @apply bg-gray-500;
         @apply flex-shrink-0;
+        @apply overflow-hidden;
+        @apply rounded-md;
+    }
+
+    .Image img {
+        @apply w-full h-full;
     }
 
     .Info {
@@ -42,11 +47,11 @@
             @apply flex items-center mt-auto mb-3 space-x-5;
         }
             .Heart svg{
-                @apply h-6 w-6 text-gray-400 shrink-0;
+                @apply h-6 w-6 text-gray-300 shrink-0;
                 @apply fill-current;
             }
                 .Heart svg.Hearted{
-                    @apply text-red-400;
+                    color: #FF7BA9;
                 }
 
             .ReadButton{
@@ -55,7 +60,7 @@
                 .ReadButton button{
                     @apply h-6 w-full text-gray-400;
                     @apply rounded;
-                    background: #C4C4C4;
-                    color: #646464;
+                    background: #FF7BA9;
+                    color: white;
                     max-width: 150px;
                 }
