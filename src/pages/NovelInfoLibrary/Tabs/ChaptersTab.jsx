@@ -7,6 +7,7 @@ import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 
 import { MoonLoader } from "react-spinners";
+import { useReader } from "../../../contexts/ReaderContext/ReaderProvider";
 
 function chapterToTask(novelInfo, chapter, chapterIndex) {
     return {
@@ -95,21 +96,14 @@ function ChaptersTab({ librarian, novelInfo }) {
     // set the downloads menu
 
     const Item = function ({ index, style }) {
-        const { menuComponentId, setMenuComponentId, setMenuComponent } =
-            useNovelInfoLibraryContext();
+       
         const { functions: Downloader } = useDownloader();
 
-        function Component(props) {
-            return (
-                <>
-                    <MenuItem>Download all chapters</MenuItem>
-                    <MenuItem>Cancel all pending chapters</MenuItem>
-                    <MenuItem>Close</MenuItem>
-                </>
-            );
-        }
+        const {setReaderIsOpen} = useReader();
 
-        const ComponentId = 0;
+        function handleClick(){
+            setReaderIsOpen(true);
+        }
 
         function DownloadAllChapters() {
             let tasksToDownload = chapters.map((chapter) => {
@@ -120,21 +114,16 @@ function ChaptersTab({ librarian, novelInfo }) {
 
         function CancelAllChapters() {}
 
-        useEffect(() => {
-            if (menuComponentId === ComponentId) {
-                return;
-            }
-            setMenuComponentId(ComponentId);
-            setMenuComponent(Component);
-        }, [menuComponentId, setMenuComponent, setMenuComponentId]);
-
-        function download() {
+        
+        function download(e) {
+            e.stopPropagation();
             let chapter = chapters[index];
             Downloader.addTask(chapterToTask(novelInfo, chapter, index + 1));
+
         }
 
         return (
-            <div key={index} className="flex py-2 px-5" style={style}>
+            <div key={index} className="flex py-2 px-5" style={style} onClick={handleClick}>
                 <div>
                     <h1 className="text-sm font-medium items-center">
                         Chapter {index + 1}
