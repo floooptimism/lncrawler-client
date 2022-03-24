@@ -24,6 +24,29 @@ function ChaptersTab({ librarian, novelInfo }) {
     const [chapters, setChapters] = useState([]);
     const [initDone, setInitDone] = useState(false);
     const [downloadedChapters, setDownloadedChapters] = useState([]);
+    const { menuComponentId, setMenuComponentId, setMenuComponent } =
+    useNovelInfoLibraryContext();
+
+    function Component(props) {
+        return (
+            <>
+                <MenuItem>Download all chapters</MenuItem>
+                <MenuItem>Cancel all pending chapters</MenuItem>
+                <MenuItem>Close</MenuItem>
+            </>
+        );
+    }
+
+    const ComponentId = 0;
+
+    useEffect(() => {
+        if (menuComponentId === ComponentId) {
+            return;
+        }
+        setMenuComponentId(ComponentId);
+        setMenuComponent(Component);
+    }, [menuComponentId, setMenuComponent, setMenuComponentId]);
+
 
     async function fetchChaptersInfo() {
         let chapters = await librarian.getChapters(novelInfo.url);
