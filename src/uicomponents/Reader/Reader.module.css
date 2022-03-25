@@ -1,0 +1,50 @@
+.Container {
+    @apply fixed top-0 left-0 w-screen h-screen z-50;
+    @apply overflow-y-scroll;
+    @apply bg-white;
+}
+
+.Content{
+    @apply px-2 py-4 z-50;
+}
+
+
+.ChapterNav{
+    @apply fixed bottom-0 left-0 z-50;
+    @apply h-11 w-screen;
+    @apply flex  md:hidden;
+    @apply transition-all ease-in duration-200;
+    background-color: #4A4A4A;
+}
+
+.ChapterNavClose{
+    transform: translateY(44px);
+}
+
+.ChapterNav > div:first-child{
+    @apply border-r border-gray-600;
+}
+
+.ChapterNav > div:nth-of-type(2){
+    @apply border-l border-gray-600;
+}
+
+.ChapterNav div{
+    @apply w-full;
+    @apply items-center justify-center flex;
+    @apply text-sm;
+    color: #D8D8D8;
+}
+
+
+.TopBarClose{
+    @apply -translate-y-11;
+}
+
+.TopBar{
+    @apply fixed top-0 left-0 h-11 w-screen;
+    @apply transition-all ease-in duration-200;
+    @apply flex md:translate-y-0;
+    background-color: #4A4A4A;
+}
+
