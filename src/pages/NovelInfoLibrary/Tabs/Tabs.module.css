@@ -12,12 +12,13 @@
 }
 
 .Tabs {
-    @apply flex justify-evenly border-b-2;
+    @apply flex justify-evenly border-b;
     border-color: #e7e7e7;
 }
 
 .TabSelected {
-    @apply font-medium border-b-2 border-gray-500;
+    @apply font-medium border-b-2;
+    border-color: #eb79a8;
     color: #262626;
 }
 

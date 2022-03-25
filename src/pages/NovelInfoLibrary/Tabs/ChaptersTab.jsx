@@ -123,7 +123,7 @@ function ChaptersTab({ librarian, novelInfo }) {
         }
 
         return (
-            <div key={index} className="flex py-2 px-5" style={style} onClick={handleClick}>
+            <div key={index} className="flex py-2 px-5 cursor-pointer" style={style} onClick={handleClick}>
                 <div>
                     <h1 className="text-sm font-medium items-center">
                         Chapter {index + 1}

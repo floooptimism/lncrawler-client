@@ -17,6 +17,8 @@ import NovelInfoLibrary from "../NovelInfoLibrary/NovelInfoLibrary";
 
 import scrollControlFunctions from "../../util/disableScrolling";
 import NovelInfoLibraryProvider from "../../contexts/NovelInfoLibraryContext/NovelInfoLibraryContext";
+import Reader from "../../uicomponents/Reader/Reader";
+import ReaderProvider, { useReader } from "../../contexts/ReaderContext/ReaderProvider";
 const { enableScroll, disableScroll } = scrollControlFunctions;
 
 function Library() {
@@ -109,14 +111,31 @@ function Library() {
             </div>
 
             <NovelInfoLibraryProvider>
-                <NovelInfoLibrary
-                    url={novelViewModalParam}
-                    open={novelViewModal}
-                    onClose={setNovelViewModal.bind(null, false)}
-                />
+                <ReaderProvider>
+                    <>
+                        <NovelInfoLibrary
+                            url={novelViewModalParam}
+                            open={novelViewModal}
+                            onClose={setNovelViewModal.bind(null, false)}
+                        />
+
+                        <ReaderComponent />
+                    </>
+                </ReaderProvider>
             </NovelInfoLibraryProvider>
+
         </div>
     );
+}
+
+function ReaderComponent(){
+    const {readerIsOpen} = useReader();
+
+    return (
+        <>
+            {readerIsOpen && <Reader />}
+        </>
+    )
 }
 
 export default Library;
