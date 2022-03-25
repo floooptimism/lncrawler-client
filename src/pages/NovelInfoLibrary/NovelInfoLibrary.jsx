@@ -9,14 +9,16 @@ import { Menu } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { useNovelInfoLibraryContext } from "../../contexts/NovelInfoLibraryContext/NovelInfoLibraryContext";
+import { useReader } from "../../contexts/ReaderContext/ReaderProvider";
 
 function NovelInfoLibrary({ onClose, url, open }) {
     const [novelInfo, setNovelInfo] = useState(null);
     const { librarian } = useLibrarian();
     const [loading, setLoading] = useState(true);
-
     const [moreDownloadOptionsMenu, setMoreDownloadOptionsMenu] =
         useState(false);
+
+    const {setReaderIsOpen, setReaderNovelInfo} = useReader();
 
     // if not loaded in library, fetch data from server and set it back to db
 
