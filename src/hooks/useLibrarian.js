@@ -57,6 +57,10 @@ function useLibrarian(novelChangedCallBack){
         setNovels(novels.filter(n => n.url !== url));
     }
 
+    async function getChapterContent(novelURL, chapterIndex){
+        return await librarian.getChapterContent(novelURL, chapterIndex);
+    }
+
     function getNovelInfo(url){
         return novels.filter(n => n.url === url)[0];
     }
@@ -80,6 +84,7 @@ function useLibrarian(novelChangedCallBack){
             getDownloadedChapters,
             getNovels,
             addToLibrary,
+            getChapterContent,
             removeFromLibrary,
             getNovelInfo,
             updateNovel,
