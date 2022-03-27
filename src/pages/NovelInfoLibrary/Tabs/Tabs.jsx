@@ -12,20 +12,6 @@ function Tabs(props) {
         ["Chapters", ChaptersTab],
     ]);
 
-    function RenderActiveTab(props) {
-        let ActiveTab = tabs[props.active][1];
-        
-        useEffect( () => {
-            if(props.active === 1){
-                props.setMoreDownloadOptionsMenu(true);
-                return;
-            }
-            props.setMoreDownloadOptionsMenu(false);
-        }, [props])
-
-        return <ActiveTab {...props} />;
-    }
-
     return (
         <div className="h-full">
             <div>
@@ -47,10 +33,28 @@ function Tabs(props) {
             </div>
 
             <div className="px-4 h-full">
-                <RenderActiveTab {...props} active={active}/>
+                <MemRenderActive {...props} tabs={tabs} active={active}/>
             </div>
         </div>
     );
 }
+
+function RenderActiveTab(props) {
+    let ActiveTab = props.tabs[props.active][1];
+    let newProp = {...props};
+    delete newProp.tabs;
+    useEffect( () => {
+        if(props.active === 1){
+            props.setMoreDownloadOptionsMenu(true);
+            return;
+        }
+        props.setMoreDownloadOptionsMenu(false);
+    }, [props])
+
+    return <ActiveTab {...newProp} />;
+}
+
+const MemRenderActive = React.memo(RenderActiveTab);
+
 
 export default Tabs;
