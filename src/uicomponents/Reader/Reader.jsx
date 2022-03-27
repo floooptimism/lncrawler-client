@@ -4,11 +4,14 @@ import Liaison from "../../functionalcomponents/Liaison/Liaison";
 
 import styles from "./Reader.module.css";
 
-import scrollControlFunctions from '../../util/disableScrolling';
+import scrollControlFunctions from "../../util/disableScrolling";
+import { useReader } from "../../contexts/ReaderContext/ReaderProvider";
 
-const {disableScroll, enableScroll} = scrollControlFunctions;
+const { disableScroll, enableScroll } = scrollControlFunctions;
 
 function Reader({ novelInfo, chapter }) {
+    const { setReaderIsOpen } = useReader();
+
     const [content, setContent] = useState("");
     const [backgroundColor, setBackgroundColor] = useState(null);
     const [fontColor, setFontColor] = useState(null);
@@ -16,7 +19,9 @@ function Reader({ novelInfo, chapter }) {
 
     const [isFetching, setIsFetching] = useState(true);
 
-    const [chapterNavIsOpen, setChapterNavIsOpen] = useState(false);
+    // ui flags
+    const [chapterNavIsOpen, setChapterNavIsOpen] = useState(true);
+    const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 
     const { librarian } = useLibrarian();
 
@@ -24,13 +29,13 @@ function Reader({ novelInfo, chapter }) {
         disableScroll();
         return () => {
             enableScroll();
-        }
-    })
+        };
+    });
 
     useEffect(() => {
         // get novel info if novelID changes
         let isMounted = true;
-        if(!novelInfo) return;
+        if (!novelInfo) return;
         setIsFetching(true);
         librarian
             .getChapterContent(novelInfo.url, chapter.index)
@@ -61,33 +66,39 @@ function Reader({ novelInfo, chapter }) {
         };
     }, [novelInfo, chapter, librarian]);
 
-    function detectScreen(){
-        // if "block" then it's a mobile device, else it's a desktop device
-        let display = window.getComputedStyle(document.getElementById('device-detector')).display;
-        if(display === "block"){
-            return 'mobile';
-        }
-        return 'desktop'
+    function closeReader() {
+        setReaderIsOpen(false);
     }
 
-    function handleClickForMobile(){
+    function detectScreen() {
+        // if "block" then it's a mobile device, else it's a desktop device
+        let display = window.getComputedStyle(
+            document.getElementById("device-detector")
+        ).display;
+        if (display === "block") {
+            return "mobile";
+        }
+        return "desktop";
+    }
+
+    function handleClickForMobile() {
         let device = detectScreen();
-        if(device === "mobile"){
+        if (device === "mobile") {
             setChapterNavIsOpen(!chapterNavIsOpen);
         }
     }
 
     return (
         <div className={styles.Container} onClick={handleClickForMobile}>
-            <div id="device-detector" className="absolute md:hidden">
-
-            </div>
+            <div id="device-detector" className="absolute md:hidden"></div>
             {/* content */}
-            <div className={styles.Content} style={{
-                backgroundColor: backgroundColor,
-                color: fontColor,
-                fontSize: fontSize
-            }}
+            <div
+                className={styles.Content}
+                style={{
+                    backgroundColor: backgroundColor,
+                    color: fontColor,
+                    fontSize: fontSize,
+                }}
             >
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -215,18 +226,57 @@ function Reader({ novelInfo, chapter }) {
             </div>
 
             {/* chapter nav */}
-            <div className={`${styles.TopBar} ${chapterNavIsOpen ? "":styles.TopBarClose}`}>
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className={`${styles.TopBar} ${
+                    chapterNavIsOpen ? "" : styles.TopBarClose
+                }`}
+            >
                 {/* exit */}
+                <div
+                    className="flex items-center justify-center text-white"
+                    onClick={closeReader}
+                >
+                    <svg
+                        height="24"
+                        width="24"
+                        className="text-white fill-current md:mr-3"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21z" />
+                    </svg>
+                    <span className="hidden md:inline">Exit</span>
+                </div>
 
                 {/* chapter info */}
+                <div className="text-white text-xs md:text-base">
+                    Chapater 5: yada yada yada
+                </div>
 
                 {/* appearance settings */}
-
+                <div className="flex items-center justify-center text-white">
+                    <svg
+                        className="text-white fill-current md:mr-3"
+                        height="24"
+                        width="24"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z" />
+                    </svg>
+                    <span className="hidden md:inline text-sm">Appearance</span>
+                </div>
             </div>
 
-            <div className={`${styles.ChapterNav} ${chapterNavIsOpen ? "":styles.ChapterNavClose}`} onClick={ e => {
-                e.stopPropagation();
-            }}>
+            <div
+                className={`${styles.ChapterNav} ${
+                    chapterNavIsOpen ? "" : styles.ChapterNavClose
+                }`}
+                onClick={(e) => {
+                    e.stopPropagation();
+                }}
+            >
                 <div>Prev Chapter</div>
                 <div>Next Chapter</div>
             </div>

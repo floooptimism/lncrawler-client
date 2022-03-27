@@ -5,7 +5,8 @@
 }
 
 .Content{
-    @apply px-2 py-4 z-50;
+    @apply px-7 py-4 z-50;
+    @apply mt-12; 
 }
 
 
@@ -21,30 +22,32 @@
     transform: translateY(44px);
 }
 
+/* 
 .ChapterNav > div:first-child{
     @apply border-r border-gray-600;
 }
 
 .ChapterNav > div:nth-of-type(2){
     @apply border-l border-gray-600;
-}
+} */
 
 .ChapterNav div{
     @apply w-full;
     @apply items-center justify-center flex;
     @apply text-sm;
-    color: #D8D8D8;
+    color: #ffffff;
 }
 
 
 .TopBarClose{
-    @apply -translate-y-11;
+    @apply -translate-y-12;
 }
 
 .TopBar{
-    @apply fixed top-0 left-0 h-11 w-screen;
+    @apply fixed top-0 left-0 h-12 w-screen;
     @apply transition-all ease-in duration-200;
-    @apply flex md:translate-y-0;
+    @apply flex md:translate-y-0 items-center justify-between;
+    @apply px-4;
     background-color: #4A4A4A;
 }
 
