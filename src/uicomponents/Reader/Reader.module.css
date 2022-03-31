@@ -1,3 +1,7 @@
+:root {
+    --appearanceControlWidth: 224px;
+}
+
 .Container {
     @apply fixed top-0 left-0 w-screen h-screen z-50;
     @apply overflow-y-scroll;
@@ -6,7 +10,8 @@
 
 .Content{
     @apply px-7 py-4 z-50;
-    @apply mt-12; 
+    @apply py-14; 
+    @apply whitespace-pre-line
 }
 
 
@@ -14,7 +19,7 @@
     @apply fixed bottom-0 left-0 z-50;
     @apply h-11 w-screen;
     @apply flex  md:hidden;
-    @apply transition-all ease-in duration-200;
+    @apply transition-all duration-200;
     background-color: #4A4A4A;
 }
 
@@ -44,10 +49,121 @@
 }
 
 .TopBar{
-    @apply fixed top-0 left-0 h-12 w-screen;
-    @apply transition-all ease-in duration-200;
+    @apply fixed top-0 left-0 h-12 w-full;
+    @apply transition-all duration-200;
     @apply flex md:translate-y-0 items-center justify-between;
     @apply px-4;
     background-color: #4A4A4A;
+
+    
+}
+
+@media (min-width: 768px) {
+    .TopBarSettingsOpen {
+        width: calc(100% - var(--appearanceControlWidth));
+    }
+
+    .ContentSettingsOpen {
+        width: calc(100% - var(--appearanceControlWidth));
+    }
+}
+
+
+.AppearanceControl {
+    @apply px-8 py-6;
+    @apply fixed;
+    @apply transition-all duration-200;
+    @apply bg-red-500 z-50;
+    @apply grid md:flex md:flex-col text-white;
+    @apply md:space-y-8;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(80px,1fr));
+    background-color: #4A4A4A;
+    
+    /* mobile dimensions */
+    @apply w-screen h-52;
+    @apply bottom-0 left-0;
+    
+    /* desktop dimensions */
+    @apply md:w-56 md:h-screen;
+    @apply md:left-full md:-translate-x-56;
+
+}
+
+.AppearanceControl > div > span {
+    @apply text-xs text-gray-200; 
+}
+
+.AppearanceControlClose{
+    @apply opacity-0;
+    @apply pointer-events-none;
+
+    /* mobile */
+    @apply translate-y-52;
+
+    /* desktop */
+    @apply md:translate-x-56 md:translate-y-0;
+
+    
+}
+
+.AppearanceControlOpen{
+    @apply opacity-100;
+    @apply pointer-events-auto;
+    
+    /* mobile */
+    @apply translate-y-0;
+
+    /* desktop */
+    @apply md:-translate-x-56 md:translate-y-0;
+}
+
+.AppearanceSettingsButton{
+    @apply flex items-center justify-center text-white; 
+}
+
+.AppearanceSettingsButtonActive{
+    color: #f373a0;
+}
+
+
+
+.Control {
+    @apply mt-2;
+    @apply flex items-center justify-between;
+    @apply w-24;
+
+}
+
+.InputColor {
+    width: 24px;
+    height:24px;
+    border: none;
+    border-radius: 5px;
+    @apply ml-0;
+}
+
+
+
+
+.Loading {
+    @apply fixed flex flex-col items-center top-0 left-0 w-screen h-screen z-50;
+    @apply overflow-y-scroll;
+    @apply bg-white;
+}
+
+.LoadingText{
+    @apply text-center;
+    @apply text-gray-500;
+    @apply text-xl;
+    @apply font-bold;
+    @apply mx-auto;
+    @apply mt-32;
+    
+}
+
+.LoadingText > h1 {
+    @apply mt-2;
+    color: #f373a0;
 }
 
