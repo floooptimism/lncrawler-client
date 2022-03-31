@@ -6,16 +6,24 @@ import styles from "./Reader.module.css";
 
 import scrollControlFunctions from "../../util/disableScrolling";
 import { useReader } from "../../contexts/ReaderContext/ReaderProvider";
+import { useReaderAppearance } from "./hooks/useReaderAppearance";
 
 const { disableScroll, enableScroll } = scrollControlFunctions;
 
-function Reader({ novelInfo, chapter }) {
-    const { setReaderIsOpen } = useReader();
+function Reader() {
+    const { setReaderIsOpen, readerNovelInfo, readerChapterInfo } = useReader();
+
+    const {
+        fontSize,
+        backgroundColor,
+        fontColor,
+        incrementFontSize,
+        decrementFontSize,
+        setFontColor,
+        setBackgroundColor,
+    } = useReaderAppearance();
 
     const [content, setContent] = useState("");
-    const [backgroundColor, setBackgroundColor] = useState(null);
-    const [fontColor, setFontColor] = useState(null);
-    const [fontSize, setFontSize] = useState(null);
 
     const [isFetching, setIsFetching] = useState(true);
 
@@ -35,25 +43,25 @@ function Reader({ novelInfo, chapter }) {
     useEffect(() => {
         // get novel info if novelID changes
         let isMounted = true;
-        if (!novelInfo) return;
+        if (!readerNovelInfo) return;
         setIsFetching(true);
         librarian
-            .getChapterContent(novelInfo.url, chapter.index)
+            .getChapterContent(readerNovelInfo.url, readerChapterInfo.chapterIndex)
             .then((res) => {
-                if (res) {
+                if(res) {
                     if (isMounted) {
-                        setContent(res.content);
+                        setContent(res);
                         setIsFetching(false);
                     }
                 } else {
                     // fetch from network
                     Liaison.getNovelChapterContent(
-                        chapter.url,
-                        novelInfo.source
+                        readerChapterInfo.url,
+                        readerNovelInfo.source
                     ).then((res) => {
                         if (res) {
                             if (isMounted) {
-                                setContent(res.content);
+                                setContent(res);
                                 setIsFetching(false);
                             }
                         }
@@ -64,7 +72,7 @@ function Reader({ novelInfo, chapter }) {
         return () => {
             isMounted = false;
         };
-    }, [novelInfo, chapter, librarian]);
+    }, [readerNovelInfo, readerChapterInfo, librarian]);
 
     function closeReader() {
         setReaderIsOpen(false);
@@ -84,6 +92,10 @@ function Reader({ novelInfo, chapter }) {
     function handleClickForMobile() {
         let device = detectScreen();
         if (device === "mobile") {
+            if (chapterNavIsOpen && settingsIsOpen) {
+                setSettingsIsOpen(false);
+                return;
+            }
             setChapterNavIsOpen(!chapterNavIsOpen);
         }
     }
@@ -92,149 +104,32 @@ function Reader({ novelInfo, chapter }) {
         <div className={styles.Container} onClick={handleClickForMobile}>
             <div id="device-detector" className="absolute md:hidden"></div>
             {/* content */}
-            <div
-                className={styles.Content}
-                style={{
-                    backgroundColor: backgroundColor,
-                    color: fontColor,
-                    fontSize: fontSize,
-                }}
-            >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Vestibulum morbi blandit cursus risus at ultrices mi tempus
-                imperdiet. Arcu non sodales neque sodales ut. Donec enim diam
-                vulputate ut pharetra sit amet aliquam id. Nulla facilisi nullam
-                vehicula ipsum a. Feugiat vivamus at augue eget. Vel fringilla
-                est ullamcorper eget nulla facilisi etiam dignissim diam. Nisi
-                lacus sed viverra tellus in hac. Dignissim sodales ut eu sem
-                integer. Orci sagittis eu volutpat odio facilisis. Faucibus nisl
-                tincidunt eget nullam non. Bibendum ut tristique et egestas quis
-                ipsum suspendisse ultrices. Est velit egestas dui id. Enim nec
-                dui nunc mattis. Sed tempus urna et pharetra pharetra. Morbi
-                blandit cursus risus at ultrices mi. Turpis cursus in hac
-                habitasse platea dictumst. Neque egestas congue quisque egestas
-                diam in. Nunc sed id semper risus in hendrerit gravida rutrum
-                quisque. Odio ut sem nulla pharetra diam sit amet. Id interdum
-                velit laoreet id donec ultrices tincidunt. Vel fringilla est
-                ullamcorper eget nulla facilisi etiam dignissim. Eget mi proin
-                sed libero enim sed faucibus. Tempus egestas sed sed risus
-                pretium quam vulputate. Tortor at risus viverra adipiscing at in
-                tellus integer feugiat. Varius morbi enim nunc faucibus a
-                pellentesque sit amet porttitor. Tortor at auctor urna nunc id.
-                Nam libero justo laoreet sit amet. Pellentesque sit amet
-                porttitor eget dolor. Elementum nibh tellus molestie nunc. Et
-                malesuada fames ac turpis egestas sed. Ut tellus elementum
-                sagittis vitae et leo. Eros in cursus turpis massa. Lorem dolor
-                sed viverra ipsum nunc aliquet. Tempus egestas sed sed risus.
-                Vitae proin sagittis nisl rhoncus mattis rhoncus urna neque.
-                Libero nunc consequat interdum varius sit amet mattis. Nisl
-                rhoncus mattis rhoncus urna neque. Convallis posuere morbi leo
-                urna molestie at elementum eu. Vestibulum mattis ullamcorper
-                velit sed. Sagittis orci a scelerisque purus semper eget duis
-                at. Hendrerit dolor magna eget est lorem ipsum dolor. Sit amet
-                massa vitae tortor. Scelerisque fermentum dui faucibus in.
-                Scelerisque eleifend donec pretium vulputate sapien nec sagittis
-                aliquam. Egestas sed tempus urna et pharetra pharetra. Mauris
-                pellentesque pulvinar pellentesque habitant morbi. Vitae et leo
-                duis ut diam. Risus viverra adipiscing at in tellus. Purus non
-                enim praesent elementum. Ac turpis egestas sed tempus urna et.
-                Auctor eu augue ut lectus. Consectetur purus ut faucibus
-                pulvinar elementum integer enim. Quis lectus nulla at volutpat
-                diam. Id porta nibh venenatis cras sed felis. Nibh sit amet
-                commodo nulla facilisi nullam vehicula ipsum a. Libero nunc
-                consequat interdum varius sit amet mattis. Amet commodo nulla
-                facilisi nullam. Amet consectetur adipiscing elit duis tristique
-                sollicitudin. Odio facilisis mauris sit amet massa vitae tortor.
-                Enim facilisis gravida neque convallis a. Condimentum lacinia
-                quis vel eros donec ac. Diam quis enim lobortis scelerisque
-                fermentum dui faucibus in ornare. Dui vivamus arcu felis
-                bibendum ut tristique et egestas. Faucibus et molestie ac
-                feugiat sed lectus vestibulum mattis. Adipiscing enim eu turpis
-                egestas pretium aenean pharetra magna. Quis blandit turpis
-                cursus in hac habitasse platea. Consectetur a erat nam at lectus
-                urna duis convallis convallis. Massa placerat duis ultricies
-                lacus sed turpis. In nibh mauris cursus mattis molestie a.
-                Venenatis urna cursus eget nunc scelerisque viverra mauris. Enim
-                ut tellus elementum sagittis vitae et leo. Nisi quis eleifend
-                quam adipiscing vitae proin sagittis nisl. Egestas dui id ornare
-                arcu odio ut sem nulla. Elit scelerisque mauris pellentesque
-                pulvinar pellentesque habitant morbi tristique senectus. Mauris
-                pharetra et ultrices neque ornare aenean. Mi proin sed libero
-                enim sed faucibus turpis in eu. Pretium fusce id velit ut tortor
-                pretium viverra suspendisse. Sit amet risus nullam eget felis
-                eget. Pulvinar pellentesque habitant morbi tristique senectus et
-                netus. Fames ac turpis egestas maecenas pharetra convallis
-                posuere morbi leo. Ut sem nulla pharetra diam sit amet nisl.
-                Tempor orci eu lobortis elementum nibh tellus molestie nunc. Mi
-                tempus imperdiet nulla malesuada pellentesque elit eget.
-                Tincidunt tortor aliquam nulla facilisi cras fermentum odio.
-                Dictum sit amet justo donec enim diam vulputate ut pharetra.
-                Cursus in hac habitasse platea dictumst quisque sagittis purus
-                sit. Sed elementum tempus egestas sed sed risus pretium quam.
-                Purus in massa tempor nec feugiat nisl pretium. Ultricies leo
-                integer malesuada nunc vel risus commodo viverra. Aliquam
-                faucibus purus in massa tempor. Tristique nulla aliquet enim
-                tortor at auctor urna. Scelerisque mauris pellentesque pulvinar
-                pellentesque habitant morbi tristique. Ipsum dolor sit amet
-                consectetur adipiscing elit ut aliquam. Volutpat commodo sed
-                egestas egestas fringilla phasellus faucibus. In nisl nisi
-                scelerisque eu ultrices. Nisl purus in mollis nunc sed id. Ut
-                etiam sit amet nisl purus in mollis nunc. Convallis posuere
-                morbi leo urna. Phasellus faucibus scelerisque eleifend donec
-                pretium vulputate sapien nec. Morbi tristique senectus et netus
-                et malesuada fames ac. Dui ut ornare lectus sit. In ante metus
-                dictum at tempor commodo ullamcorper a lacus. Facilisis gravida
-                neque convallis a cras. Nam aliquam sem et tortor consequat id
-                porta nibh. Dictumst vestibulum rhoncus est pellentesque elit
-                ullamcorper dignissim cras tincidunt. Fermentum leo vel orci
-                porta non pulvinar neque laoreet. Curabitur vitae nunc sed
-                velit. Sodales neque sodales ut etiam sit amet nisl. Nunc
-                consequat interdum varius sit. Molestie a iaculis at erat. Risus
-                in hendrerit gravida rutrum quisque. Tincidunt arcu non sodales
-                neque sodales ut etiam sit amet. Dignissim suspendisse in est
-                ante in nibh mauris cursus. Neque vitae tempus quam pellentesque
-                nec nam aliquam sem et. Viverra maecenas accumsan lacus vel
-                facilisis volutpat est velit. Suspendisse interdum consectetur
-                libero id. Pellentesque elit ullamcorper dignissim cras
-                tincidunt lobortis feugiat. A diam sollicitudin tempor id eu. Et
-                tortor consequat id porta nibh venenatis cras sed. Posuere lorem
-                ipsum dolor sit amet consectetur adipiscing elit. Nam aliquam
-                sem et tortor consequat id porta nibh venenatis. Pharetra diam
-                sit amet nisl suscipit. Nisl pretium fusce id velit. Ut lectus
-                arcu bibendum at varius. Nunc consequat interdum varius sit amet
-                mattis vulputate enim. At risus viverra adipiscing at in tellus
-                integer. Mauris augue neque gravida in fermentum et
-                sollicitudin. Ac turpis egestas maecenas pharetra. Eget duis at
-                tellus at urna. Turpis cursus in hac habitasse platea dictumst
-                quisque. Turpis cursus in hac habitasse. Rutrum tellus
-                pellentesque eu tincidunt. Quis blandit turpis cursus in hac
-                habitasse platea dictumst quisque. Viverra nam libero justo
-                laoreet sit amet cursus sit amet. Volutpat maecenas volutpat
-                blandit aliquam. Vitae ultricies leo integer malesuada. Eu nisl
-                nunc mi ipsum faucibus vitae. Scelerisque varius morbi enim nunc
-                faucibus. Nulla aliquet porttitor lacus luctus accumsan. Neque
-                viverra justo nec ultrices. Neque sodales ut etiam sit amet nisl
-                purus. Tincidunt eget nullam non nisi est sit. Augue lacus
-                viverra vitae congue eu. Lorem ipsum dolor sit amet consectetur
-                adipiscing elit ut. Orci porta non pulvinar neque laoreet
-                suspendisse interdum. Dignissim sodales ut eu sem integer.
-                Nullam eget felis eget nunc lobortis mattis. Tincidunt praesent
-                semper feugiat nibh sed pulvinar proin gravida. Orci phasellus
-                egestas tellus rutrum. Eleifend mi in nulla posuere sollicitudin
-                aliquam ultrices sagittis orci.
-            </div>
+            {content.trim() !== "" && (
 
-            {/* chapter nav */}
+                <div
+                    className={`${styles.Content} ${
+                        settingsIsOpen ? styles.ContentSettingsOpen : ""
+                    }`}
+                    style={{
+                        backgroundColor: backgroundColor,
+                        color: fontColor,
+                        fontSize: fontSize,
+                    }}
+                >
+                    {content}
+                </div>
+            )}
+
+            {/* topbar */}
             <div
                 onClick={(e) => e.stopPropagation()}
                 className={`${styles.TopBar} ${
                     chapterNavIsOpen ? "" : styles.TopBarClose
-                }`}
+                } ${settingsIsOpen ? styles.TopBarSettingsOpen : ""}`}
             >
                 {/* exit */}
                 <div
-                    className="flex items-center justify-center text-white"
+                    className="flex items-center cursor-pointer justify-center text-white"
                     onClick={closeReader}
                 >
                     <svg
@@ -251,13 +146,20 @@ function Reader({ novelInfo, chapter }) {
 
                 {/* chapter info */}
                 <div className="text-white text-xs md:text-base">
-                    Chapater 5: yada yada yada
+                    {readerChapterInfo.name}
                 </div>
 
                 {/* appearance settings */}
-                <div className="flex items-center justify-center text-white">
+                <div
+                    className={`${styles.AppearanceSettingsButton} cursor-pointer ${
+                        settingsIsOpen
+                            ? styles.AppearanceSettingsButtonActive
+                            : ""
+                    }`}
+                    onClick={() => setSettingsIsOpen(!settingsIsOpen)}
+                >
                     <svg
-                        className="text-white fill-current md:mr-3"
+                        className="fill-current md:mr-3"
                         height="24"
                         width="24"
                         viewBox="0 0 24 24"
@@ -269,6 +171,7 @@ function Reader({ novelInfo, chapter }) {
                 </div>
             </div>
 
+            {/* next and prev page */}
             <div
                 className={`${styles.ChapterNav} ${
                     chapterNavIsOpen ? "" : styles.ChapterNavClose
@@ -282,7 +185,151 @@ function Reader({ novelInfo, chapter }) {
             </div>
 
             {/* appearance control */}
-            <div className={styles.AppearanceControl}></div>
+            <div
+                onClick={(e) => e.stopPropagation()}
+                className={`${styles.AppearanceControl} ${
+                    settingsIsOpen
+                        ? styles.AppearanceControlOpen
+                        : styles.AppearanceControlClose
+                }`}
+            >
+                {/* font size */}
+                <div>
+                    <span>Font Size</span>
+                    {/* font size ui component increment and decrement */}
+                    <div className={styles.Control}>
+                        {/* minus icon */}
+                        <div
+                            className={styles.FontSizeControlIcon}
+                            onClick={decrementFontSize}
+                        >
+                            <svg
+                                height="17px"
+                                width="17px"
+                                version="1.1"
+                                viewBox="0 0 32 32"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>minus-circle</title>
+                                <defs />
+                                <g
+                                    id="Page-1"
+                                    fill="none"
+                                    fillRule="evenodd"
+                                    stroke="none"
+                                    strokeWidth="1"
+                                >
+                                    <g
+                                        id="Icon-Set-Filled"
+                                        fill="#ECECEC"
+                                        transform="translate(-518.000000, -1089.000000)"
+                                    >
+                                        <path
+                                            id="minus-circle"
+                                            d="M540,1106 L528,1106 C527.447,1106 527,1105.55 527,1105 C527,1104.45 527.447,1104 528,1104 L540,1104 C540.553,1104 541,1104.45 541,1105 C541,1105.55 540.553,1106 540,1106 L540,1106 Z M534,1089 C525.163,1089 518,1096.16 518,1105 C518,1113.84 525.163,1121 534,1121 C542.837,1121 550,1113.84 550,1105 C550,1096.16 542.837,1089 534,1089 L534,1089 Z"
+                                        />
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+
+                        {/* font size */}
+                        <div className={styles.FontSizeControlValue}>
+                            <span>{fontSize}px</span>
+                        </div>
+
+                        {/* plus icon */}
+                        <div
+                            className={styles.FontSizeControlIcon}
+                            onClick={incrementFontSize}
+                        >
+                            <svg
+                                height="17px"
+                                width="17px"
+                                version="1.1"
+                                viewBox="0 0 32 32"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>plus-circle</title>
+                                <defs />
+                                <g
+                                    id="Page-1"
+                                    fill="none"
+                                    fillRule="evenodd"
+                                    stroke="none"
+                                    strokeWidth="1"
+                                >
+                                    <g
+                                        id="Icon-Set-Filled"
+                                        fill="#ECECEC"
+                                        transform="translate(-466.000000, -1089.000000)"
+                                    >
+                                        <path
+                                            id="plus-circle"
+                                            d="M488,1106 L483,1106 L483,1111 C483,1111.55 482.553,1112 482,1112 C481.447,1112 481,1111.55 481,1111 L481,1106 L476,1106 C475.447,1106 475,1105.55 475,1105 C475,1104.45 475.447,1104 476,1104 L481,1104 L481,1099 C481,1098.45 481.447,1098 482,1098 C482.553,1098 483,1098.45 483,1099 L483,1104 L488,1104 C488.553,1104 489,1104.45 489,1105 C489,1105.55 488.553,1106 488,1106 L488,1106 Z M482,1089 C473.163,1089 466,1096.16 466,1105 C466,1113.84 473.163,1121 482,1121 C490.837,1121 498,1113.84 498,1105 C498,1096.16 490.837,1089 482,1089 L482,1089 Z"
+                                        />
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {/* background color */}
+                <div>
+                    <span>Background Color</span>
+                    {/* font size ui component increment and decrement */}
+                    <div className={styles.Control}>
+                        {/* <div className={styles.ControlButton}>
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 512 512"
+                                fill="#ECECEC"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>ionicons-v5-m</title>
+                                <path d="M441,336.2l-.06-.05c-9.93-9.18-22.78-11.34-32.16-12.92l-.69-.12c-9.05-1.49-10.48-2.5-14.58-6.17-2.44-2.17-5.35-5.65-5.35-9.94s2.91-7.77,5.34-9.94l30.28-26.87c25.92-22.91,40.2-53.66,40.2-86.59S449.73,119.92,423.78,97c-35.89-31.59-85-49-138.37-49C223.72,48,162,71.37,116,112.11c-43.87,38.77-68,90.71-68,146.24s24.16,107.47,68,146.23c21.75,19.24,47.49,34.18,76.52,44.42a266.17,266.17,0,0,0,86.87,15h1.81c61,0,119.09-20.57,159.39-56.4,9.7-8.56,15.15-20.83,15.34-34.56C456.14,358.87,450.56,345.09,441,336.2ZM112,208a32,32,0,1,1,32,32A32,32,0,0,1,112,208Zm40,135a32,32,0,1,1,32-32A32,32,0,0,1,152,343Zm40-199a32,32,0,1,1,32,32A32,32,0,0,1,192,144Zm64,271a48,48,0,1,1,48-48A48,48,0,0,1,256,415Zm72-239a32,32,0,1,1,32-32A32,32,0,0,1,328,176Z" />
+                            </svg>
+                        </div> */}
+                        <input className={`${styles.InputColor}`} onChange={e => setBackgroundColor(e.target.value)} type="color"  value={backgroundColor}/>
+                    </div>
+                </div>
+
+                {/* font color */}
+                <div>
+                    <span>Font Color</span>
+                    {/* font size ui component increment and decrement */}
+                    <div className={styles.Control}>
+                        {/* <div className={styles.ControlButton}>
+                            <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 512 512"
+                                fill="#ECECEC"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <title>ionicons-v5-m</title>
+                                <path d="M441,336.2l-.06-.05c-9.93-9.18-22.78-11.34-32.16-12.92l-.69-.12c-9.05-1.49-10.48-2.5-14.58-6.17-2.44-2.17-5.35-5.65-5.35-9.94s2.91-7.77,5.34-9.94l30.28-26.87c25.92-22.91,40.2-53.66,40.2-86.59S449.73,119.92,423.78,97c-35.89-31.59-85-49-138.37-49C223.72,48,162,71.37,116,112.11c-43.87,38.77-68,90.71-68,146.24s24.16,107.47,68,146.23c21.75,19.24,47.49,34.18,76.52,44.42a266.17,266.17,0,0,0,86.87,15h1.81c61,0,119.09-20.57,159.39-56.4,9.7-8.56,15.15-20.83,15.34-34.56C456.14,358.87,450.56,345.09,441,336.2ZM112,208a32,32,0,1,1,32,32A32,32,0,0,1,112,208Zm40,135a32,32,0,1,1,32-32A32,32,0,0,1,152,343Zm40-199a32,32,0,1,1,32,32A32,32,0,0,1,192,144Zm64,271a48,48,0,1,1,48-48A48,48,0,0,1,256,415Zm72-239a32,32,0,1,1,32-32A32,32,0,0,1,328,176Z" />
+                            </svg>
+                        </div> */}
+                        <input className={`${styles.InputColor}`} type="color" onChange={e => setFontColor(e.target.value)}  value={fontColor}/>
+                    </div>
+                </div>
+            </div>
+
+            {/* loading */}
+            {isFetching && (
+                <div className={styles.Loading}>
+                    <div className="px-4 py-4 w-full">
+                        <button className="underline" onClick={closeReader}>Cancel</button>
+                    </div>
+                    <div className={styles.LoadingText}>
+                        Loading content...  
+                        <h1>{readerChapterInfo.name}</h1>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
