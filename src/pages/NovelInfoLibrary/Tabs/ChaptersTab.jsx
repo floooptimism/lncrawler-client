@@ -28,25 +28,40 @@ function ChaptersTab({ librarian, novelInfo }) {
     const { menuComponentId, setMenuComponentId, setMenuComponent } =
         useNovelInfoLibraryContext();
 
-    function Component(props) {
-        return (
-            <>
-                <MenuItem>Download all chapters</MenuItem>
-                <MenuItem>Cancel all pending chapters</MenuItem>
-                <MenuItem>Close</MenuItem>
-            </>
-        );
-    }
+    const { functions: Downloader } = useDownloader();
 
-    const ComponentId = 0;
+    
 
     useEffect(() => {
-        if (menuComponentId === ComponentId) {
-            return;
+        const ComponentId = 0;
+        function Component(props) {
+            function downloadAllChapters(){
+                let tasks = chapters.map((chapter, index) => chapterToTask(novelInfo, chapter, index+1));
+                let filteredTasks = tasks.filter( (task, index) => !downloadedChapters[task.chapterIndex])
+                Downloader.bulkAddTask(filteredTasks);
+            }
+    
+            function bulkRemoveTasks(){
+                let tasks = chapters.map((chapter, index) => {
+                    return {
+                        id: novelInfo.url + chapter.url,
+                    }
+                });
+                Downloader.bulkRemoveTask(tasks);
+            }
+    
+            return (
+                <>
+                    <MenuItem onClick={downloadAllChapters}>Download all chapters</MenuItem>
+                    <MenuItem onClick={bulkRemoveTasks}>Cancel all pending chapters</MenuItem>
+                    <MenuItem>Close</MenuItem>
+                </>
+            );
         }
+
         setMenuComponentId(ComponentId);
         setMenuComponent(Component);
-    }, [menuComponentId, setMenuComponent, setMenuComponentId]);
+    }, [menuComponentId, setMenuComponent, setMenuComponentId, Downloader, chapters, novelInfo, downloadedChapters]);
 
     async function fetchChaptersInfo() {
         let chapters = await librarian.getChapters(novelInfo.url);
@@ -146,10 +161,12 @@ function ChaptersTab({ librarian, novelInfo }) {
 const Item = function ({data, index, style}) {
     const { functions: Downloader } = useDownloader();
     
-    const { chapters, novelInfo, downloadedChapters, setReaderIsOpen } = data;
+    const { chapters, novelInfo, downloadedChapters, itemClick } = data;
     
     function handleClick() {
-        setReaderIsOpen(true);
+        let chapterInfo = chapters[index];
+        chapterInfo.chapterIndex = index+1;
+        itemClick(novelInfo, chapterInfo);
     }
 
     function download(e) {
@@ -219,14 +236,19 @@ const Item = function ({data, index, style}) {
 };
 
 function MyList({chapters, novelInfo, downloadedChapters}) {
-    const { setReaderIsOpen } = useReader();
-    console.log("RERENDERING MYLIST");
+    const { setReaderIsOpen, setReaderNovelInfo, setReaderChapterInfo } = useReader();
+
+    function itemClick(novelInfo, chapterInfo) {
+        setReaderNovelInfo(novelInfo);
+        setReaderChapterInfo(chapterInfo);
+        setReaderIsOpen(true);
+    }
 
     return (
         <AutoSizer>
             {({ height, width }) => (
                 <List
-                    itemData={{chapters, novelInfo, downloadedChapters, setReaderIsOpen}}
+                    itemData={{chapters, novelInfo, downloadedChapters, itemClick}}
                     height={height}
                     itemCount={chapters.length}
                     itemSize={52}
