@@ -26,10 +26,6 @@ function Browse(props) {
         setSearchResults(res);
     }
 
-    useEffect( () =>{
-      console.log("Novelids", novelIds);
-    }, [novelIds])
-
     return (
         <div className={styles.BrowseContainer}>
             <form
