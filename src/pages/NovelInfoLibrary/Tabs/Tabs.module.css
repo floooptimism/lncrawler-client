@@ -12,7 +12,7 @@
 }
 
 .Tabs {
-    @apply flex justify-evenly border-b;
+    @apply flex justify-evenly md:justify-start md:space-x-4 md:px-5 border-b;
     border-color: #e7e7e7;
 }
 
