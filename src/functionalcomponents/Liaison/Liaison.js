@@ -91,10 +91,11 @@ class Liaison {
 
     try {
       let res = await axios.get(url);
-      console.log(res);
+      console.log("string",res.data);
       return res.data;
     } catch (err) {
       console.log(err);
+      console.log("ERROR");
       return null;
     }
   }
