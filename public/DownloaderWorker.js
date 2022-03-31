@@ -24,7 +24,6 @@ class DownloaderWorker {
 
   cancelDownload() {
     if(this.callMeToAbortDownload) {
-      console.log("Called the abort function");
       this.callMeToAbortDownload.abort();
       this.callMeToAbortDownload = null;
     }
@@ -46,14 +45,17 @@ class DownloaderWorker {
 
   processTask(task) {
     this.setState("working");
-
+    if(!task || !task.source) {
+      this.requestTask();
+      return;
+    }
     if (task.source && task.url) {
       let query = getQueryString(task.type, task.source, task.url);
       let xhr = request(
         query,
         () => {}, //progress
         (result) => { // success
-          this.sendResult(result, task);
+          this.sendResult(JSON.parse(result), task);
         },
         (status) => { // error
           this.sendResult(null, task, false);
