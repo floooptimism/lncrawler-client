@@ -50,10 +50,11 @@ function NovelInfoLibrary({ onClose, url, open }) {
     useEffect(() => {
         setLoading(true);
         if (librarian.getNovelInfo) {
-            setNovelInfo(librarian.getNovelInfo(url));
+            let novelInfo = librarian.getNovelInfo(url);
+            setNovelInfo(novelInfo);
         }
         setLoading(false);
-    }, [url]);
+    }, [url, librarian]);
 
     if (loading) {
         return (
