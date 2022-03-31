@@ -12,9 +12,7 @@ function ReaderProvider(props) {
         <ReaderContext.Provider
             value={{
                 readerIsOpen,
-                setReaderIsOpen,
-                readerContent,
-                setReaderContent,
+                setReaderIsOpen,    
                 readerNovelInfo,
                 setReaderNovelInfo,
                 readerChapterInfo,
