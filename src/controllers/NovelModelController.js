@@ -110,11 +110,8 @@ class NovelModelController {
       novel_url +
       "ChapterChunk" +
       Math.floor(chapterNumber / (MAXCHAPTERSPERCHUNK + 1));
-
     let chunk = await ChapterChunkDexie.get(chunkid);
-    console.log("This is chunk -> ", chunk);
     let chaptermeta = await ChapterMetaDexie.get(chunk.chaptermetaref);
-    console.log(chaptermeta);
     //store the content in the chunk
     chunk.chapters[(chapterNumber - 1) % MAXCHAPTERSPERCHUNK].content = content;
     //modify chaptermeta to reflect the new downloaded chapter
@@ -222,9 +219,10 @@ class NovelModelController {
     //get the chunk for the corresponding chapterNumber
     let chunkid =
       novel_url +
-      "ChapterChunk" +
-      Math.floor(chapterNumber / MAXCHAPTERSPERCHUNK + 1);
+      "ChapterChunk" +  
+      Math.floor(chapterNumber / (MAXCHAPTERSPERCHUNK + 1));
     let chunk = await ChapterChunkDexie.get(chunkid);
+    if(!chunk) return null; 
     return chunk.chapters[(chapterNumber - 1) % MAXCHAPTERSPERCHUNK].content;
   }
 }

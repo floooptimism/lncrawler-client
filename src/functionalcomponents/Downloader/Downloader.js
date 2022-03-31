@@ -82,13 +82,12 @@ class Downloader {
     let validTasks = tasks.filter( (task) => {
       return !this.tasksHash[task.id];
     })
-
     if(validTasks.length <= 0){
       this.sendTask();
       return;
     }
 
-    for(var task in validTasks){
+    for(var task of validTasks){
       this.tasks.push(task);
       this.tasksHash[task.id] = { idx: this.tasks.length - 1, status: 0 };
     }
@@ -103,6 +102,8 @@ class Downloader {
           1
         );
         delete this.tasksHash[task.id];
+        
+        // recalculate indices
         let count = 0;
         for(var t of this.tasks){
           this.tasksHash[t.id].idx = count++;
@@ -143,7 +144,7 @@ class Downloader {
           this.failCallback();
           break;
         case "success":
-          console.log("Task ", msg.data.task, " completed!");
+          console.log("SUCCESS TASK");
           this.removeTask(msg.data.task);
           this.setCurrentTask(null);
           this.successCallback({
