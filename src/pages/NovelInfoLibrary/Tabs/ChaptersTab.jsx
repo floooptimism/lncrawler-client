@@ -236,13 +236,15 @@ const Item = function ({data, index, style}) {
 };
 
 function MyList({chapters, novelInfo, downloadedChapters}) {
-    const { setReaderIsOpen, setReaderNovelInfo, setReaderChapterInfo } = useReader();
+    const { setReaderIsOpen, setReaderNovelInfo, setReaderChapterInfo, setReaderChapters } = useReader();
 
     function itemClick(novelInfo, chapterInfo) {
         setReaderNovelInfo(novelInfo);
         setReaderChapterInfo(chapterInfo);
         setReaderIsOpen(true);
+        setReaderChapters(chapters);
     }
+
 
     return (
         <AutoSizer>

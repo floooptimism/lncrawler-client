@@ -8,7 +8,7 @@ function InformationTab({novelInfo}) {
             <div className="flex justify-between mt-5">
                 <div className={styles.Attribute}>
                     <h1>Chapters</h1>
-                    <p>{novelInfo && novelInfo.numberOfChapters}</p>
+                    <p>{(novelInfo && novelInfo.numberOfChapters) || "( Chapters not loaded )"}</p>
                 </div>
                 <div className={styles.Attribute}>
                     <h1>Reading progress</h1>

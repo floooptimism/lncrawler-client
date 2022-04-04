@@ -11,7 +11,7 @@ import { useReaderAppearance } from "./hooks/useReaderAppearance";
 const { disableScroll, enableScroll } = scrollControlFunctions;
 
 function Reader() {
-    const { setReaderIsOpen, readerNovelInfo, readerChapterInfo } = useReader();
+    const { setReaderIsOpen, readerChapters, readerNovelInfo, readerChapterInfo, prevAndNextTracker} = useReader();
 
     const {
         fontSize,
@@ -33,12 +33,15 @@ function Reader() {
 
     const { librarian } = useLibrarian();
 
+
+
     useEffect(() => {
         disableScroll();
         return () => {
             enableScroll();
         };
     });
+
 
     useEffect(() => {
         // get novel info if novelID changes

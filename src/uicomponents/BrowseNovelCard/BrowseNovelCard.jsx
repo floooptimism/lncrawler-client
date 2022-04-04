@@ -10,15 +10,7 @@ function BrowseNovelCard({
     onClick,
     inLibrary,
 }) {
-    function toggleInLibrary() {
-        if (inLibrary) {
-            // remove from library
-            return;
-        }
-
-        // add to library
-    }
-
+  
     // opens the modal
     function clickHandle() {
         onClick(url, source, inLibrary);
@@ -60,7 +52,6 @@ function BrowseNovelCard({
 
                 {/* Indicator if Novel is already in library or not */}
                 <div
-                    onClick={toggleInLibrary}
                     className={
                         styles.BrowseNovelCardIndicator +
                         " " +

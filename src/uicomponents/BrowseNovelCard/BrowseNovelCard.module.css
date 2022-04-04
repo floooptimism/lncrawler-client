@@ -56,11 +56,5 @@
 }
 
 .BrowseNovelCardIndicatorInLibrary {
-  @apply text-green-400 bg-opacity-20;
-}
-
-.BrowseNovelCardIndicatorNotInLibrary{
-  color: #404040;
-  background-color: #cfcfcf;
-  @apply w-28; 
+  @apply text-green-400 bg-opacity-20 font-medium;
 }

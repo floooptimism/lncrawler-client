@@ -16,11 +16,6 @@ function NovelInfoBrowser({novelInfo, exist, toggleInLibrary}) {
                 >
                     {exist ? "Added to Library" : "Add to Library"}
                 </button>
-                {exist && (
-                    <button className={styles.AddToLibraryButtonView}>
-                        View in Library
-                    </button>
-                )}
             </div>
 
             {/* info container */}

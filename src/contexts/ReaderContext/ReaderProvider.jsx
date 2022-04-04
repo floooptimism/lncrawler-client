@@ -4,9 +4,32 @@ const ReaderContext = createContext();
 
 function ReaderProvider(props) {
     const [readerIsOpen, setReaderIsOpen] = useState(false);
-    const [readerContent, setReaderContent] = useState("");
     const [readerNovelInfo, setReaderNovelInfo] = useState(null);
     const [readerChapterInfo, setReaderChapterInfo] = useState(null);
+    const [readerChapters, setReaderChapters] = useState([]);
+    const [prevAndNextTracker, setPrevAndNextTracker] = useState([false, false]);
+
+    useEffect( () => {
+      if(!readerNovelInfo) return;
+
+      function hasPrevChapter(){
+        let chapterIndex = readerChapterInfo.chapterIndex;
+        return chapterIndex > 1;
+      }
+    
+      function hasNextChapter(){
+        let chapterIndex = readerChapterInfo.chapterIndex;
+        return chapterIndex < readerNovelInfo.numberOfChapters;
+      }
+
+      setPrevAndNextTracker([hasPrevChapter(), hasNextChapter()])
+
+    }, [readerChapterInfo, readerChapters,readerNovelInfo])
+  
+    function nextChapter(){
+      
+    }
+
 
     return (
         <ReaderContext.Provider
@@ -17,6 +40,9 @@ function ReaderProvider(props) {
                 setReaderNovelInfo,
                 readerChapterInfo,
                 setReaderChapterInfo,
+                readerChapters,
+                prevAndNextTracker,
+                setReaderChapters
             }}
         >
             {props.children}

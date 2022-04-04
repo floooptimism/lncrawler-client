@@ -7,7 +7,7 @@ import Liaison from './functionalcomponents/Liaison/Liaison';
 
 
 function App() {
-  
+
   return (
     <div className="App">
         <Navbar />
