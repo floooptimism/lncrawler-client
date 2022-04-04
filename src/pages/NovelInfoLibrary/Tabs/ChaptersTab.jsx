@@ -164,7 +164,7 @@ const Item = function ({data, index, style}) {
     const { chapters, novelInfo, downloadedChapters, itemClick } = data;
     
     function handleClick() {
-        let chapterInfo = chapters[index];
+        let chapterInfo = {...chapters[index]};
         chapterInfo.chapterIndex = index+1;
         itemClick(novelInfo, chapterInfo);
     }

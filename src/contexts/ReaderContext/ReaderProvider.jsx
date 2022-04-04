@@ -8,9 +8,34 @@ function ReaderProvider(props) {
     const [readerChapterInfo, setReaderChapterInfo] = useState(null);
     const [readerChapters, setReaderChapters] = useState([]);
     const [prevAndNextTracker, setPrevAndNextTracker] = useState([false, false]);
+  
+    function setNewChapterInfo(oldIndex, newIndex){
+      let url = readerChapters[oldIndex].url;
+      let name = readerChapters[oldIndex].name;
+      let newChapterInfo = {
+        chapterIndex:newIndex,
+        url: url,
+        name: name
+      }
+      setReaderChapterInfo(newChapterInfo);
+    }
+
+    function prevChapter(){
+      if(!prevAndNextTracker[0]) return;
+      let newIndex = readerChapterInfo.chapterIndex - 1;
+      // actual index if 0-based is chapterIndex - 1, so 2 steps back for previous chapter's index
+      setNewChapterInfo(readerChapterInfo.chapterIndex-2, newIndex);
+    }
+
+    function nextChapter(){
+      if(!prevAndNextTracker[1]) return;
+      let newIndex = readerChapterInfo.chapterIndex + 1;
+      setNewChapterInfo(readerChapterInfo.chapterIndex, newIndex);
+    }
 
     useEffect( () => {
       if(!readerNovelInfo) return;
+      console.log("GOT CALLED");
 
       function hasPrevChapter(){
         let chapterIndex = readerChapterInfo.chapterIndex;
@@ -19,18 +44,13 @@ function ReaderProvider(props) {
     
       function hasNextChapter(){
         let chapterIndex = readerChapterInfo.chapterIndex;
-        return chapterIndex < readerNovelInfo.numberOfChapters;
+        return chapterIndex < readerChapters.length;
       }
 
       setPrevAndNextTracker([hasPrevChapter(), hasNextChapter()])
 
-    }, [readerChapterInfo, readerChapters,readerNovelInfo])
+    }, [readerChapters,readerNovelInfo])
   
-    function nextChapter(){
-      
-    }
-
-
     return (
         <ReaderContext.Provider
             value={{
@@ -42,7 +62,9 @@ function ReaderProvider(props) {
                 setReaderChapterInfo,
                 readerChapters,
                 prevAndNextTracker,
-                setReaderChapters
+                setReaderChapters,
+                prevChapter,
+                nextChapter
             }}
         >
             {props.children}

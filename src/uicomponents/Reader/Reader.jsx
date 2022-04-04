@@ -11,7 +11,7 @@ import { useReaderAppearance } from "./hooks/useReaderAppearance";
 const { disableScroll, enableScroll } = scrollControlFunctions;
 
 function Reader() {
-    const { setReaderIsOpen, readerChapters, readerNovelInfo, readerChapterInfo, prevAndNextTracker} = useReader();
+    const { setReaderIsOpen, readerNovelInfo, readerChapterInfo, prevAndNextTracker, nextChapter, prevChapter} = useReader();
 
     const {
         fontSize,
@@ -32,8 +32,14 @@ function Reader() {
     const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 
     const { librarian } = useLibrarian();
-
-
+  
+    function next(){
+      nextChapter();
+    }
+    
+    function prev(){
+      prevChapter();
+    }
 
     useEffect(() => {
         disableScroll();
@@ -48,6 +54,7 @@ function Reader() {
         let isMounted = true;
         if (!readerNovelInfo) return;
         setIsFetching(true);
+        setContent("");
         librarian
             .getChapterContent(readerNovelInfo.url, readerChapterInfo.chapterIndex)
             .then((res) => {
@@ -183,8 +190,8 @@ function Reader() {
                     e.stopPropagation();
                 }}
             >
-                <div>Prev Chapter</div>
-                <div>Next Chapter</div>
+                <div onClick={prev}>Prev Chapter</div>
+                <div onClick={next}>Next Chapter</div>
             </div>
 
             {/* appearance control */}

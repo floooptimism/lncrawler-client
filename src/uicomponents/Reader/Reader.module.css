@@ -11,7 +11,7 @@
 .Content{
     @apply px-7 py-4 z-50;
     @apply py-14; 
-    @apply whitespace-pre-line
+    @apply whitespace-pre-wrap;
 }
 
 
