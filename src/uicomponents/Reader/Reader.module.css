@@ -27,6 +27,22 @@
     transform: translateY(44px);
 }
 
+.ChapterNavDesktop {
+  @apply fixed bottom-4 w-screen;
+  @apply hidden md:flex justify-center items-center space-x-4;
+}
+
+.ChapterNavDesktop > div {
+  @apply bg-gray-300;
+  @apply px-2 py-1;
+  @apply rounded;
+  @apply text-gray-100 text-sm font-light;
+  @apply flex items-center justify-center;
+  @apply space-x-2;
+  background-color: #4a4a4a;
+}
+
+
 /* 
 .ChapterNav > div:first-child{
     @apply border-r border-gray-600;

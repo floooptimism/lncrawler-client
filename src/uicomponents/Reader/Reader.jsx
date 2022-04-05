@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import useLibrarian from "../../hooks/useLibrarian";
 import Liaison from "../../functionalcomponents/Liaison/Liaison";
+import ArrowRight from '../svgs/ArrowRight';
+import ArrowLeft from '../svgs/ArrowLeft';
 
 import styles from "./Reader.module.css";
 
@@ -192,6 +194,20 @@ function Reader() {
             >
                 <div onClick={prev}>Prev Chapter</div>
                 <div onClick={next}>Next Chapter</div>
+            </div>
+
+            <div className={`${styles.ChapterNavDesktop}`}>
+                <div onClick={prev}>
+                  <ArrowLeft fill="#fff"/>
+                  <span>Prev Page</span>
+                </div>
+                <div onClick={next}>
+                  <span>
+                    Next Page
+                  </span>
+                  <ArrowRight fill="#fff"/>
+                </div>
+                
             </div>
 
             {/* appearance control */}
