@@ -13,7 +13,7 @@ import { useReaderAppearance } from "./hooks/useReaderAppearance";
 const { disableScroll, enableScroll } = scrollControlFunctions;
 
 function Reader() {
-    const { setReaderIsOpen, readerNovelInfo, readerChapterInfo, prevAndNextTracker, nextChapter, prevChapter} = useReader();
+    const { setReaderIsOpen, readerNovelInfo, readerChapterInfo, nextChapter, prevChapter} = useReader();
 
     const {
         fontSize,
@@ -34,11 +34,11 @@ function Reader() {
     const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 
     const { librarian } = useLibrarian();
-  
+
     function next(){
       nextChapter();
     }
-    
+
     function prev(){
       prevChapter();
     }
@@ -192,22 +192,22 @@ function Reader() {
                     e.stopPropagation();
                 }}
             >
-                <div onClick={prev}>Prev Chapter</div>
-                <div onClick={next}>Next Chapter</div>
+                <div className="cursor-pointer" onClick={prev}>Prev Chapter</div>
+                <div className="cursor-pointer" onClick={next}>Next Chapter</div>
             </div>
 
             <div className={`${styles.ChapterNavDesktop}`}>
-                <div onClick={prev}>
+                <div onClick={prev} className="cursor-pointer">
                   <ArrowLeft fill="#fff"/>
                   <span>Prev Page</span>
                 </div>
-                <div onClick={next}>
+                <div onClick={next} className="cursor-pointer">
                   <span>
                     Next Page
                   </span>
                   <ArrowRight fill="#fff"/>
                 </div>
-                
+
             </div>
 
             {/* appearance control */}
@@ -351,7 +351,7 @@ function Reader() {
                         <button className="underline" onClick={closeReader}>Cancel</button>
                     </div>
                     <div className={styles.LoadingText}>
-                        Loading content...  
+                        Loading content...
                         <h1>{readerChapterInfo.name}</h1>
                     </div>
                 </div>
