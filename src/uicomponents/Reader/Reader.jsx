@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import useLibrarian from "../../hooks/useLibrarian";
+import librarian from "../../functionalcomponents/Librarian/Librarian";
 import Liaison from "../../functionalcomponents/Liaison/Liaison";
 import ArrowRight from '../svgs/ArrowRight';
 import ArrowLeft from '../svgs/ArrowLeft';
@@ -13,8 +13,7 @@ import { useReaderAppearance } from "./hooks/useReaderAppearance";
 const { disableScroll, enableScroll } = scrollControlFunctions;
 
 function Reader() {
-    const { setReaderIsOpen, readerNovelInfo, readerChapterInfo, nextChapter, prevChapter} = useReader();
-
+    const { setReaderIsOpen, readerData, setReaderData} = useReader();
     const {
         fontSize,
         backgroundColor,
@@ -24,24 +23,84 @@ function Reader() {
         setFontColor,
         setBackgroundColor,
     } = useReaderAppearance();
-
-    const [content, setContent] = useState("");
-
-    const [isFetching, setIsFetching] = useState(true);
-
     // ui flags
     const [chapterNavIsOpen, setChapterNavIsOpen] = useState(true);
     const [settingsIsOpen, setSettingsIsOpen] = useState(false);
 
-    const { librarian } = useLibrarian();
+    const [content, setContent] = useState(null);
+
+    // fetch data at load
+    useEffect( () => {
+        let isMounted = true;
+        
+        async function fetchContent() {
+            if (readerData.chapterInfo) {
+                let content = await librarian.getChapterContent(readerData.novelInfo.url, readerData.chapterInfo.chapterIndex);                console.log(content);
+                if(content){
+                    if(isMounted) setContent(content);
+                }else {
+                    content = await Liaison.getNovelChapterContent(readerData.chapterInfo.url, readerData.novelInfo.url);
+                    if(content){
+                        if(isMounted) setContent(content);
+                    }
+                }
+            }
+        }
+
+        fetchContent();
+
+        async function updateNovel(){
+            let novelInfo = await librarian.getNovel(readerData.novelInfo.url);
+            if(novelInfo.currentChapter !== readerData.chapterInfo.chapterIndex){
+                await librarian.updateNovel({
+                    ...novelInfo,
+                    currentChapter: readerData.chapterInfo.chapterIndex
+                })
+            }
+        }
+
+        updateNovel();
+
+
+        return () => {
+            isMounted = false;
+        }
+
+    }, [readerData]);
+
+    // update novel data
+
 
     function next(){
-      nextChapter();
+        if(!hasNextChapter()) return;
+        setContent(null);
+        let newChapterInfo = {...readerData.chapters[readerData.chapterInfo.chapterIndex]};
+        newChapterInfo.chapterIndex = readerData.chapterInfo.chapterIndex + 1;
+
+        setReaderData({...readerData, 
+            chapterInfo: newChapterInfo
+        })
     }
 
     function prev(){
-      prevChapter();
+        if(!hasPrevChapter()) return;
+        setContent(null);
+        let newChapterInfo = {...readerData.chapters[readerData.chapterInfo.chapterIndex - 2]};
+        newChapterInfo.chapterIndex = readerData.chapterInfo.chapterIndex - 1;
+
+        setReaderData({...readerData, 
+            chapterInfo: newChapterInfo
+        })
     }
+
+    function hasPrevChapter(){
+        return readerData.chapterInfo.chapterIndex > 1;
+    }
+
+    function hasNextChapter(){
+        return readerData.chapterInfo.chapterIndex < readerData.chapters.length;
+    }
+
 
     useEffect(() => {
         disableScroll();
@@ -50,41 +109,6 @@ function Reader() {
         };
     });
 
-
-    useEffect(() => {
-        // get novel info if novelID changes
-        let isMounted = true;
-        if (!readerNovelInfo) return;
-        setIsFetching(true);
-        setContent("");
-        librarian
-            .getChapterContent(readerNovelInfo.url, readerChapterInfo.chapterIndex)
-            .then((res) => {
-                if(res) {
-                    if (isMounted) {
-                        setContent(res);
-                        setIsFetching(false);
-                    }
-                } else {
-                    // fetch from network
-                    Liaison.getNovelChapterContent(
-                        readerChapterInfo.url,
-                        readerNovelInfo.source
-                    ).then((res) => {
-                        if (res) {
-                            if (isMounted) {
-                                setContent(res);
-                                setIsFetching(false);
-                            }
-                        }
-                    });
-                }
-            });
-
-        return () => {
-            isMounted = false;
-        };
-    }, [readerNovelInfo, readerChapterInfo, librarian]);
 
     function closeReader() {
         setReaderIsOpen(false);
@@ -116,7 +140,7 @@ function Reader() {
         <div className={styles.Container} onClick={handleClickForMobile}>
             <div id="device-detector" className="absolute md:hidden"></div>
             {/* content */}
-            {content.trim() !== "" && (
+            {content && (
 
                 <div
                     className={`${styles.Content} ${
@@ -158,7 +182,7 @@ function Reader() {
 
                 {/* chapter info */}
                 <div className="text-white text-xs md:text-base">
-                    {readerChapterInfo.name}
+                    {readerData.chapterInfo.name}
                 </div>
 
                 {/* appearance settings */}
@@ -345,14 +369,14 @@ function Reader() {
             </div>
 
             {/* loading */}
-            {isFetching && (
+            {content===null && (
                 <div className={styles.Loading}>
                     <div className="px-4 py-4 w-full">
                         <button className="underline" onClick={closeReader}>Cancel</button>
                     </div>
                     <div className={styles.LoadingText}>
                         Loading content...
-                        <h1>{readerChapterInfo.name}</h1>
+                        <h1>{readerData.chapterInfo.name}</h1>
                     </div>
                 </div>
             )}
