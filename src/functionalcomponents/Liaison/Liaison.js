@@ -78,6 +78,7 @@ class Liaison {
   }
 
   async getNovelChapterContent(chapterURL, novelSource) {
+    console.log("GETTING CALLED AF");
     const postfix = "/chaptercontent";
     const param_scraperSource = "scraperSource=" + novelSource;
     const param_chapterURL = "chapterURL=" + chapterURL;
@@ -91,7 +92,6 @@ class Liaison {
 
     try {
       let res = await axios.get(url);
-      console.log("string",res.data);
       return res.data;
     } catch (err) {
       console.log(err);

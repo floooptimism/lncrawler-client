@@ -7,6 +7,7 @@ const { compare } = require("string-compare");
 
 
 class NovelModelController {
+
   /**
    * Stores the shitty novel
    * @param {Object} novel - Novel Object
@@ -44,12 +45,10 @@ class NovelModelController {
    */
   async updateNovel(novel){
     let novelLibrary = await NovelDexie.get(novel.url);
-    console.log("RETURNNNNNN", novelLibrary);
     if(!novelLibrary){
-      return false;
-    }
+      return false; }
     novel = {...novelLibrary, ...novel};
-    console.log("YOOOOO", novel);
+    console.log("NOVEL UPDATED TO ", novel);
     await novel.save();
     return true;
   }
@@ -221,7 +220,9 @@ class NovelModelController {
       novel_url +
       "ChapterChunk" +  
       Math.floor(chapterNumber / (MAXCHAPTERSPERCHUNK + 1));
+      console.log(chunkid);
     let chunk = await ChapterChunkDexie.get(chunkid);
+    console.log("GET CHAPTE RCONTENT", chunk);
     if(!chunk) return null; 
     return chunk.chapters[(chapterNumber - 1) % MAXCHAPTERSPERCHUNK].content;
   }
