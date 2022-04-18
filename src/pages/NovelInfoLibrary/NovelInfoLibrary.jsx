@@ -112,7 +112,7 @@ function NovelInfoLibrary({ onClose, url, open }) {
             </div>
 
             {/* brief info */}
-            <div className={styles.SummarizeInfo}>
+            <div className={`${styles.SummarizeInfo}`}>
                 {/* cover image */}
                 <div className={styles.Image}>
                     <img src={novelInfo && novelInfo.cover} alt="Novel cover"/>

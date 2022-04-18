@@ -4,10 +4,12 @@
     @apply bg-white;
     @apply overflow-y-scroll;
     @apply pt-2;
+    @apply md:px-10
 }
 
+
 .NovelInfoContainerShow{
-    @apply flex flex-col space-y-6;
+    @apply flex flex-col space-y-6 md:space-y-10;
 }
 
 .TopBar{
@@ -19,6 +21,7 @@
 .SummarizeInfo{
     @apply h-40 flex items-center px-3 space-x-4;
 }
+
     .Image{
         @apply h-32 w-24;
         @apply flex-shrink-0;
@@ -60,7 +63,7 @@
                 .ReadButton button{
                     @apply h-6 w-full text-gray-400;
                     @apply rounded;
-                    background: #FF7BA9;
+                    background: var(--secondary-color);
                     color: white;
                     max-width: 150px;
                 }

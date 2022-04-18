@@ -29,11 +29,11 @@ function NovelInfo({url, source, onClose, library=false}) {
             setExist(false);
         }
     },[url, novelIds]);
-    
+
     useEffect(() => {
         // get info from api
         Liaison.getNovelInfo(url, source).then(res => setNovelInfo(res));
-        
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url, source]);
 
@@ -49,7 +49,7 @@ function NovelInfo({url, source, onClose, library=false}) {
                 return;
             }
         }
-    }, [novelInfo])
+    }, [novelInfo, exist, librarian, source, url])
 
     return (
         <div className={styles.background}>
