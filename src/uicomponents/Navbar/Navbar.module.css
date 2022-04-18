@@ -7,6 +7,7 @@
 .SideBar {
     @apply fixed w-56 top-0 md:left-0 bg-white h-screen;
     @apply bg-white;
+    @apply border-r border-gray-300;
     @apply transition-all ease-in duration-100 z-50;
 }
 
@@ -27,7 +28,7 @@
 }
 
 .NavItemIcon{
-    @apply text-gray-700 fill-current;
+    @apply fill-current;
 }
 
 .NavItemNotPicked{
@@ -35,7 +36,8 @@
 }
 
 .NavItemPicked{
-    @apply bg-gray-100 font-medium;
+    @apply font-medium;
+    color: var(--secondary-color); 
 }
 
 .NavItemIcon{

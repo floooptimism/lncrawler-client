@@ -186,9 +186,9 @@ const Item = function ({data, index, style}) {
         >
             <div>
                 <h1 className="text-sm font-medium items-center">
-                    Chapter {index + 1}
+                  {chapters[index].name}
                 </h1>
-                <p className="text-xs">{chapters[index].name}</p>
+                <p className="text-xs">{`Index ${index+1}`}</p>
             </div>
 
             <div className="ml-auto flex items-center">
@@ -236,13 +236,15 @@ const Item = function ({data, index, style}) {
 };
 
 function MyList({chapters, novelInfo, downloadedChapters}) {
-    const { setReaderIsOpen, setReaderNovelInfo, setReaderChapterInfo, setReaderChapters } = useReader();
+    const { setReaderIsOpen, setReaderData } = useReader();
 
     function itemClick(novelInfo, chapterInfo) {
-        setReaderNovelInfo(novelInfo);
-        setReaderChapterInfo(chapterInfo);
+        setReaderData({
+            novelInfo,
+            chapterInfo,
+            chapters
+        })
         setReaderIsOpen(true);
-        setReaderChapters(chapters);
     }
 
 
