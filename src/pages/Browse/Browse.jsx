@@ -32,22 +32,16 @@ function Browse(props) {
                 className={styles.Form}
                 onSubmit={(e) => {
                     e.preventDefault();
-                    searchNovel(e.target[0].value, e.target[1].value);
+                    searchNovel(e.target[0].value, "https://lightnovel.world");
                 }}
             >
-                <h1 className="text-center p-4 text-2xl text-gray-500">Search</h1>
                 <SearchBar className="w-full" />
 
-                {/* Dropdown select source */}
-                <div className={`${styles.SourceDropdownContainer}`}>
-                    <label htmlFor="source">Select Source</label>
-                    <select id="source" className={`${styles.SourceDropdown}`}>
-                        <option value="https://lightnovel.world">
-                            www.lightnovel.world
-                        </option>
-                    </select>
-                </div>
             </form>
+            <div className="border-b border-gray-200">
+
+            </div>
+
 
             <div className="relative flex-wrap flex flex-col justify-center items-center gap-3 py-8">
                 {/* if searched and searchResults is empty, tell user that there are no results  */}

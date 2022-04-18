@@ -36,7 +36,7 @@ function Library() {
         setNovelViewModal(true);
     }
 
-    // TODO: Search novels function
+    // DONE Search novels function
     function searchNovelInLibrary(novelname) {
         if (novelname.trim() === "") {
             setSearchNovelResult([]);
@@ -59,7 +59,7 @@ function Library() {
     }, [novelViewModal]);
 
     return (
-        <div className="mt-14 px-1">
+        <div className="pt-14 md:pt-5">
             {/* Searchbar */}
             <form
                 className={style.Form}
@@ -73,9 +73,13 @@ function Library() {
                     className={`focus:border-none ${style.SearchBar}`}
                 />
             </form>
+            <div className="border-b border-gray-200">
+
+            </div>
+
 
             {/* Novel List */}
-            <div className="flex-wrap flex flex-col justify-center items-center gap-3 mt-5">
+            <div className="flex-wrap flex flex-col sm:flex-row items-center gap-3 mt-5">
                 {novels.length === 0 && (
                     <div>
                         <h1 className="text-center">No novels in library</h1>

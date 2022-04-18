@@ -1,5 +1,7 @@
 .Form {
     @apply px-3 rounded-lg;
+    @apply py-5 pt-0;
+    @apply md:w-96;
 
 }
 
