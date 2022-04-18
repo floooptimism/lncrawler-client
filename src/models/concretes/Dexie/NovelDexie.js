@@ -29,6 +29,7 @@ class NovelDexie extends Model{
         this.views = views;
         this.rating = rating;
         this.save = this.constructor.save;
+        this.currentChapter = 1;
     }
 
     static async get(url){
