@@ -7,10 +7,10 @@ import styles from './Tabs.module.css';
 
 function Tabs(props) {
     const [active, setActive] = useState(0);
-    const [tabs, setTabs] = useState([
+    const tabs = [
         ["Information", InformationTab],
         ["Chapters", ChaptersTab],
-    ]);
+    ];
 
     return (
         <div className="h-full">

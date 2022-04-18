@@ -22,8 +22,8 @@
 
 .TabSelected {
     @apply font-medium border-b-2;
-    border-color: #eb79a8;
-    color: #5a5a5a;
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
 }
 
 .TabNotSelected {
