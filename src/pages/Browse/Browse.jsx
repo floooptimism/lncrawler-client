@@ -35,7 +35,7 @@ function Browse(props) {
                     searchNovel(e.target[0].value, "https://lightnovel.world");
                 }}
             >
-                <SearchBar className="w-full" />
+                <SearchBar className="w-full" placeholder="Search novels"/>
 
             </form>
             <div className="border-b border-gray-200">
@@ -43,7 +43,7 @@ function Browse(props) {
             </div>
 
 
-            <div className="relative flex-wrap flex flex-col justify-center items-center gap-3 py-8">
+            <div className="relative flex-wrap flex flex-col justify-center items-center gap-3 py-8 px-0 md:px-4">
                 {/* if searched and searchResults is empty, tell user that there are no results  */}
                 {searched && !loading && searchResults.length === 0 && (
                     <p className={styles.Info}>No results found</p>

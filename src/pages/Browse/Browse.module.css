@@ -42,7 +42,7 @@ body{
 }
 
 .Form{
-    @apply py-5 pt-0 px-3;
+    @apply py-5 pt-0 px-4;
     @apply md:w-96;
     @apply rounded-lg;
 }

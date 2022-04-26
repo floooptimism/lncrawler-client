@@ -69,6 +69,7 @@ function Library() {
             >
                 {/* <h1 className="text-center mb-3 text-2xl text-gray-500">Search</h1> */}
                 <SearchBar
+                    placeholder="Search library"
                     onChange={debounce(searchNovelInLibrary, 500)}
                     className={`focus:border-none ${style.SearchBar}`}
                 />
