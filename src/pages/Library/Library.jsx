@@ -79,13 +79,12 @@ function Library() {
 
 
             {/* Novel List */}
-            <div className="flex-wrap flex flex-col sm:flex-row items-center gap-3 mt-5">
+            <div className="flex-wrap flex flex-col sm:flex-row items-center gap-3 mt-5 px-0 md:px-4">
                 {novels.length === 0 && (
-                    <div>
-                        <h1 className="text-center">No novels in library</h1>
-                        <p className="text-center">
-                            Add novels to your library by clicking the button
-                            below
+                    <div className="p-6 rounded border border-gray-400 text-gray-800" style={{borderColor: "var(--secondary-color)"}}>
+                        <h1 className="text-center text-lg font-medium mb-2">No novels in library</h1>
+                        <p className="text-center text-gray-700">
+                            You can discover and search novels in the <span className="font-medium italic">Browse</span> tab
                         </p>
                     </div>
                 )}
