@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import style from './SearchBar.module.css';
 
 
-function SearchBar({onChange, className}) {
+function SearchBar({onChange, className, placeholder}) {
   const [input, setInput] = useState("");
 
   function onTextChange(event) {
@@ -29,7 +29,7 @@ function SearchBar({onChange, className}) {
         </svg>
       </span>
 
-      <input type="text" value={input} onChange={onTextChange} placeholder="Search novel" className={style.searchBar} />
+      <input type="text" value={input} onChange={onTextChange} placeholder={placeholder || "PlaceHolde rhere"} className={style.searchBar} />
     </div>
   );
   
