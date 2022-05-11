@@ -3,8 +3,16 @@
   @apply rounded-lg shadow-lg border border-gray-100;
   @apply p-3;
   @apply overflow-hidden;
+  @apply hover:shadow-xl;
+  @apply transition-all duration-150 ease-in;
   /* height: 230px; */
 }
+
+.BrowseNovelCardContainer:hover {
+  border-color: var(--secondary-color);
+}
+
+
 
 .BrowseNovelCardImageContainer {
   @apply rounded-lg shadow overflow-hidden;

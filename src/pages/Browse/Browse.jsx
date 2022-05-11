@@ -55,7 +55,7 @@ function Browse(props) {
                 {/* if not searched, tell user to enter a novel name and select source */}
                 {!searched && (
                     <p className={styles.Info}>
-                        Enter a novel name and select a source
+                        Enter a novel name, Ex. "Beginning"
                     </p>
                 )}
 
