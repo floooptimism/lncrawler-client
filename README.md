@@ -6,10 +6,10 @@
 
 A web application that crawls web novels from various sources and stores them in the local library for offline reading.
 
-* **Library** support.
-* Chapter progress tracking.
-* Supports multiple sources.
-* **Progressive Web App**
+- [x] **Library** support.
+- [] Chapter progress tracking.
+- [] Supports multiple sources.
+- [] **Progressive Web App**
 
 ### Contributers
 
